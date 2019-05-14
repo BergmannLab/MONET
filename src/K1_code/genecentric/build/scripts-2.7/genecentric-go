@@ -1,0 +1,33 @@
+#!/usr/sup/bin/python
+'''
+'genecentric-go' takes a BPM file as input and outputs a set of GO enrichment 
+results for every module in the BPM file.
+'''
+
+from functools import partial
+
+import bpm.cmdargs.go # Which command line arguments do we want?
+from bpm import bpmreader, conf, geneinter, enrichment, parallel
+
+parallel.costs['load_genes'] = 10
+parallel.print_progress()
+
+geneinter.load_genes() # Creates global vars geneinter.genes and geneinter.gis
+bpms = bpmreader.read(conf.bpm)
+
+# Calculate the total number of steps so we can measure progress
+parallel.steps = (len(bpms) * 2) + sum(parallel.costs.itervalues())
+
+def modules():
+    for i, b in enumerate(bpms):
+        for modnum, mod in enumerate(b):
+            yield i, modnum, mod
+
+enrich = partial(enrichment.enrich, len(bpms) * 2)
+bpmenrichment = parallel.pmap(enrich, modules())
+parallel.print_progress(final=True)
+
+with open(conf.enrichment, 'w+') as out:
+    for bpmi, modi, genes, goterms in sorted(bpmenrichment):
+        print >> out, enrichment.write_bpm(bpmi, modi, genes, goterms)
+

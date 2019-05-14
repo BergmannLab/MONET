@@ -1,0 +1,10 @@
+Metadata-Version: 1.0
+Name: genecentric
+Version: 1.0.3
+Summary: A utility to generate between-pathway modules (BPMs) and perform GO enrichment on them.
+Home-page: http://bcb.cs.tufts.edu/genecentric
+Author: Andrew Gallant
+Author-email: Andrew.Gallant@tufts.edu
+License: GPL
+Description: See README
+Platform: UNKNOWN

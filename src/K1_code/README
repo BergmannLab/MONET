@@ -1,0 +1,269 @@
+README for Team Tusk module identification code
+===============================================
+
+=====
+Setup
+=====
+
+Read this *before* running the clustering scripts below.
+
+Dependencies:
+-------------
+
+All of the network manipulations (preprocessing, clustering, etc.) use the
+Python 'igraph' package, which is generally not installed by default. igraph
+can be installed using pip or easy_install (e.g. 'pip install python-igraph').
+
+Clustering also requires the 'scikit-learn' package, which can also be
+installed using pip or easy_install (e.g. 'pip install scikit-learn').
+This package, as well as other parts of our clustering implementation,
+also requires numpy and scipy to be installed, which come with many
+distributions of python.
+
+If you're not running Python 2.7 or above, you'll need to install 'argparse'
+from PyPI. (Should be as easy as `easy_install-2.6 argparse`.)
+
+
+Subdirectories:
+---------------
+
+    ./capDSD:          capDSD source code
+    ./clustering:      Clustering implementation and related scripts for both
+                       subchallenges
+    ./genecentric:     Genecentric source code
+    ./data:            Directory for network and clustering data
+    ./network_scripts: Scripts for general network preprocessing/manipulation
+    ./shell_scripts:   Scripts for running cluster generation
+
+
+Location of network data:
+-------------------------
+
+  The shell scripts assume that the network edge list files are located in
+  the appropriate data/networks/subchallenge[#] directory (for example, the
+  first PPI for subchallenge 1 would be at
+  data/networks/subchallenge1/1_ppi_anonym_v2.txt).
+ 
+
+==========
+Clustering
+==========
+
+tl;dr:
+------
+
+To generate final submissions for Subchallenge 1, run these scripts in
+this order from the top-level directory:
+    - shell_scripts/subchallenge1/nodelists.sh
+    - shell_scripts/subchallenge1/matrices.sh
+    - shell_scripts/subchallenge1/calc_DSD.sh (this will take a while)
+    - shell_scripts/subchallenge1/cluster_1_4_6.sh
+    - shell_scripts/subchallenge1/genecentric.sh
+    - shell_scripts/subchallenge1/cluster_2_3_5.sh
+
+
+For subchallenge 2, run in this order from the top-level directory:
+    - shell_scripts/subchallenge2/merge_1_2_4.sh
+    - shell_scripts/subchallenge2/matrices.sh
+    - shell_scripts/subchallenge2/calc_DSD.sh
+    - shell_scripts/subchallenge2/cluster.sh
+
+
+NOTE: precomputed DSD matrices are provided with the code for convenience,
+      to save time you can unzip them into data/DSD and skip the calc_DSD.sh
+      step for both subchallenges (make sure to still run the first 2 scripts,
+      since some of the later scripts rely on having adjacency matrices
+      computed for the networks)
+
+
+Each of these must be run after the previous script finishes (i.e. you
+can't run them in parallel, each script depends on the output of the
+previous script).
+
+Once this is done (which may take a while, depending on where/how
+you run it), our final submissions will be in data/final_clusters .
+
+
+Detailed documentation for basic cluster generation pipeline:
+-------------------------------------------------------------
+
+The base method we used for clustering is a combination of our 'Diffusion
+State Distance' (DSD) distance metric, and a generic spectral clustering
+implementation from scikit-learn (as described in more detail in our writeup).
+
+All commands are run from the base directory.
+
+Step 1: Generate an adjacency matrix from the edge lists given, in
+        order to run DSD.
+
+  1a) Generate a node list from the edge list:
+
+      python scripts/nodelist_from_el.py [edgelist_file] > [nodelist_file]
+
+      or, for all networks,
+      ./shell_scripts/subchallenge1/nodelists.sh
+
+  1b) Generate an adjacency matrix (with entries in the order of the node list)
+      for networks 1, 2, and 4-6, using the edge list and node list:
+
+      python scripts/adj_matrix.py [edgelist_file] -n [nodelist_file] > [matrix_file]
+
+      or, for all networks,
+      ./shell_scripts/subchallenge1/matrices.sh
+
+      (This may take ~5 minutes on the larger networks, but shouldn't take
+      much longer)
+
+      NOTE: do not do this for network 3, run augment_directed instead as
+            described in step 1.5
+
+
+Step 1.5: Add low-weight back edges on network 3 before running DSD, as
+          described in the writeup.
+
+  python augment_directed.py [edgelist_file] -o [output_prefix]
+
+  (the matrices.sh script takes care of this)
+
+  This will write the augmented adjacency matrix to output_prefix.aug, and
+  the nodelist to output_prefix.nodelist .
+
+
+Step 2: Run DSD using the matrices/nodelists generated in step 1.
+
+  python dsd_gen.py [matrix_file] -n [nodelist_file] [-d for network 3] -o [output_prefix]
+
+  or, for all networks,
+  ./shell_scripts/subchallenge1/calc_DSD.sh
+
+  dsd_gen will automatically split the matrix into connected components (if there
+  is more than one), and output a DSD matrix for each component to a file with
+  the name [output_prefix]_[component_number].dsd . Nodelists for the resulting
+  DSD matrices have the same names, with a .nodelist suffix.
+
+  This part may take a while (several hours for the larger networks, a few minutes
+  for network 3).
+
+
+Step 3: Run spectral clustering on the resulting DSD matrix.
+
+  python clustering/generate_clusters.py [dsd_file] -n [nodelist_file] -a 1 -p [k_value] > [cluster_file]
+
+  or, to generate Team Tusk final submissions for networks 1, 4, and 6:
+  ./shell_scripts/subchallenge1/cluster_1_4_6.sh
+
+  (note final submissions for networks 2, 3, and 5 use Genecentric, which
+   is described below)
+
+  This writes a cluster file in the format specified by the Dream challenge to
+  cluster_file, using the given network and k_value.
+
+
+Step 4: Split large clusters, if there are any.
+
+  python clustering/split_clusters.py [dsd_file] [cluster_file] -n [nodelist_file] > [split_cluster_file]
+
+  (cluster_1_4_6.sh takes care of this)
+
+  This writes a file with clusters of size > 100 split into smaller clusters.
+
+
+Now, you should have the files:
+
+  data/final_clusters/sc1_1.txt,
+  data/final_clusters/sc1_4.txt, and
+  data/final_clusters/sc1_6.txt.
+
+These were our final submissions for networks 1, 4, and 6 on SC1.
+
+
+Instructions for running Genecentric on networks 2, 3, and 5:
+-------------------------------------------------------------
+
+As we described in our writeup, we used the Genecentric software package
+to search for dense bipartite subgraphs in networks 2, 3, and 5. Here
+are the steps for generating clusterings augmented with Genecentric
+clusters:
+
+Step 1: for networks 2 and 5, generate spectral clusterings (using generate_clusters)
+        as above with k=10 and k=20
+
+
+Step 2: Generate subgraphs (i.e. edge lists) from the spectral clusters.
+
+  python clustering/gc_scripts/clusters_to_sgs.py [original matrix file] [cluster file] -n [node_list] -o [output_prefix]
+
+  The subgraphs that are generated will be output in the form [output_prefix][sg_index].txt.
+
+
+Step 3: Run Genecentric on each of the clusters.
+
+  python genecentric/genecentric-bpms [subgraph] [gc_cluster_file] --minimum-size 3 --maximum-size 100 --squaring
+
+
+Step 4: Aggregate all of the clusters found by Genecentric into a single
+        cluster file.
+
+  python clustering/gc_scripts/integrate_gc.py [gc_cluster_directory] > [output_file]
+
+  (all of the above are done by genecentric.sh in shell_scripts/subchallenge1)
+
+
+Step 5: Merge the aggregate clusters with a spectral clustering.
+
+  a) For the greedy approach:
+
+     python clustering/gc_scripts/gc_and_other.py [gc_clusters] [spectral_clusters] > [merged_cluster_file]
+
+  b) For the overlap graph approach:
+
+     First, generate the overlap graphs using
+
+     python clustering/gc_scripts/gc_overlap.py [gc_clusters] [spectral_clusters] > [overlap_clusters]
+
+     Then, run
+
+     python clustering/gc_scripts/overlap_clusters.py [overlap_clusters] [spectral_clusters] > [cluster_file]
+
+     to generate the final clusters.
+
+
+Step 5: run clustering/split_clusters.py on all the results, the same as above
+
+
+Now, you should have the files:
+
+  data/final_clusters/sc1_2.txt,
+  data/final_clusters/sc1_3.txt, and
+  data/final_clusters/sc1_5.txt.
+
+These were our final submissions for networks 2, 3, and 5 for SC1.
+
+
+Yes, this part (Genecentric) is quite complicated and unintuitive. It was a
+late addition to our clustering pipeline, and I didn't have time to document
+and automate it to the extent that I would have liked before the submission
+deadline.
+
+
+Subchallenge 2:
+---------------
+
+The process for generating SC2 clusters is almost the same as for networks 1,
+4, and 6 in SC1, but the union network has to be generated first.
+
+To do this:
+
+    python network_scripts/merge_1_2_4.py network_scripts/networks_1_2_4.txt > [union_nodelist]
+
+Then, generate the adjacency matrix from the union_nodelist and cluster as before.
+
+All of this logic is contained in the scripts in shell_scripts/subchallenge2.
+
+
+Questions?
+----------
+
+If you have questions about Genecentric or any other parts of the
+code/implementation, feel free to contact me at john.crawford@tufts.edu.
+

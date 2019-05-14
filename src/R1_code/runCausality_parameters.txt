@@ -1,0 +1,15 @@
+filename=input.txt
+b=3.5
+c=1000
+i=2
+filter=double
+threshold=4
+interWeight=yes
+weighted=T
+dir=result
+post=recluster
+smallest=10
+largest=100
+b2=0.5
+c2=800
+i2=2

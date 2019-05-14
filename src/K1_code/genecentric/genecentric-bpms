@@ -1,0 +1,54 @@
+#!/usr/bin/env python2
+
+""" Copyright 2018 Bergmann's Lab UNIL <mattia.tomasoni@unil.ch>
+
+This file is part of DREAM DMI Tool.
+
+   DREAM DMI Tool is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   DREAM DMI Tool is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with DREAM DMI Tool. If not, see <https://www.gnu.org/licenses/>.
+
+###############################################################################
+Mattia Tomasoni - UNIL, CBG
+2017 DREAM challenge on Disease Module Identification
+https://www.synapse.org/modulechallenge
+
+'genecentric-bpms' is a script that generates a set of between-pathway modules 
+in BPM file format.
+###############################################################################
+"""
+
+import csv
+
+import bpm.cmdargs.bpms # Which command line arguments do we want?
+from bpm import conf, geneinter, parallel, partition, prune
+
+parallel.print_progress()
+
+geneinter.load_genes() # Creates global vars geneinter.genes and geneinter.gis
+
+# Calculate the total number of steps so we can measure progress
+parallel.steps = conf.M + geneinter.genecount() + sum(parallel.costs.values())
+
+# Create a BPM from every gene and then prune them
+bpms = partition.bpms()
+bpms = prune.prune(bpms)
+
+outf = open(conf.bpm, 'w+')
+out = csv.writer(outf, delimiter='\t')
+for i, (mod1, mod2) in enumerate(bpms):
+    mod1, mod2 = list(mod1), list(mod2)
+    out.writerow(['BPM%d/Module1' % i] + mod1)
+    out.writerow(['BPM%d/Module2' % i] + mod2)
+
+parallel.print_progress(final=True)
+

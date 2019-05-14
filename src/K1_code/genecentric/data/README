@@ -1,0 +1,12 @@
+We've included Yeast data with Genecentric so that users will always be able to 
+look at a running example.
+
+The 'chrombio.csv' file is raw data downloaded from 
+http://interactome-cmp.ucsf.edu/
+It is not included in the repository because of its file size. However, we have 
+included the 'yeast_emap.gi' file which is derived from chrombio.csv'.
+
+The 'essentials' list is derived from 
+http://www-sequence.stanford.edu/group/yeast_deletion_project/Essential_ORFs.txt
+where each line simply contains an 'ORF_name' from the file above.
+

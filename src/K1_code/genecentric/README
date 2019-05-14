@@ -1,0 +1,104 @@
+Genecentric is a package that performs two main tasks:
+  1. Implement the BPM generation algorithm with pruning described in
+     Leiserson et al, 2010. Parallelization is automatically exploited
+     there is more than one CPU.
+  2. Perform GO enrichment on BPMs using the JSON-RPC API of Funcassociate 2.0.
+     Documentation of the API can be found here: 
+     http://llama.mshri.on.ca/funcassociate/documentation
+
+DEPENDENCIES
+============
+As of right now, Python 2.6 or greater is required. The main cause of this is 
+use of Python's json library, which was added in 2.6. If there's demand, we can 
+see about working around this.
+
+Also, if you're not running Python 2.7, you'll need to install 'argparse' from 
+PyPI. (Should be as easy as `easy_install-2.6 argparse`.)
+
+There are no other dependencies other than the Internet for GO enrichment.
+
+INSTALLATION
+============
+For *nix based systems:
+  Download the distribution at 
+  http://bcb.cs.tufts.edu/genecentric/download_linux.php
+
+  Extract it, change into the directory, and install:
+
+    tar zxf genecentric*.tar.gz
+    cd genecentric*
+    python2 setup.py install
+
+  Instead of using 'python2 setup.py install', you could also install it with
+  easy_install like so:
+
+    easy_install-2.7 ./
+
+  This method is particularly useful if you don't have root access on the 
+  machine your installing it to.
+
+For Windows based systems:
+  Download the distribution at 
+  http://bcb.cs.tufts.edu/genecentric/download_win.php
+  
+  Run the executable. ???
+
+EXECUTION
+=========
+You should now be able to run an example using some data that come with the 
+package. (It should be installed to Python's installation prefix, typically 
+'/usr' on *nix based machines. If on Windows, it may be in your Python 
+distribution folder.)
+
+If you can't find the data on your system, you can download it here:
+http://bcb.cs.tufts.edu/genecentric/files/data/
+Remember, this is Yeast EMAP data from the Krogan Lab. You may want to find
+your own data if this data isn't applicable. To see where we got this example
+data from, see:
+http://bcb.cs.tufts.edu/genecentric/files/data/README
+
+Back to the example:
+
+  export DATA="/usr/share/genecentric/data/"
+  genecentric-bpms -m 20 -e $DATA/essentials $DATA/yeast_emap.gi output.bpm
+
+And to run GO enrichment (requires an Internet connection):
+
+  genecentric-go -e $DATA/essentials $DATA/yeast_emap.gi output.bpm enrich.gobpm
+
+Which should give a list of generated BPMs in 'output.bpm' and enrichment
+results in 'enrich.gobpm' in the current directory.
+
+OTHER NOTES
+===========
+
+Some terminology on file formats used by Genecentric:
+
+It is convention to use the file format names on the left as extensions to
+corresponding files. i.e., 'yeast_emap.gi'. This is not required, however.
+
+  gi      A 'genetic interaction' file is formatted as tab-delimited with three 
+          columns. The first column contains the first gene name, the second 
+          column contains the second gene name, and the third column contains 
+          the interaction score.
+
+  bpm     A 'bpm' file is a tab-delimited file where each row represents a 
+          module in a between-pathway module. The first column is the BPM and 
+          module identifier, i.e. 'BPM5/Module1', and the rest of the columns 
+          are the gene names belonging to that particular module.
+
+  gobpm   A 'gobpm' file contains the GO enrichment results of every module in 
+          a 'bpm' file. Each module begins with a line starting with '>' and 
+          followed by the BPM/module identifier, i.e. '> BPM5/Module1'.
+          The line immediately following that is a tab-delimited list of genes 
+          in that module.
+          The lines following that, up to the next '> ...' line, are the GO 
+          enrichment results. Namely, each row represents a GO term that has 
+          been enriched for some subset of this module's genes.
+          Each line representing a GO term contains the following information 
+          in order and in tab-delimited form: the p-value, the ratio of the 
+          number of genes in the query associated with this GO term to the 
+          total number of genes in the query, the GO name, and finally, the 
+          subset of genes in the module that have been enriched for this GO 
+          term. (The subset of genes is delimited by single space characters.)
+

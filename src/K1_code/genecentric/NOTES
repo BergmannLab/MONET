@@ -1,0 +1,3 @@
+command for running GeneCentric for Dream challenge:
+
+python genecentric-bpms -p 4 --minimum-size 3 --maximum-size 100 --squaring /r/bcb/dream11/evaluation/yeast_networks/biogrid_ppi_nom.t100.conf ./yeast_biogrid_t100.bpm &

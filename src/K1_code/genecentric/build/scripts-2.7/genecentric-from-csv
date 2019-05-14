@@ -1,0 +1,65 @@
+#!/usr/sup/bin/python
+'''
+'genecentric-from-csv' takes a CSV file as input and converts it into the
+format understood by 'genecentric'. Namely, a tab-delimited file with three
+columns: gene1, gene2 and interaction score.
+'''
+import argparse
+import csv
+
+parser = argparse.ArgumentParser(
+    description='Convert CSV files to Genecentric input files',
+    formatter_class=argparse.ArgumentDefaultsHelpFormatter)
+aa = parser.add_argument
+aa('csv', type=str,
+   metavar='INPUT_CSV_FILE', help='Location of the CSV file.')
+aa('gi', type=str,
+   metavar='OUTPUT_GI_FILE',
+   help='Where the genetic interaction file will be written')
+aa('--delimiter', dest='delimiter', default='\t',
+   help='The delimiter of the CSV file. The default is a tab.')
+aa('--no-header', dest='no_header', action='store_true',
+   help='If set, do not ignore the first line.')
+aa('--g1-name', dest='g1_name', type=int, default=0,
+   help='The column number of the first gene name.')
+aa('--g2-name', dest='g2_name', type=int, default=3,
+   help='The column number of the second gene name.')
+aa('--g1-allele', dest='g1_allele', type=int, default=2,
+   help='The column number of the first gene allele value. '
+        'Set to -1 if your data does not have this information.')
+aa('--g2-allele', dest='g2_allele', type=int, default=5,
+   help='The column number of the second gene allele value. '
+        'Set to -1 if your data does not have this information.')
+aa('--int-score', dest='int_score', type=int, default=6,
+   help='The column number of the genetic interaction score.')
+conf = parser.parse_args()
+
+reader = csv.reader(open(conf.csv), delimiter=conf.delimiter)
+writer = csv.writer(open(conf.gi, 'w+'), delimiter='\t')
+
+# Keep a record of all gene pairs so we don't print duplicates.
+pairs = set()
+
+# If an interaction score is not the result of a deletion/deletion event,
+# it is excluded from the set of genes used.
+for i, row in enumerate(reader):
+    if i == 0 and not conf.no_header: # there IS a header
+        continue
+
+    if ((conf.g1_allele > -1 and conf.g2_allele > -1)
+         and (row[conf.g1_allele] != 'deletion'
+              or row[conf.g2_allele] != 'deletion')):
+            continue
+
+    g1, g2 = row[conf.g1_name].strip(), row[conf.g2_name].strip()
+    if (g1, g2) in pairs:
+        continue
+
+    pairs.add((g1, g2))
+    pairs.add((g2, g1))
+
+    score = row[conf.int_score].strip()
+    if len(score) == 0 or score == '0':
+        score = '0.0'
+    writer.writerow([row[conf.g1_name], row[conf.g2_name], row[conf.int_score]])
+

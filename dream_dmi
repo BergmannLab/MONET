@@ -1,0 +1,377 @@
+#! /bin/bash -
+
+# Copyright 2018 Bergmann's Lab UNIL <mattia.tomasoni@unil.ch>
+#
+# This file is part of DREAM DMI Tool.
+#
+#    DREAM DMI Tool is free software: you can redistribute it and/or modify
+#    it under the terms of the GNU General Public License as published by
+#    the Free Software Foundation, either version 3 of the License, or
+#    (at your option) any later version.
+#
+#    DREAM DMI Tool is distributed in the hope that it will be useful,
+#    but WITHOUT ANY WARRANTY; without even the implied warranty of
+#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#    GNU General Public License for more details.
+#
+#    You should have received a copy of the GNU General Public License
+#    along with DREAM DMI Tool. If not, see <https://www.gnu.org/licenses/>.
+#
+###############################################################################
+# Mattia Tomasoni - UNIL, CBG
+# 2017 DREAM challenge on Disease Module Identification
+# https://www.synapse.org/modulechallenge
+################################################################################
+
+# K1: Team Tusk
+# M1: Team Aleph
+# R1: Team Causality
+
+working_dir=$PWD
+install_dir="$HOME/.dream_dmi_tool"
+
+###################################################################################################
+# HELP USAGE MESSAGE
+###################################################################################################
+
+usage() {
+  echo "USAGE: dream_dmi --input=[...] --method=[...] --container=[...] [OPTIONS]"
+
+  echo "Run DREAM challenge Disease Module Identification methods"
+  echo ""
+  echo "  MANDATORY:"
+  echo "  --input=        network to be analysed (path to file)"
+  echo "  --method=       challenge method: [K1|M1|R1]"
+  echo "  --container=    container type: [docker|singularity]"
+  echo ""
+  echo "  OPTIONAL:"
+  echo "  --output=        directory in which to output results"
+  echo ""
+  echo "  options for method R1"
+  echo "  (general)"
+  echo "  --b=            balance parameter (numeric value)"
+  echo "  --c=            size of coarsened graph (numeric value)"
+  echo "  --i=            inflation parameter (numeric value)"
+  echo "  (preprocessing-specific)"
+  echo "  --filter=       preprocessing strategy: [double|pageRank|quantile]"
+  echo "  --throshold=    quantile threshold for preprocessing (numeric value)"
+  echo "  (challenge-specific)"
+  echo "  --post=         postprocessing strategy: [recluster|discard]"
+  echo "  --smallest=     min cluster size (numeric value)"
+  echo "  --largest=      bmax cluster size (numeric value)"
+  echo "  --b2=           recluster parameter (numeric value)"
+  echo "  --c2=           recluster parameter (numeric value)"
+  echo "  --i2=           recluster parameter (numeric value)"
+  echo ""
+  echo "EXAMPLE:"
+  echo "dream_dmi --input=/tmp/input.txt --method=K1 --container=docker"
+}
+
+###################################################################################################
+# PARAMETERS
+###################################################################################################
+
+# DEFAULTS
+input="not_set"
+output="not_set"
+method="not_set"
+container="not_set"
+b=2
+c=800
+i=2
+filter=quantile
+threshold=4
+interWeight=yes
+weighted=T
+dir=result
+post=discard
+smallest=3
+largest=100
+b2=2
+c2=500
+i2=2
+
+# READ USER INPUT #################################################################################
+while [ "$1" != "" ]; do
+  PARAM=`echo $1 | awk -F= '{print $1}'`
+  VALUE=`echo $1 | awk -F= '{print $2}'`
+  case $PARAM in
+    -h | --help)
+      usage 
+      exit
+      ;;
+    --input)
+      input=$VALUE
+      ;;
+    --output)
+      output=$VALUE
+      ;;
+    --method)
+      method=$VALUE
+      ;;
+    --container)
+      container=$VALUE
+      ;;
+    --b)
+      b=$VALUE
+      ;;
+    --c)
+      c=$VALUE
+      ;;
+    --i)
+      i=$VALUE
+      ;;
+    --filter)
+      filter=$VALUE
+      ;;
+    --threshold)
+      threshold=$VALUE
+      ;;
+    --post)
+      post=$VALUE
+      ;;
+    --smallest)
+      smallest=$VALUE
+      ;;
+    --largest)
+      largest=$VALUE
+      ;;
+    --b2)
+      b2=$VALUE
+      ;;
+    --c2)
+      c2=$VALUE
+      ;;
+    --i2)
+      i2=$VALUE
+      ;;
+    *)
+      echo "ERROR: unknown parameter \"$PARAM\""
+      echo ""
+      usage
+      exit 1
+      ;;
+  esac
+  shift
+done
+
+# HANDLE MANDATORY AND DEFAULT PARAMETERS #########################################################
+
+if [ "$method" != "K1" -a "$method" != "M1" -a "$method" != "R1" ]; then
+  echo "ERROR: you must specify a method (--method option)\n"
+  usage
+  exit 1
+fi
+
+if [ "$input" != "not_set" ]; then
+  if [ ! -f "$input" ]; then
+    echo "ERROR: the input file $input does not exist"
+    exit 1
+  else
+    # copy input network file to designated input location
+    if [ "$method" = "K1" ]; then
+      cp $input "$install_dir/src/K1_code/data/input_network.txt"; fi
+    if [ "$method" = "M1" ]; then
+      cp $input "$install_dir/src/M1_code/sub-challenge1/input.txt"; fi
+    if [ "$method" = "R1" ]; then
+      cp $input "$install_dir/src/R1_code/sub-challenge1/input.txt"; fi
+  fi
+else
+  echo "ERROR: you must provide an input file (--input option)\n"
+  usage
+  exit 1
+fi
+
+if [ "$output" != "not_set" ]; then
+  # create dir if it does not exist
+  if [ ! -d "$output" ]; then
+    mkdir $output
+  fi
+  # remove trailing slash if present
+  if [[ $output == */ ]]; then
+    #output=${output::-1}
+    output=${output::${#output}-1}
+    
+  fi
+else
+  output=$working_dir
+fi
+
+if [ "$container" != "docker" -a "$container" != "singularity" ]; then
+  echo "ERROR: you must specify a container type (--container option)\n"
+  usage
+  exit 1
+fi
+if [ "$container" = "docker" ]; then
+  docker --help > /tmp/docker_test
+  if ! grep -q "Usage:	docker" /tmp/docker_test; then
+    echo "ERROR: you specified --container=docker, but docker is not installed"
+    echo "Please visit https://www.docker.com\n"
+    exit 1
+  fi
+fi
+if [ "$container" = "singularity" ]; then
+  singularity --help > /tmp/singularity_test
+  if ! grep -q "USAGE: singularity" /tmp/singularity_test; then
+    echo "ERROR: you specified --container=singularity, but singularity is not installed"
+    echo "Please visit http://singularity.lbl.gov\n"
+    exit 1
+  fi
+fi
+
+# WRITE PARAMETERS TO FILE ########################################################################
+if [ "$method" = "R1" ]
+then
+  addToParametersFile() {
+    echo "$1"="$2" >> "$install_dir/src/R1_code/runCausality_parameters.txt"
+  }
+  rm -f "$install_dir/src/R1_code/runCausality_parameters.txt"
+  touch "$install_dir/src/R1_code/runCausality_parameters.txt"
+  addToParametersFile filename "input.txt"
+  addToParametersFile b "$b"
+  addToParametersFile c "$c"
+  addToParametersFile i "$i"
+  addToParametersFile filter "$filter"
+  addToParametersFile threshold "$threshold"
+  addToParametersFile interWeight "$interWeight" 
+  addToParametersFile weighted "$weighted"
+  addToParametersFile dir "$dir"
+  addToParametersFile post "$post"
+  addToParametersFile smallest "$smallest"
+  addToParametersFile largest "$largest"
+  addToParametersFile b2 "$b2"
+  addToParametersFile c2 "$c2"
+  addToParametersFile i2 "$i2"
+fi
+
+###################################################################################################
+# INVOKE DOCKER/SINGULARITY TO RUN THE CHOSEN METHOD
+###################################################################################################
+
+getDockerReferenceName() {
+  if [ $method = "K1" ]; then
+    echo "k1-image"; fi
+  if [ $method = "M1" ]; then
+    echo "m1-image"; fi
+  if [ $method = "R1" ]; then
+    echo "r1-image"; fi
+}
+
+checkDockerBuildSuccess() {
+  if ! grep -q "Successfully built" /tmp/docker_build_output; then
+    echo "ERROR: docker build returned an error"
+    echo "       - is an internet connection available?"
+    echo "       - is the docker daemon running?"
+    echo "see /tmp/docker_build_output for details"
+    exit 1
+  fi
+}
+
+checkSingularityBuildSuccess() {
+  if ! grep -q "Finalizing Singularity container" /tmp/singularity_build_output; then
+    echo "ERROR: singularity build returned an error"
+    echo "       - is an internet connection available?"
+    echo "       - is singularity running?"
+    echo "see /tmp/singularity_build_output for details"
+    rm -f "$install_dir/containers/"$method"/singularity/"$method"-image.img"
+    exit 1
+  fi
+}
+
+
+# take initial timestamp
+begin=$(date +%s)
+timestamp=`date '+%Y-%m-%d-%H%M%S'`
+# increase stack memory limit
+default_ulimit=$(ulimit -s)
+if [ "$method" = "K1" ]; then
+  ulimit -s 32768 > /dev/null 2>&1
+else
+  ulimit -s 16384 > /dev/null 2>&1
+fi
+
+
+# RUN THE METHOD ##################################################################################
+echo "" && echo "--------------------------------------------------------------------------------"
+echo "DREAM challenge Disease Module Identification" && echo ""
+echo "Method: $method"
+network_name=$(basename $input)
+echo "Input: $network_name"
+echo "Container: $container"
+
+if [ "$container" = "singularity" ]
+then
+  # build the singularity image (if image already exists, skip this step)
+  echo "Preparing container, please wait..."
+  if [ ! -f "$install_dir"/containers/"$method"/singularity/"$method"-image.img ]; then
+    cd "$install_dir"/containers/"$method"/singularity/
+    singularity image.create --size 1500 ./$method-image.img > \
+     /tmp/singularity_create_output 2>&1
+    sudo -E env "PATH=$PATH" singularity build ./$method-image.img Singularity > \
+     /tmp/singularity_build_output 2>&1
+    cd ../../..
+    checkSingularityBuildSuccess
+    cd $working_dir
+  fi
+  # run container
+  echo "Running container, please wait..."
+  singularity run \
+   -B "$install_dir"/src/"$method"_code:/"$method"_code/ \
+   "$install_dir"/containers/"$method"/singularity/"$method"-image.img > \
+   "$output"/"$timestamp"__"$method"__console-output__"$network_name" 2>&1
+fi
+if [ "$container" = "docker" ]
+then
+  # build the docker image (if image already exists, this command does nothing)
+  echo "Preparing container, please wait..."
+  docker_reference=$(getDockerReferenceName)
+  sudo docker build -t $docker_reference "$install_dir"/containers/"$method"/docker \
+   > /tmp/docker_build_output 2>&1
+  checkDockerBuildSuccess
+  # remove (old) container (if exists)
+  sudo docker rm "$method"-container > /tmp/docker_rm_output 2>&1
+  # run (new) container
+  echo "Running container, please wait..."
+  sudo docker run --name "$method"-container \
+   -v "$install_dir"/src/"$method"_code:/"$method"_code/ "$docker_reference" > \
+   "$output"/"$timestamp"__"$method"__console-output__"$network_name" 2>&1
+fi
+
+ulimit -s $default_ulimit
+end=$(date +%s) # calculate execution time
+tottime=$(expr $end - $begin)
+echo "" && echo "Exectution took $tottime seconds"
+
+# PREPARE OUTPUT AND CLEAN UP TEMP FILES ##########################################################
+
+output_file="$output"/"$timestamp"__"$method"__result-modules__"$network_name"
+
+if [ "$method" = "K1" ]; then
+  rm -f "$install_dir"/src/K1_code/data/DSD/* # remove temporary files
+  rm "$install_dir"/src/K1_code/data/input_network.txt;
+  if [ ! -f "$install_dir"/src/K1_code/data/final_clusters/clusters.txt ]; then
+    echo ERROR: see "$output"/"$timestamp"__"$method"__console-output__"$network_name"
+  else
+    mv "$install_dir"/src/K1_code/data/final_clusters/clusters.txt $output_file
+    echo "DONE: output can be found in $output"
+  fi  
+fi
+if [ "$method" = "M1" ]; then
+  rm "$install_dir"/src/M1_code/sub-challenge1/input.txt
+  if [ ! -f "$install_dir"/src/M1_code/sub-challenge1/output.txt ]; then
+    echo ERROR: see "$output"/"$timestamp"__"$method"__console-output__"$network_name"
+  else
+    mv "$install_dir"/src/M1_code/sub-challenge1/output.txt $output_file
+    echo "DONE: output can be found in $output"
+  fi
+fi
+if [ "$method" = "R1" ]; then
+  rm "$install_dir"/src/R1_code/sub-challenge1/input.txt
+  if [ ! -f "$install_dir"/src/R1_code/sub-challenge1/result/input.txt ]; then
+    echo ERROR: see "$output"/"$timestamp"__"$method"__console-output__"$network_name"
+  else
+    mv "$install_dir"/src/R1_code/sub-challenge1/result/input.txt $output_file
+    echo "DONE: output can be found in $output"
+  fi
+fi
+

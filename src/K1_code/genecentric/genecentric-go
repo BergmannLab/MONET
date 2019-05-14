@@ -1,0 +1,55 @@
+#!/usr/bin/env python2
+""" Copyright 2018 Bergmann's Lab UNIL <mattia.tomasoni@unil.ch>
+
+This file is part of DREAM DMI Tool.
+
+   DREAM DMI Tool is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   DREAM DMI Tool is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with DREAM DMI Tool. If not, see <https://www.gnu.org/licenses/>.
+
+###############################################################################
+Mattia Tomasoni - UNIL, CBG
+2017 DREAM challenge on Disease Module Identification
+https://www.synapse.org/modulechallenge
+
+'genecentric-go' takes a BPM file as input and outputs a set of GO enrichment 
+results for every module in the BPM file.
+###############################################################################
+"""
+
+from functools import partial
+
+import bpm.cmdargs.go # Which command line arguments do we want?
+from bpm import bpmreader, conf, geneinter, enrichment, parallel
+
+parallel.costs['load_genes'] = 10
+parallel.print_progress()
+
+geneinter.load_genes() # Creates global vars geneinter.genes and geneinter.gis
+bpms = bpmreader.read(conf.bpm)
+
+# Calculate the total number of steps so we can measure progress
+parallel.steps = (len(bpms) * 2) + sum(parallel.costs.itervalues())
+
+def modules():
+    for i, b in enumerate(bpms):
+        for modnum, mod in enumerate(b):
+            yield i, modnum, mod
+
+enrich = partial(enrichment.enrich, len(bpms) * 2)
+bpmenrichment = parallel.pmap(enrich, modules())
+parallel.print_progress(final=True)
+
+with open(conf.enrichment, 'w+') as out:
+    for bpmi, modi, genes, goterms in sorted(bpmenrichment):
+        print >> out, enrichment.write_bpm(bpmi, modi, genes, goterms)
+

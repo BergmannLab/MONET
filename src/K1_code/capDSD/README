@@ -1,0 +1,81 @@
+Copyright 2018 Bergmann's Lab UNIL <mattia.tomasoni@unil.ch>
+
+This file is part of DREAM DMI Tool.
+
+   DREAM DMI Tool is free software: you can redistribute it and/or modify
+   it under the terms of the GNU General Public License as published by
+   the Free Software Foundation, either version 3 of the License, or
+   (at your option) any later version.
+
+   DREAM DMI Tool is distributed in the hope that it will be useful,
+   but WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU General Public License for more details.
+
+   You should have received a copy of the GNU General Public License
+   along with DREAM DMI Tool. If not, see <https://www.gnu.org/licenses/>.
+
+###############################################################################
+Mattia Tomasoni - UNIL, CBG
+2017 DREAM challenge on Disease Module Identification
+https://www.synapse.org/modulechallenge
+###############################################################################
+----------------------------
+About
+----------------------------
+capDSD is an extension of DSD (available at dsd.cs.tufts.edu) that takes in to account
+a measure of interaction confidence while also incorporating directed pathway data.
+
+If you use capDSD, please cite:
+M. Cao, C. M. Pietras, X. Feng, K.J. Doroschak, T. Schaffner, J. Park, H. Zhang, L. J. Cowen and B. Hescott, New directions for diffusion-based network prediction of protein function: incorporating pathways with confidence. Bioinformatics, Volume 30, ISMB 2014 Proceedings, i219-i227, 2014.
+
+DSD is licensed under the GNU public license version 2.0. If you would
+like to license DSD in an environment where the GNU public license is
+unacceptable (such as inclusion in a non-GPL software package) commercial
+licensing is available through Tufts offices of Technology Transfer.
+Contact cowen@cs.tufts.edu for more information.
+Contact cpietras@cs.tufts.edu for issues involving the code.
+Address: 161 College Ave., Medford, MA 02155, USA
+
+----------------------------
+Installation
+----------------------------
+capDSD requires Python 2.7 and an installation of numpy.  To run, simply place the .py files in the desired directory and invoke using the python interpreter.
+
+----------------------------
+Using DSD.py
+----------------------------
+Run python DSD.py -h for information on arguments.  capDSD takes a PPI and optionally a directory of PPIPs (PPI pathways).  
+
+The format for PPIs is tab delimited:
+Protein1    Protein2    confidence
+ProteinX    ProteinY    confidence
+...
+
+Confidence is optional, but must be specified in a flag passed to DSD.py if it is to be used. If the PPI is treated as directed, the direction is from the first column to the second.
+
+The format for PPIPs is tab delimited:
+Protein1    Protein2    type1   type2
+ProteinX    ProteinY    typeX   typeY   typeZ
+...
+
+Types are optional, and are used with -m 3 (default) to determine whether or not to treat the edge as directed.  If all of the types are present in a list of "directed types," 
+the edge is treated as directed.
+
+To run cDSD, simply pass a properly formatted PPI as infile and specify the -c flag.
+To run caDSD, use the -c flag, specify the directory with the ppip files with -p, and use -mult 0
+To run capDSD, use the -c flag, specify the directory with the ppip files with -p
+
+Parameters m, s, and r can be specified with -mult, -s, and -r respectively, but will default to the values of 25, 7, and .7 that are used in the paper. 
+
+A small example is available at bcb.cs.tufts.edu/capdsd/files/testdata.zip
+
+----------------------------
+Using KeggParse.py
+----------------------------
+KeggParse.py is used to parse a directory of .kgml files from http://www.genome.jp/kegg/ and output them in .ppip format.  Run with KeggParse.py /target/directory/path/
+
+----------------------------
+Generating confidence scores
+----------------------------
+The source code for generating confidence scores for a given PPI is not available at the moment, but may be at a future date.
