@@ -23,9 +23,8 @@
 ###############################################################################
 
 echo 
-echo "Installing the DREAM_DMI TOOL"
-echo "Disease module identification algorithms"
-echo "top performers from the 2017 DREAM CHALLENGE"
+echo "Installing MONET"
+echo "MOdularising NEtwork Toolbox for mining of molecular and genetic networks"
 echo
 
 # ask for root password (needed to make monet command available from all
@@ -76,7 +75,7 @@ echo "  ...OK"
 
 # make monet command available
 echo "- Updating operating system..."
-sudo ln -s ~/.monet_tool/monet /usr/local/bin/monet 
+sudo ln -s ~/.monet/monet /usr/local/bin/monet 
 echo "  ...OK"
 
 # (optionally) test the installation
