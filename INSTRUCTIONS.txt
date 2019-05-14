@@ -16,7 +16,7 @@ https://github.com/BergmannLab/MONET/blob/master/README.md
 $ git clone https://github.com/BergmannLab/MONET.git
 
 3) INSTALL MONET
-$ cd monet && ./install.sh
+$ cd MONET && ./install.sh
 You will be proposed to test your installation.
 
 4) RUN
