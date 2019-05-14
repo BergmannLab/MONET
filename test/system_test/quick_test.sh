@@ -27,7 +27,7 @@
 # input using whatever container is available and check the exit code.
 ###############################################################################
 
-output=/tmp/dream_dmi_quick_test/
+output=/tmp/monet_quick_test/
 rm -rf $output
 mkdir $output
 
@@ -46,7 +46,7 @@ checkOutput() {
 # if Docker is installed
 docker --help > /tmp/docker_test 2>&1
 if [ $? -eq "0" ]; then 
-  dream_dmi --input=./input/3_signal_anonym_directed_v3.txt --output=$output --method=R1 --container=docker \
+  monet --input=./input/3_signal_anonym_directed_v3.txt --output=$output --method=R1 --container=docker \
     --b=1.7 --c=400 --i=2 --filter=quantile --threshold=1 --post=discard --smallest=3 --largest=100 --b2=1.7 --c2=500 --i2=2 \
     > $output/console_output.txt 2>&1
   checkOutput
@@ -55,11 +55,11 @@ fi
 #if Singularity is installed
 singularity --help > /tmp/singularity_test 2>&1
 if [ $? -eq "0" ]; then
-  dream_dmi --input=./input/3_signal_anonym_directed_v3.txt --output=$output --method=R1 --container=singularity \
+  monet --input=./input/3_signal_anonym_directed_v3.txt --output=$output --method=R1 --container=singularity \
     --b=1.7 --c=400 --i=2 --filter=quantile --threshold=1 --post=discard --smallest=3 --largest=100 --b2=1.7 --c2=500 --i2=2 \
     > $output/console_output.txt 2>&1
   checkOutput
 fi
 
-echo "ERROR: neither Docker nor Singularity appear to be installed" > /tmp/dream_dmi_quick_test/output.txt
+echo "ERROR: neither Docker nor Singularity appear to be installed" > /tmp/monet_quick_test/output.txt
 exit 1

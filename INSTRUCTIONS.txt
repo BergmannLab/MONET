@@ -1,8 +1,8 @@
 Welcome and thank you!
 
-DreamDMI is a Linux/macOS command-line tool for Disease Module Identification 
-in molecular networks, leveraging the top performing methods of the “Disease 
-Module Identification (DMI) DREAM Challenge”.
+MONET is a Linux/macOS command-line toolbox to mine molecular and genetic
+networks, leveraging the top performing methods of the “Disease Module 
+Identification (DMI) DREAM Challenge”.
 For more information on the Challenge:
 please visit: https://www.synapse.org/modulechallenge
 
@@ -10,25 +10,27 @@ please visit: https://www.synapse.org/modulechallenge
 https://www.docker.com or http://singularity.lbl.gov.
 
 2) README
-https://github.com/mattiat/DREAM_DMI_Tool/blob/master/README.md
+https://github.com/BergmannLab/MONET/blob/master/README.md
 
 3) GET THE CODE
-git pull https://github.com/mattiat/DREAM_DMI_Tool.git
+$ git clone https://github.com/BergmannLab/MONET.git
 
-3) INSTALL DreamDMI
-$ ./install
+3) INSTALL MONET
+$ cd monet && ./install.sh
 You will be proposed to test your installation.
 
 4) RUN
-From any location, run:
-$ dream_dmi --help
-$ dream_dmi --input=/tmp/input.txt [—-output=] —-method=M1 --container=docker
+From any location on your machine, run:
+$ monet --help
+$ monet --method=M1 --container=docker --input=[input_network] \
+  —-method=M1 --container=[docker|singularity]
 
-Example input network: see the content of test/input/ and read README.md.
+Example input networks: see the content of test/input/ and read README.md.
 
 5) COLLECT THE OUTPUT
-Two output files will be produced in the directory where you run the command,
+Two output files will be generated in the directory where you run the command,
 marked with a timestamp and the name of your input network: one file containing
 the run-time outputs and the other containing the results of your analysis.
 
-QUESTIONS, BUG-REPORTS: Mattia Tomasoni, <mattia.tomasoni@unil.ch>
+QUESTIONS, BUG-REPORTS: Mattia Tomasoni, <mattia.tomasoni@unil.ch> 
+                        and Sven Bergmann <sven.bergmann@unil.ch>

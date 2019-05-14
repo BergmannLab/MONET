@@ -33,7 +33,7 @@ printf "method\ttime\tmax_RAM\tmean_RAM\n" >> $stats_output_file
 
 
 start_resource_monitor () {
-  ram_output="/tmp/dream_dmi_benchmark_test/"
+  ram_output="/tmp/monet_benchmark_test/"
   rm -rf $ram_output && mkdir $ram_output
   # take initial timestamp
   begin=$(date +%s)
@@ -68,28 +68,28 @@ for dir in */; do
   chmod +x *.sh
 
   start_resource_monitor
-  ./run_dream_dmi_R1.sh
+  ./run_monet_R1.sh
   stop_resource_monitor "R1"
 
   service docker restart
   sleep 30
-  find  ~/.dream_dmi_tool -name "core.*" -delete # clean any core dumps
+  find  ~/.monet -name "core.*" -delete # clean any core dumps
 
   start_resource_monitor
-  ./run_dream_dmi_M1.sh
+  ./run_monet_M1.sh
   stop_resource_monitor "M1"
 
   service docker restart
   sleep 30
-  find  ~/.dream_dmi_tool -name "core.*" -delete 
+  find  ~/.monet -name "core.*" -delete 
 
   start_resource_monitor
-  ./run_dream_dmi_K1.sh
+  ./run_monet_K1.sh
   stop_resource_monitor "K1"
 
   service docker restart
   sleep 30
-  find  ~/.dream_dmi_tool -name "core.*" -delete 
+  find  ~/.monet -name "core.*" -delete 
 
   cd $base
   

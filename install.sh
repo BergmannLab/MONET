@@ -1,20 +1,20 @@
 #! /bin/bash -
 
 # Copyright 2018 Bergmann's Lab UNIL <mattia.tomasoni@unil.ch>
-# This file is part of DREAM DMI Tool.
+# This file is part of MONET.
 #
-#    DREAM DMI Tool is free software: you can redistribute it and/or modify
+#    MONET is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
-#    DREAM DMI Tool is distributed in the hope that it will be useful,
+#    MONET is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 #
 #    You should have received a copy of the GNU General Public License
-#    along with DREAM DMI Tool. If not, see <https://www.gnu.org/licenses/>.
+#    along with MONET. If not, see <https://www.gnu.org/licenses/>.
 #
 ###############################################################################
 # Mattia Tomasoni - UNIL, CBG
@@ -28,24 +28,24 @@ echo "Disease module identification algorithms"
 echo "top performers from the 2017 DREAM CHALLENGE"
 echo
 
-# ask for root password (needed to make dream_dmi command available from all
-# locations by adding link in /usr/local/bin/dream_dmi)
+# ask for root password (needed to make monet command available from all
+# locations by adding link in /usr/local/bin/monet)
 echo "Superuser rights are required."
 sudo ls > /dev/null
 echo
 
-# check whether dream_dmi is already installed
-if [ -f /usr/local/bin/dream_dmi ]; then
-  read -p "dream_dmi is already installed. Would you like to overwrite? [y|n] " -n 1 -r
+# check whether monet is already installed
+if [ -f /usr/local/bin/monet ]; then
+  read -p "monet is already installed. Would you like to overwrite? [y|n] " -n 1 -r
   echo ""
   if [[ $REPLY =~ ^[y]$ ]]; then
     ./uninstall.sh > /dev/null 2>&1
   elif [[ $REPLY =~ ^[n]$ ]]; then
-    echo "EXITING: dream_dmi WAS NOT RE-INSTALLED."
+    echo "EXITING: monet WAS NOT RE-INSTALLED."
     exit 0
   else
     echo "invalid option selected"
-    echo "EXITING: dream_dmi WAS NOT RE-INSTALLED."
+    echo "EXITING: monet WAS NOT RE-INSTALLED."
     exit 0
   fi  
 fi
@@ -59,24 +59,24 @@ if [ $? -eq "0" ]; then singularity_installed=true; else singularity_installed=f
 
 if ! $docker_installed && ! $singularity_installed; then
   echo "  ERROR: Neither docker nor singularity are installed."
-  echo "    Install either of the two to successfully run dream_dmi."
+  echo "    Install either of the two to successfully run monet."
   echo "    Please visit https://www.docker.com or http://singularity.lbl.gov"
-  echo "" && echo "ABORTING: dream_dmi WAS NOT INSTALLED."
+  echo "" && echo "ABORTING: monet WAS NOT INSTALLED."
   exit 1
 else
   echo "  ...OK"
 fi
 
-# store dream_dmi code in the home directory
+# store monet code in the home directory
 echo "- Copying files..."
-mkdir ~/.dream_dmi_tool
-cp -r ./* ~/.dream_dmi_tool
-chmod -R 750 ~/.dream_dmi_tool
+mkdir ~/.monet
+cp -r ./* ~/.monet
+chmod -R 750 ~/.monet
 echo "  ...OK"
 
-# make dream_dmi command available
+# make monet command available
 echo "- Updating operating system..."
-sudo ln -s ~/.dream_dmi_tool/dream_dmi /usr/local/bin/dream_dmi 
+sudo ln -s ~/.monet_tool/monet /usr/local/bin/monet 
 echo "  ...OK"
 
 # (optionally) test the installation
@@ -88,16 +88,16 @@ then
 echo "- Testing, thank you for waiting... "
   cd test/system_test && ./quick_test.sh > /dev/null 2>&1 && cd ..
   if [ $? -gt "0" ]; then
-    echo "  ERROR: see /tmp/dream_dmi_quick_test/console_output.txt"
-    echo "" && echo "ABORTING: dream_dmi WAS NOT INSTALLED."
+    echo "  ERROR: see /tmp/monet_quick_test/console_output.txt"
+    echo "" && echo "ABORTING: monet WAS NOT INSTALLED."
     exit 1
   else
     echo "  ...OK"
   fi  
 fi
 
-echo "" && echo "FINISHED: dream_dmi WAS INSTALLED SUCCESSFULLY."
-echo "Invoke dream_dmi in a bash shell from any location."
+echo "" && echo "FINISHED: monet WAS INSTALLED SUCCESSFULLY."
+echo "Invoke monet in a bash shell from any location."
 echo 
 
 # reload current shell so changes to ~/.bashrc will become available

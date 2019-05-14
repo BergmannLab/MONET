@@ -75,30 +75,30 @@ def run():
                         os.system(move_benchmark_network)
                         os.system(move_benchmark_solution)
                         os.system(move_benchmark_stats)
-                        # Generate dream_dmi run files ################################################################
+                        # Generate monet run files ################################################################
                         method = 'R1'
-                        run_dream_dmi_R1 = 'dream_dmi' + \
+                        run_monet_R1 = 'monet' + \
                         ' --input=./network.txt' + \
                         ' --output=../' + benchmark_output + \
                         ' --method=' + method + ' --container=docker --b=1.7 --c=400 --i=2 ' + \
                         ' --filter=quantile --threshold=1 --post=discard' + \
                         ' --smallest=' + str(minc) + ' --largest=' + str(maxc) + ' --b2=1.7 --c2=500 --i2=2'
-                        generate_R1_script =  benchmark_input + '/run_dream_dmi_R1.sh'
-                        os.system('echo ' + run_dream_dmi_R1 + '> ' + generate_R1_script)
+                        generate_R1_script =  benchmark_input + '/run_monet_R1.sh'
+                        os.system('echo ' + run_monet_R1 + '> ' + generate_R1_script)
                         method = 'M1'
-                        run_dream_dmi_M1 = 'dream_dmi' + \
+                        run_monet_M1 = 'monet' + \
                         ' --input=./network.txt' + \
                         ' --output=../' + benchmark_output + \
                         ' --method=' + method + ' --container=docker'
-                        generate_M1_script =  benchmark_input + '/run_dream_dmi_M1.sh'
-                        os.system('echo ' + run_dream_dmi_M1 + '> ' + generate_M1_script)
+                        generate_M1_script =  benchmark_input + '/run_monet_M1.sh'
+                        os.system('echo ' + run_monet_M1 + '> ' + generate_M1_script)
                         method = 'K1'
-                        run_dream_dmi_K1 = 'dream_dmi' + \
+                        run_monet_K1 = 'monet' + \
                         ' --input=./network.txt' + \
                         ' --output=../' + benchmark_output + \
                         ' --method=' + method + ' --container=docker'
-                        generate_K1_script =  benchmark_input + '/run_dream_dmi_K1.sh'
-                        os.system('echo ' + run_dream_dmi_K1 + '> ' + generate_K1_script)
+                        generate_K1_script =  benchmark_input + '/run_monet_K1.sh'
+                        os.system('echo ' + run_monet_K1 + '> ' + generate_K1_script)
     
 
 if __name__ == '__main__':

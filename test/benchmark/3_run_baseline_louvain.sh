@@ -31,7 +31,7 @@ stats_output="$PWD/output/__resource_usage/"
 stats_output_file="$stats_output"benchmark_resource_usage_baseline.tsv
 
 start_resource_monitor () {
-  ram_output="/tmp/dream_dmi_benchmark_test/"
+  ram_output="/tmp/monet_benchmark_test/"
   rm -rf $ram_output && mkdir $ram_output
   # take initial timestamp
   begin=$(date +%s)

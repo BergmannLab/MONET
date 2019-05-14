@@ -34,7 +34,7 @@ from generate_benchnmarks import Grid
 import os
     
 def score_benchmark(benchmark_network, benchmark_solution, numb_nodes):
-    def import_dream_dmi_output(file, numb_nodes):
+    def import_monet_output(file, numb_nodes):
         communities = [-1] * (numb_nodes + 1)
         with open(file, newline='') as f:    
             for community in list(csv.reader(f, delimiter='\t')):
@@ -52,7 +52,7 @@ def score_benchmark(benchmark_network, benchmark_solution, numb_nodes):
         solution = pd.read_csv(file, sep='\t', header=None)
         communities = solution.iloc[:,1].tolist()
         return communities
-    to_be_tested = import_dream_dmi_output(benchmark_network, numb_nodes)
+    to_be_tested = import_monet_output(benchmark_network, numb_nodes)
     solution = import_solution(benchmark_solution)
     return(sc.normalized_mutual_info_score(to_be_tested,solution))
 

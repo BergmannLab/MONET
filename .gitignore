@@ -2,6 +2,7 @@
 .swp
 .pydevproject
 .project
+.pyc
 test/system_test/input/1*.txt
 test/system_test/input/2*.txt
 test/system_test/input/4*.txt
