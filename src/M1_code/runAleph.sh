@@ -26,7 +26,7 @@ echo M1: Running Team Aleph\'s code from the 2017 DREAM challenge on disease mod
 
 # run method
 cd /M1_code/sub-challenge1
-python3.6 ./aleph_urv_method.py
+python3 ./aleph_urv_method.py
 
 # docker generates output files owned by root: make them read/writable
 chmod 777 -R /M1_code/sub-challenge1/*

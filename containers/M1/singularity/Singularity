@@ -25,7 +25,7 @@
 ###############################################################################
 
 Bootstrap: docker
-From: ubuntu:17.10
+From: python:3
 
 %labels
 AUTHOR Mattia Tomasoni <mattia.tomasoni@unil.ch>
@@ -38,8 +38,10 @@ AUTHOR Mattia Tomasoni <mattia.tomasoni@unil.ch>
 apt-get update && \
  apt-get -y install software-properties-common && \
  apt-get update && \
- apt-get -y install python3.6 && \
  apt-get -y install python3-networkx
+
+pip3 install numpy
+pip3 install networkx
 
 ###############################################################################
 # run method

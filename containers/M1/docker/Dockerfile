@@ -24,17 +24,19 @@
 # one of the top performing teams: Team Aleph
 ###############################################################################
 
-FROM ubuntu:17.10
+FROM python:3
 LABEL maintainer="Mattia Tomasoni <mattia.tomasoni@unil.ch>"
 
 ###############################################################################
-# install python 3.6 and required libraries
+# install required libraries
 
 RUN apt-get update && \
  apt-get -y install software-properties-common && \
  apt-get update && \
- apt-get -y install python3.6 && \
  apt-get -y install python3-networkx
+
+RUN pip3 install numpy
+RUN pip3 install networkx
 
 ###############################################################################
 # run method
