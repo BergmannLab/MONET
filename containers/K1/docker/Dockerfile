@@ -24,7 +24,7 @@
 # one of the top performing teams: Team Tusk
 ###############################################################################
 
-FROM ubuntu:17.10
+FROM ubuntu
 LABEL maintainer="Mattia Tomasoni <mattia.tomasoni@unil.ch>"
 
 ###############################################################################

@@ -25,7 +25,7 @@
 ###############################################################################
 
 Bootstrap: docker
-From: ubuntu:17.10
+From: ubuntu
 
 %labels
 AUTHOR Mattia Tomasoni <mattia.tomasoni@unil.ch>

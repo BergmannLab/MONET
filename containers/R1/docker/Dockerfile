@@ -24,15 +24,19 @@
 # one of the top performing teams: Team Causality
 ###############################################################################
 
-FROM ubuntu:17.10
+FROM ubuntu
 LABEL maintainer="Mattia Tomasoni <mattia.tomasoni@unil.ch>"
 
 ###############################################################################
-# install R and required libraries
+# set time zone (prevent interactive prompt which would break build)
+RUN apt-get update && \ 
+ export DEBIAN_FRONTEND=noninteractive && \
+ apt-get install -y tzdata && \
+ ln -fs /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime && \
+ dpkg-reconfigure --frontend noninteractive tzdata
 
-RUN apt-get update && \
- apt-get -y install software-properties-common && \
- apt-get update
+###############################################################################
+# install R and required libraries
 
 RUN apt-get -y install r-base
 
