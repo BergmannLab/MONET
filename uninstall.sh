@@ -27,12 +27,12 @@ echo "Uninstalling the DREAM_DMI TOOL"
 echo 
 
 # ask for root password (needed to remove /usr/local/bin/monet)
-echo "Superuser rights are required."
-sudo ls > /dev/null
-echo
+#echo "Superuser rights are required."
+#sudo ls > /dev/null
+#echo
 
 
-sudo rm -f /usr/local/bin/monet
+rm -f /usr/local/bin/monet
 rm -rf ~/.monet
 echo FINISHED: monet was UNINSTALLED SUCCESSFULLY.
 echo

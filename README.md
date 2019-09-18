@@ -19,9 +19,9 @@ The tool was tested on *Ubuntu Linux 18.04*, *CentOS Linux 7.5* and *macOS Sierr
 
 
 ## INSTALLATION
-To install: ```./install```
+To install: ```./install.sh```
 
-To uninstall: ```./uninstall```
+To uninstall: ```./uninstall.sh```
 
 ## RUNNING
 To run, invoke, from any location: ```monet --help```

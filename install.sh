@@ -29,9 +29,9 @@ echo
 
 # ask for root password (needed to make monet command available from all
 # locations by adding link in /usr/local/bin/monet)
-echo "Superuser rights are required."
-sudo ls > /dev/null
-echo
+#echo "Superuser rights are required."
+#sudo ls > /dev/null
+#echo
 
 # check whether monet is already installed
 if [ -f /usr/local/bin/monet ]; then
@@ -75,7 +75,7 @@ echo "  ...OK"
 
 # make monet command available
 echo "- Updating operating system..."
-sudo ln -s ~/.monet/monet /usr/local/bin/monet 
+ln -s ~/.monet/monet /usr/local/bin/monet 
 echo "  ...OK"
 
 # (optionally) test the installation
