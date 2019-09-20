@@ -23,34 +23,28 @@
 ###############################################################################
 
 echo 
-echo "Installing MONET"
-echo "MOdularising NEtwork Toolbox for mining of molecular and genetic networks"
+echo "MONET: MOdularising NEtwork Toolbox"
+echo "       for mining of molecular and genetic networks"
 echo
 
-# ask for root password (needed to make monet command available from all
-# locations by adding link in /usr/local/bin/monet)
-#echo "Superuser rights are required."
-#sudo ls > /dev/null
-#echo
-
 # check whether monet is already installed
-if [ -f /usr/local/bin/monet ]; then
-  read -p "monet is already installed. Would you like to overwrite? [y|n] " -n 1 -r
+if [ -d ~/.monet ]; then
+  read -p "MONET is already installed. Would you like to overwrite? [y|n] " -n 1 -r
   echo ""
   if [[ $REPLY =~ ^[y]$ ]]; then
     ./uninstall.sh > /dev/null 2>&1
   elif [[ $REPLY =~ ^[n]$ ]]; then
-    echo "EXITING: monet WAS NOT RE-INSTALLED."
+    echo "EXITING: MONET WAS NOT RE-INSTALLED."
     exit 0
   else
     echo "invalid option selected"
-    echo "EXITING: monet WAS NOT RE-INSTALLED."
+    echo "EXITING: MONET WAS NOT RE-INSTALLED."
     exit 0
   fi  
 fi
 
 # check that either docker or singularity are installed
-echo "- Checking that docker and/or singularity are installed..."
+echo "- Are docker or singularity installed?..."
 docker --help > /tmp/docker_test 2>&1
 if [ $? -eq "0" ]; then docker_installed=true; else docker_installed=false; fi
 singularity --help > /tmp/singularity_test 2>&1
@@ -63,7 +57,7 @@ if ! $docker_installed && ! $singularity_installed; then
   echo "" && echo "ABORTING: monet WAS NOT INSTALLED."
   exit 1
 else
-  echo "  ...OK"
+  echo "  ...YES"
 fi
 
 # store monet code in the home directory
@@ -71,12 +65,7 @@ echo "- Copying files..."
 mkdir ~/.monet
 cp -r ./* ~/.monet
 chmod -R 750 ~/.monet
-echo "  ...OK"
-
-# make monet command available
-echo "- Updating operating system..."
-ln -s ~/.monet/monet /usr/local/bin/monet 
-echo "  ...OK"
+echo "  ...DONE"
 
 # (optionally) test the installation
 echo ""
@@ -95,9 +84,19 @@ echo "- Testing, thank you for waiting... "
   fi  
 fi
 
-echo "" && echo "FINISHED: monet WAS INSTALLED SUCCESSFULLY."
-echo "Invoke monet in a bash shell from any location."
-echo 
-
-# reload current shell so changes to ~/.bashrc will become available
-exec bash
+# make monet command available: add location where monet will be installed to $PATH
+case ":$PATH:" in
+  *"monet"*)
+    # already in path due to previous installation, nothing to do
+    echo "" && echo "SUCCESS: installation completed."
+    ;;
+  *)
+    echo ""; echo export PATH=\"'$PATH':$HOME/.monet\" >>  ~/.bash_profile
+    echo ""
+    echo "SUCCESS: please provide your password to finalize the installation."
+    echo "You are being REDIRECTED TO YOUR HOME DIRECTORY"
+    echo "INVOKE monet FROM ANY LOCATION"
+    username=$(whoami)
+    su - $username #re-login and execute the profile script to make monet command available
+    ;;
+esac

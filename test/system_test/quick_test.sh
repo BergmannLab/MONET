@@ -47,7 +47,7 @@ checkOutput() {
 singularity --help > /tmp/singularity_test 2>&1
 if [ $? -eq "0" ]; then
   echo testing with singularity
-  monet --input=./input/3_signal_anonym_directed_v3.txt --output=$output --method=R1 --container=singularity \
+  $HOME/.monet/monet --input=./input/3_signal_anonym_directed_v3.txt --output=$output --method=R1 --container=singularity \
     --b=1.7 --c=400 --i=2 --filter=quantile --threshold=1 --post=discard --smallest=3 --largest=100 --b2=1.7 --c2=500 --i2=2 \
     > $output/console_output.txt 2>&1
   checkOutput
@@ -57,7 +57,7 @@ fi
 docker --help > /tmp/docker_test 2>&1
 if [ $? -eq "0" ]; then
   echo testing with docker
-  monet --input=./input/3_signal_anonym_directed_v3.txt --output=$output --method=R1 --container=docker \
+  $HOME/.monet/monet --input=./input/3_signal_anonym_directed_v3.txt --output=$output --method=R1 --container=docker \
     --b=1.7 --c=400 --i=2 --filter=quantile --threshold=1 --post=discard --smallest=3 --largest=100 --b2=1.7 --c2=500 --i2=2 \
     > $output/console_output.txt 2>&1
   checkOutput
