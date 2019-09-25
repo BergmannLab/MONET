@@ -50,4 +50,4 @@ apt-get -y install r-cran-igraph
 
 %runscript
  
-exec /bin/sh "/R1_code/runCausality.sh"
+exec /bin/bash "/R1_code/runCausality.sh"
