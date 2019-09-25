@@ -212,7 +212,7 @@ if [ "$container" = "docker" ]; then
 fi
 if [ "$container" = "singularity" ]; then
   singularity --help > /tmp/singularity_test
-  if ! grep -q "Usage:" /tmp/singularity_test; then
+  if [ ! grep -q "Usage:" /tmp/singularity_test] && [ ! grep -q "USAGE:" /tmp/singularity_test]; then
     echo "ERROR: you specified --container=singularity, but singularity is not installed"
     echo "Please visit http://singularity.lbl.gov\n"
     exit 1
