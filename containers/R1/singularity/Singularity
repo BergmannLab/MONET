@@ -35,7 +35,7 @@ AUTHOR Mattia Tomasoni <mattia.tomasoni@unil.ch>
 
 %post
 
-apt-get update && \ 
+apt-get update && \
  export DEBIAN_FRONTEND=noninteractive && \
  apt-get install -y tzdata && \
  ln -fs /usr/share/zoneinfo/Europe/Amsterdam /etc/localtime && \
