@@ -307,7 +307,7 @@ then
     cd "$install_dir"/containers/"$method"/singularity/
     singularity image.create --size 1500 ./$method-image.img > \
      /tmp/singularity_create_output 2>&1
-    singularity build ./$method-image.img Singularity > \
+    singularity build --fakeroot ./$method-image.img Singularity > \
      /tmp/singularity_build_output 2>&1
     cd ../../..
     checkSingularityBuildSuccess
