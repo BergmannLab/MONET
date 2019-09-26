@@ -67,6 +67,7 @@ cp -r ./* ~/.monet
 chmod -R 750 ~/.monet
 echo "  ...DONE"
 
+
 # (optionally) test the installation
 echo ""
 read -p "Would you like to test the installation? (take a few mins) [y|n] " -n 1 -r
@@ -91,7 +92,7 @@ case ":$PATH:" in
     echo "" && echo "SUCCESS: installation completed."
     ;;
   *)
-    echo ""; echo export PATH=\"'$PATH':$HOME/.monet\" >>  ~/.bash_profile
+    echo ""; echo export PATH=\"'$PATH':$HOME/.monet\" >>  ~/.bashrc
     echo ""
     echo "SUCCESS: please provide your password to finalize the installation."
     echo "You are being REDIRECTED TO YOUR HOME DIRECTORY"
