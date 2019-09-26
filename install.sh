@@ -27,8 +27,11 @@ echo "MONET: MOdularising NEtwork Toolbox"
 echo "       for mining of molecular and genetic networks"
 echo
 
+user_home=$HOME
+username=$(whoami)
+
 # check whether monet is already installed
-if [ -d ~/.monet ]; then
+if [ -d $user_home/.monet ]; then
   read -p "MONET is already installed. Would you like to overwrite? [y|n] " -n 1 -r
   echo ""
   if [[ $REPLY =~ ^[y]$ ]]; then
@@ -62,20 +65,59 @@ fi
 
 # store monet code in the home directory
 echo "- Copying files..."
-mkdir ~/.monet
-cp -r ./* ~/.monet
-chmod -R 750 ~/.monet
+mkdir $user_home/.monet
+cp -r ./* $user_home/.monet
+chmod -R 750 $user_home/.monet
 echo "  ...DONE"
 
+function add_to_bashrc {
+# make monet command available: add location where monet will be installed to $PATH
+case ":$PATH:" in
+  *"monet"*)
+    # already in path due to previous installation, nothing to do
+    echo "" && echo "SUCCESS: installation completed."
+    ;;
+  *)
+    echo ""; echo export PATH=\"'$PATH':$HOME/.monet\" >>  $user_home/.bashrc
+    ;;
+esac
+}
+
+# in the case of Singularity users, the images need to be built by root
+if ! $docker_installed && $singularity_installed; then
+  echo ""
+  echo "It appears only Singularity is intalled on this system."
+  echo "To complete the installation, you need SUPERUSER rights and INTERNET access."
+  read -p "Do you want to proceeed? [y|n] " -n 1 -r
+  echo " " && echo "Please wait while the Singularity containers are being built"
+  echo "(this takes a few minutes)" 
+  if [[ $REPLY =~ ^[y]$ ]]
+    then
+      # I could alternatively su root, but this does not work on Debian
+      cd $user_home/.monet/containers/K1/singularity
+      sudo singularity build ./K1-image.img Singularity
+      cd $user_home/.monet/containers/M1/singularity
+      sudo singularity build ./M1-image.img Singularity
+      cd $user_home/.monet/containers/R1/singularity
+      sudo singularity build ./R1-image.img Singularity
+      chmod -R 750 $user_home/.monet
+    else
+      echo " "
+      echo "The installation will need to be completed, manually, at a later stage."
+      echo "Please contact mattia.tomasoni@unil.ch and ask for support."  
+      add_to_bashrc
+      exit 0
+  fi
+fi
 
 # (optionally) test the installation
 echo ""
-read -p "Would you like to test the installation? (take a few mins) [y|n] " -n 1 -r
+read -p "Would you like to test the installation? (takes a few mins) [y|n] " -n 1 -r
 echo ""
 if [[ $REPLY =~ ^[y]$ ]]
 then
 echo "- Testing, thank you for waiting... "
-  cd test/system_test && ./quick_test.sh > /dev/null 2>&1 && cd ..
+  cd $user_home/.monet/test/system_test && ./quick_test.sh > /dev/null 2>&1 && cd ..
   if [ $? -gt "0" ]; then
     echo "  ERROR: see /tmp/monet_quick_test/console_output.txt"
     echo "" && echo "ABORTING: monet WAS NOT INSTALLED."
@@ -85,19 +127,12 @@ echo "- Testing, thank you for waiting... "
   fi  
 fi
 
-# make monet command available: add location where monet will be installed to $PATH
-case ":$PATH:" in
-  *"monet"*)
-    # already in path due to previous installation, nothing to do
-    echo "" && echo "SUCCESS: installation completed."
-    ;;
-  *)
-    echo ""; echo export PATH=\"'$PATH':$HOME/.monet\" >>  ~/.bashrc
-    echo ""
-    echo "SUCCESS: please provide your password to finalize the installation."
-    echo "You are being REDIRECTED TO YOUR HOME DIRECTORY"
-    echo "INVOKE monet FROM ANY LOCATION"
-    username=$(whoami)
-    su - $username #re-login and execute the profile script to make monet command available
-    ;;
-esac
+add_to_bashrc
+
+echo ""
+echo "SUCCESS: please provide your password to finalize the installation."
+echo "You are being REDIRECTED TO YOUR HOME DIRECTORY"
+echo "INVOKE monet FROM ANY LOCATION"
+su - $username #re-login and execute the profile script to make monet command available
+
+
