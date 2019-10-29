@@ -27,14 +27,34 @@ To uninstall: ```./uninstall.sh```
 To run, invoke, from any location: ```monet --help```
 
 ## INPUT
-The format for the input network is the following: a tab-separated file containing one line for each edge. If an edge is connecting two nodes, nodeA and nodeB, with weight weight_AB, the file will contain the entry:
+The format for the input network is the following: a tab-separated file containing one line for each edge. If an edge is connecting two nodes, node_A and node_B, with weight weight_AB, the file will contain the entry (node_A and node_B are of type *integer*, weight_AB is of type *float*):
 
-```[nodeA]	[nodeB]	[weight_AB]```
+```[node_A] [node_B] [weight_AB]```
 
-nodeA and nodeB are of type *integer*, weight_AB is of type *float*.
+For example, an input network with five nodes:
+
+```
+01	02	0.1
+03	04	0.5
+03	05	0.3
+```
+
+For more examples, see the contents of test/system_test/input/.
 
 
-For an example, see the contents of test/system_test/input/.
+## OUTPUT
+The output is a tab-separated file contain one module for each line, formatted as follows (module_A is of type *integer*, list_nodes is a tab-separated list of *integer*):
+
+```[module_A] 1.0 [list_nodes]```
+
+For example, an output containing three communities (the first composed of three genes, the rest composed of one):
+
+```
+1	1.0	01	03	05
+2	1.0	04
+3	1.0	02
+```
+
 
 ## BENCHMARKING
 see test/benchmarking
