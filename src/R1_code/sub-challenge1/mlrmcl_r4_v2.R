@@ -1,44 +1,43 @@
-# Copyright 2018 Bergmann's Lab UNIL <mattia.tomasoni@unil.ch>
-#
-# This file is part of DREAM DMI Tool.
-#
-#    DREAM DMI Tool is free software: you can redistribute it and/or modify
-#    it under the terms of the GNU General Public License as published by
-#    the Free Software Foundation, either version 3 of the License, or
-#    (at your option) any later version.
-#
-#    DREAM DMI Tool is distributed in the hope that it will be useful,
-#    but WITHOUT ANY WARRANTY; without even the implied warranty of
-#    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-#    GNU General Public License for more details.
-#
-#    You should have received a copy of the GNU General Public License
-#    along with DREAM DMI Tool. If not, see <https://www.gnu.org/licenses/>.
-#
-###############################################################################
-# Mattia Tomasoni - UNIL, CBG
-# 2017 DREAM challenge on Disease Module Identification
-# https://www.synapse.org/modulechallenge
-###############################################################################
-
 rescale<-function(x,graph,maximum,minimum){
   numV<-vcount(graph)
   return((numV-1)/(maximum-minimum)*(x-maximum)+numV)
 }
 main <- function(file,b=2,c=5000,i=2,filter,threshold=2,inteWeight="yes",weighted=T,dir,post,smallest,largest,b2,c2,i2){
   input<-read.table(file,sep='\t')
+  isString = FALSE
+  if (is.integer(input$V1) & is.integer(input$V2) ){
+    #add 1 to node number since DREAM dataset starts at 0.
+    input[,1:2] <- input[,1:2]+1
+  }
+  else{
+    # for using string as gene name, we transfom the strings to integer and map back at the end.
+    isString = TRUE
+    dict=unique(c(as.character(input$V1), as.character(input$V2)))
+    input$V1 = as.numeric(factor(input$V1,levels = dict))
+    input$V2 = as.numeric(factor(input$V2, levels = dict))
+  }
+  
   graph<-preProcessing(input,filter,threshold,integerWeight=inteWeight)
   generateFile(graph,weighted)
   system(paste("./mlrmcl -b ",b," -c ",c," -i ",i," -o output.txt test.txt",sep=""))
   output<-postProcessing(post,smallest,largest,graph,b2,c2,i2)
+  if(isString == TRUE){
+    # translate integer back to strings using 
+    # add 1 since postProcessing is not changed, still for DREAM data with 0 as gene id. 
+    for (i in 1:length(output)){
+      temp = output[[i]] + 1
+      for (j in 1:length(temp)){
+        temp[j] = dict[as.numeric(temp[j])]
+      }
+      output[[i]] <- temp
+    }
+  }
   writeFile(output,file,dir)
   return(output)
   file.remove("output.txt")
   file.remove("test.txt")
 }
 preProcessing <- function(input,method=c("quantile","pageRank","double"),i,integerWeight = c("yes","no","1")){
-  #add 1 to node number
-  input[,1:2] <- input[,1:2]+1
   if (method=="quantile"){
     filter<-input[,3] >= quantile(input[,3])[i]
 #     # filter<-input[,3] >= 0.25
@@ -186,15 +185,6 @@ writeFile <- function(output,file,dir){
     write(temp,file=fn, ncolumns = length(output[[i]])+2, append=T, sep="\t")
   }
 }
-# index=which(pageRank>quantile(pageRank)[4])
-# index_1=which(input[,1] %in% index)
-# cut=input[index_1,]
-# index_2=which(cut[,2] %in% index)
-# cut=cut[index_2,]
-# graph <- make_graph(c(t(cut[,1:2])),directed=FALSE)
-# graph<-graph.data.frame(input[,1:2],directed = F) # this creation is not correct, some weird problems
-
-
 
 
 
