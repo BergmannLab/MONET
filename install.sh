@@ -70,7 +70,7 @@ cp -r ./* $user_home/.monet
 chmod -R 750 $user_home/.monet
 echo "  ...DONE"
 
-function add_to_bashrc {
+function add_to_path {
 # make monet command available: add location where monet will be installed to $PATH
 case ":$PATH:" in
   *"monet"*)
@@ -78,7 +78,10 @@ case ":$PATH:" in
     echo "" && echo "SUCCESS: installation completed."
     ;;
   *)
+    # add to bashrc
     echo ""; echo export PATH=\"'$PATH':$HOME/.monet\" >>  $user_home/.bashrc
+    # add to bash_profile (this is necessary on macOS)
+    echo ""; echo export PATH=\"'$PATH':$HOME/.monet\" >>  $user_home/.bash_profile
     ;;
 esac
 }
@@ -105,7 +108,7 @@ if ! $docker_installed && $singularity_installed; then
       echo " "
       echo "The installation will need to be completed, manually, at a later stage."
       echo "Please contact mattia.tomasoni@unil.ch and ask for support."  
-      add_to_bashrc
+      add_to_path
       exit 0
   fi
 fi
@@ -127,7 +130,7 @@ echo "- Testing, thank you for waiting... "
   fi  
 fi
 
-add_to_bashrc
+add_to_path
 
 echo ""
 echo "SUCCESS: please provide your password to finalize the installation."
