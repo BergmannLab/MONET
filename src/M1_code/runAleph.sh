@@ -24,9 +24,12 @@
 
 echo M1: Running Team Aleph\'s code from the 2017 DREAM challenge on disease module identification
 
+# load parameters from file
+. /M1_code/runAleph_parameters.txt
+
 # run method
 cd /M1_code/sub-challenge1
-python3 ./aleph_urv_method.py
+python3 ./aleph_urv_method.py  "$linksdir"  "$avgk"  "$smallest"  "$largest"
 
 # docker generates output files owned by root: make them read/writable
 chmod 777 -R /M1_code/sub-challenge1/*

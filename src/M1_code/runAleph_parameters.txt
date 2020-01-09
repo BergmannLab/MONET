@@ -1,0 +1,4 @@
+linksdir=undirected
+avgk=25.0
+smallest=3
+largest=100

@@ -47,6 +47,15 @@ usage() {
   echo "  OPTIONAL:"
   echo "  --output=        directory in which to output results"
   echo ""
+  echo "  options for method M1"
+  echo "  (general)"
+  echo "  --linksdir=     directionality of links: [undirected|directed]"
+  echo "  (preprocessing-specific)"
+  echo "  --avgk=         desired average degree (numeric value)"
+  echo "  (challenge-specific)"
+  echo "  --smallest=     min cluster size (numeric value)"
+  echo "  --largest=      max cluster size (numeric value)"
+  echo ""
   echo "  options for method R1"
   echo "  (general)"
   echo "  --b=            balance parameter (numeric value)"
@@ -54,11 +63,11 @@ usage() {
   echo "  --i=            inflation parameter (numeric value)"
   echo "  (preprocessing-specific)"
   echo "  --filter=       preprocessing strategy: [double|pageRank|quantile]"
-  echo "  --throshold=    quantile threshold for preprocessing (numeric value)"
+  echo "  --threshold=    quantile threshold for preprocessing (numeric value)"
   echo "  (challenge-specific)"
   echo "  --post=         postprocessing strategy: [recluster|discard]"
   echo "  --smallest=     min cluster size (numeric value)"
-  echo "  --largest=      bmax cluster size (numeric value)"
+  echo "  --largest=      max cluster size (numeric value)"
   echo "  --b2=           recluster parameter (numeric value)"
   echo "  --c2=           recluster parameter (numeric value)"
   echo "  --i2=           recluster parameter (numeric value)"
@@ -76,6 +85,8 @@ input="not_set"
 output="not_set"
 method="not_set"
 container="not_set"
+linksdir=undirected
+avgk=25.0
 b=2
 c=800
 i=2
@@ -97,7 +108,7 @@ while [ "$1" != "" ]; do
   VALUE=`echo $1 | awk -F= '{print $2}'`
   case $PARAM in
     -h | --help)
-      usage 
+      usage
       exit
       ;;
     --input)
@@ -111,6 +122,12 @@ while [ "$1" != "" ]; do
       ;;
     --container)
       container=$VALUE
+      ;;
+    --linksdir)
+      linksdir=$VALUE
+      ;;
+    --avgk)
+      avgk=$VALUE
       ;;
     --b)
       b=$VALUE
@@ -191,7 +208,7 @@ if [ "$output" != "not_set" ]; then
   if [[ $output == */ ]]; then
     #output=${output::-1}
     output=${output::${#output}-1}
-    
+
   fi
 else
   output=$working_dir
@@ -220,6 +237,19 @@ if [ "$container" = "singularity" ]; then
 fi
 
 # WRITE PARAMETERS TO FILE ########################################################################
+if [ "$method" = "M1" ]
+then
+  addToParametersFile() {
+    echo "$1"="$2" >> "$install_dir/src/M1_code/runAleph_parameters.txt"
+  }
+  rm -f "$install_dir/src/M1_code/runAleph_parameters.txt"
+  touch "$install_dir/src/M1_code/runAleph_parameters.txt"
+  addToParametersFile linksdir "$linksdir"
+  addToParametersFile avgk "$avgk"
+  addToParametersFile smallest "$smallest"
+  addToParametersFile largest "$largest"
+fi
+
 if [ "$method" = "R1" ]
 then
   addToParametersFile() {
@@ -233,7 +263,7 @@ then
   addToParametersFile i "$i"
   addToParametersFile filter "$filter"
   addToParametersFile threshold "$threshold"
-  addToParametersFile interWeight "$interWeight" 
+  addToParametersFile interWeight "$interWeight"
   addToParametersFile weighted "$weighted"
   addToParametersFile dir "$dir"
   addToParametersFile post "$post"
@@ -354,7 +384,7 @@ if [ "$method" = "K1" ]; then
   else
     mv "$install_dir"/src/K1_code/data/final_clusters/clusters.txt $output_file
     echo "DONE: output can be found in $output"
-  fi  
+  fi
 fi
 if [ "$method" = "M1" ]; then
   rm "$install_dir"/src/M1_code/sub-challenge1/input.txt
