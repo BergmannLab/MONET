@@ -58,6 +58,7 @@ fn_id = 0
 #  Packages
 #=======================================
 
+import sys
 import re
 import os
 import os.path
@@ -871,15 +872,15 @@ def find_resolution(g, names, ids, fn_net, is_dir, num_nodes, min_comm_size, max
     resolution = resolution_bisection(g, names, ids, lt_left, gt_right, res_min, res_max, fn_net, is_dir, num_nodes, strengths, min_comm_size, max_comm_size, debug)
 
   elif num_nodes > 5 * max_comm_size:
-    # find a resolution such that max_comm_size / 2 < max_size < 2 * max_comm_size
+    # find a resolution such that max_comm_size / 3 < max_size < 2 * max_comm_size
     lt_left  = lambda pinfo: pinfo['max_size'] > 2 * max_comm_size
-    gt_right = lambda pinfo: pinfo['max_size'] < max_comm_size / 2
+    gt_right = lambda pinfo: pinfo['max_size'] < max_comm_size / 3
     resolution = resolution_bisection(g, names, ids, lt_left, gt_right, res_min, res_max, fn_net, is_dir, num_nodes, strengths, min_comm_size, max_comm_size, debug)
 
   elif num_nodes > max_comm_size:
-    # find a resolution such that max_comm_size / 3 <= max_size <= max_comm_size
+    # find a resolution such that max_comm_size / 4 <= max_size <= max_comm_size
     lt_left  = lambda pinfo: pinfo['max_size'] > max_comm_size
-    gt_right = lambda pinfo: pinfo['max_size'] < max_comm_size / 3
+    gt_right = lambda pinfo: pinfo['max_size'] < max_comm_size / 4
     resolution = resolution_bisection(g, names, ids, lt_left, gt_right, res_min, res_max, fn_net, is_dir, num_nodes, strengths, min_comm_size, max_comm_size, debug)
 
   return resolution
@@ -1063,10 +1064,45 @@ def check_partition(fn_net, partition):
 
 
 #=======================================
+#  prepare command line arguments
+#=======================================
+def prepare_sys_argv(sys_argv):
+
+  is_undir = True
+  linksdir = sys_argv[1].lower()
+  if linksdir not in ["undirected", "directed"]:
+    print("Warning: '" + linksdir + "' is unknown value of 'linksdir' parameter, must be [undirected | directed]")
+    print("         Choosing the default value: 'undirected'")
+  if linksdir == "directed":
+    is_undir = False
+
+  des_avg_deg = desired_average_degree
+  avgk = float(sys_argv[2])
+  if avgk > 0.0:
+    des_avg_deg = avgk
+
+  min_comm_size = min_community_size
+  smallest = int(sys_argv[3])
+  if smallest > 0:
+    min_comm_size = smallest
+
+  max_comm_size = max_community_size
+  largest = int(sys_argv[4])
+  if largest >= min_comm_size:
+    max_comm_size = largest
+
+  return {'is_undir'      : is_undir,
+          'des_avg_deg'   : des_avg_deg,
+          'min_comm_size' : min_comm_size,
+          'max_comm_size' : max_comm_size}
+
+
+#=======================================
 #  Find communities
 #=======================================
 def find_communities(fn_data, fn_out, is_undir, des_avg_deg=desired_average_degree, des_avg_deg_tol=desired_average_degree_tolerance, min_comm_size=min_community_size, max_comm_size=max_community_size, debug=debug_default):
 
+  params = locals()
   t_ini = dt.datetime.now()
 
   print("------")
@@ -1076,6 +1112,10 @@ def find_communities(fn_data, fn_out, is_undir, des_avg_deg=desired_average_degr
 
   print("Community detection")
   print(fn_data + " -> " + fn_out)
+
+  print("  Parameters")
+  for k, v in params.items():
+    print("    " + k + " : " + str(v))
 
   fn_net = "urv-" + fn_data.replace(".txt", ".net")
   remove_all_intermediate_files(fn_net)
@@ -1113,4 +1153,6 @@ def find_communities(fn_data, fn_out, is_undir, des_avg_deg=desired_average_degr
 #find_communities("5_cancer_anonym_v2.txt"         , "5_cancer_anonym_v2-comms.txt"         , is_undir=True , debug=False)
 #find_communities("6_homology_anonym_v2.txt"       , "6_homology_anonym_v2-comms.txt"       , is_undir=True , debug=False)
 
-find_communities("input.txt", "output.txt", is_undir=True, debug=True)
+cmd_args = prepare_sys_argv(sys.argv)
+
+find_communities("input.txt", "output.txt", debug=True, **cmd_args)
