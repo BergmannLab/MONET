@@ -40,7 +40,8 @@ if [ -d $user_home/.monet ]; then
     echo "EXITING: MONET WAS NOT RE-INSTALLED."
     exit 0
   else
-    echo "invalid option selected"
+    echo ""
+    echo "ERROR: invalid option selected."
     echo "EXITING: MONET WAS NOT RE-INSTALLED."
     exit 0
   fi  
