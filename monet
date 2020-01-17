@@ -31,12 +31,13 @@ working_dir=$PWD
 install_dir="$HOME/.monet"
 
 ###################################################################################################
-# HELP USAGE MESSAGE
+# HELP MESSAGE
 ###################################################################################################
 
 usage() {
-  echo "USAGE: monet --input=[...] --method=[...] --container=[...] [OPTIONS]"
-
+  echo "USAGE 1: monet --input=[...] --method=[...] --container=[...] [OPTIONS]"
+  echo "USAGE 2: monet --kill"
+  echo ""
   echo "Run DREAM challenge Disease Module Identification methods"
   echo ""
   echo "  MANDATORY:"
@@ -48,32 +49,78 @@ usage() {
   echo "  --output=        directory in which to output results"
   echo ""
   echo "  options for method M1"
-  echo "  (general)"
-  echo "  --linksdir=     directionality of links: [undirected|directed]"
-  echo "  (preprocessing-specific)"
-  echo "  --avgk=         desired average degree (numeric value)"
-  echo "  (challenge-specific)"
-  echo "  --smallest=     min cluster size (numeric value)"
-  echo "  --largest=      max cluster size (numeric value)"
+  echo "    (general)"
+  echo "    --linksdir=     directionality of links: [undirected|directed]"
+  echo "    (preprocessing-specific)"
+  echo "    --avgk=         desired average degree (numeric value)"
+  echo "    (challenge-specific)"
+  echo "    --smallest=     min cluster size (numeric value)"
+  echo "    --largest=      max cluster size (numeric value)"
   echo ""
   echo "  options for method R1"
-  echo "  (general)"
-  echo "  --b=            balance parameter (numeric value)"
-  echo "  --c=            size of coarsened graph (numeric value)"
-  echo "  --i=            inflation parameter (numeric value)"
-  echo "  (preprocessing-specific)"
-  echo "  --filter=       preprocessing strategy: [double|pageRank|quantile]"
-  echo "  --threshold=    quantile threshold for preprocessing (numeric value)"
-  echo "  (challenge-specific)"
-  echo "  --post=         postprocessing strategy: [recluster|discard]"
-  echo "  --smallest=     min cluster size (numeric value)"
-  echo "  --largest=      max cluster size (numeric value)"
-  echo "  --b2=           recluster parameter (numeric value)"
-  echo "  --c2=           recluster parameter (numeric value)"
-  echo "  --i2=           recluster parameter (numeric value)"
+  echo "    (general)"
+  echo "    --b=            balance parameter (numeric value)"
+  echo "    --c=            size of coarsened graph (numeric value)"
+  echo "    --i=            inflation parameter (numeric value)"
+  echo "    (preprocessing-specific)"
+  echo "    --filter=       preprocessing strategy: [double|pageRank|quantile]"
+  echo "    --threshold=    quantile threshold for preprocessing (numeric value)"
+  echo "    (challenge-specific)"
+  echo "    --post=         postprocessing strategy: [recluster|discard]"
+  echo "    --smallest=     min cluster size (numeric value)"
+  echo "    --largest=      max cluster size (numeric value)"
+  echo "    --b2=           recluster parameter (numeric value)"
+  echo "    --c2=           recluster parameter (numeric value)"
+  echo "    --i2=           recluster parameter (numeric value)"
   echo ""
-  echo "EXAMPLE:"
-  echo "monet --input=/tmp/input.txt --method=K1 --container=docker"
+  echo "EXAMPLE 1: run K1 method using docker virtualization"
+  echo "$ monet --input=/tmp/input.txt --method=K1 --container=docker"
+  echo ""
+  echo "EXAMPLE 2: gracefully kill any MONET instance currently running on the system"
+  echo "$ monet --kill"
+}
+
+###################################################################################################
+# HANDLE KILL OPTION: 
+###################################################################################################
+
+stop_docker_containers(){
+  kill_output=$1
+  docker --help > /tmp/docker_test 2>&1 # is docker installed?
+  if [ $? -eq "0" ]; then docker_installed=true; else docker_installed=false; fi
+  if $docker_installed; then
+    echo "Stopping any MONET docker containers" >> $kill_output
+    echo "NOTE: Error from Daemon expected for methods not currently running)"  >> $kill_output
+    echo "" >> $kill_output
+    sudo docker stop K1-container >> $kill_output 2>&1
+    sudo docker stop M1-container >> $kill_output 2>&1
+    sudo docker stop R1-container >> $kill_output 2>&1
+  fi
+}
+
+stop_singularity_containers(){
+  kill_output=$1
+  singularity --help > /tmp/singularity_test 2>&1 # is singularity installed?
+  if [ $? -eq "0" ]; then singularity_installed=true; else singularity_installed=false; fi
+  if $singularity_installed; then
+    echo "Stopping any MONET singularity containers" >> $kill_output
+    echo "" >> $kill_output
+    # TODO waiting for help https://stackoverflow.com/questions/59791791/stopping-a-singularity-container
+  fi
+}
+
+# gracefully kill any MONET instance currently running on the system
+kill_MONET() {
+  kill_output=/tmp/MONET_kill_output
+  rm -f $kill_output
+  stop_docker_containers $kill_output
+  echo "" >> $kill_output
+  #stop_singularity_containers $kill_output
+  echo All MONET activity on this system was gracefully interrupted.
+  echo See $kill_output for details.
+  echo ""
+  echo Any ongoing MONET runs will have stopped with an ERROR.
+  echo ""
 }
 
 ###################################################################################################
@@ -109,6 +156,10 @@ while [ "$1" != "" ]; do
   case $PARAM in
     -h | --help)
       usage
+      exit
+      ;;
+    --kill)
+      kill_MONET
       exit
       ;;
     --input)
@@ -329,6 +380,9 @@ network_name=$(basename $input)
 echo "Input: $network_name"
 echo "Container: $container"
 
+console_output_file="$output"/"$timestamp"__"$method"__console-output__"$network_name"
+
+# RUN SINGULARITY
 if [ "$container" = "singularity" ]
 then
   # build the singularity image (if image already exists, skip this step)
@@ -348,8 +402,10 @@ then
   singularity run \
    -B "$install_dir"/src/"$method"_code:/"$method"_code/ \
    "$install_dir"/containers/"$method"/singularity/"$method"-image.img > \
-   "$output"/"$timestamp"__"$method"__console-output__"$network_name" 2>&1
+   $console_output_file 2>&1
 fi
+
+# RUN DOCKER
 if [ "$container" = "docker" ]
 then
   # build the docker image (if image already exists, this command does nothing)
@@ -364,7 +420,7 @@ then
   echo "Running container, please wait..."
   sudo docker run --name "$method"-container \
    -v "$install_dir"/src/"$method"_code:/"$method"_code/ "$docker_reference" > \
-   "$output"/"$timestamp"__"$method"__console-output__"$network_name" 2>&1
+   $console_output_file 2>&1
 fi
 
 ulimit -s $default_ulimit
@@ -380,7 +436,7 @@ if [ "$method" = "K1" ]; then
   rm -f "$install_dir"/src/K1_code/data/DSD/* # remove temporary files
   rm "$install_dir"/src/K1_code/data/input_network.txt;
   if [ ! -f "$install_dir"/src/K1_code/data/final_clusters/clusters.txt ]; then
-    echo ERROR: see "$output"/"$timestamp"__"$method"__console-output__"$network_name"
+    echo "ERROR: see $console_output_file"
   else
     mv "$install_dir"/src/K1_code/data/final_clusters/clusters.txt $output_file
     echo "DONE: output can be found in $output"
@@ -389,7 +445,7 @@ fi
 if [ "$method" = "M1" ]; then
   rm "$install_dir"/src/M1_code/sub-challenge1/input.txt
   if [ ! -f "$install_dir"/src/M1_code/sub-challenge1/output.txt ]; then
-    echo ERROR: see "$output"/"$timestamp"__"$method"__console-output__"$network_name"
+    echo "ERROR: see $console_output_file"
   else
     mv "$install_dir"/src/M1_code/sub-challenge1/output.txt $output_file
     echo "DONE: output can be found in $output"
@@ -398,10 +454,9 @@ fi
 if [ "$method" = "R1" ]; then
   rm "$install_dir"/src/R1_code/sub-challenge1/input.txt
   if [ ! -f "$install_dir"/src/R1_code/sub-challenge1/result/input.txt ]; then
-    echo ERROR: see "$output"/"$timestamp"__"$method"__console-output__"$network_name"
+    echo "ERROR: see $console_output_file"
   else
     mv "$install_dir"/src/R1_code/sub-challenge1/result/input.txt $output_file
     echo "DONE: output can be found in $output"
   fi
 fi
-
