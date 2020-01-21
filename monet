@@ -91,7 +91,7 @@ stop_docker_containers(){
   if [ $? -eq "0" ]; then docker_installed=true; else docker_installed=false; fi
   if $docker_installed; then
     echo "Stopping any MONET docker containers" >> $kill_output
-    echo "NOTE: Error from Daemon expected for methods not currently running)"  >> $kill_output
+    echo "NOTE: Errors from Daemon are expected for methods not currently running"  >> $kill_output
     echo "" >> $kill_output
     sudo docker stop K1-container >> $kill_output 2>&1
     sudo docker stop M1-container >> $kill_output 2>&1
@@ -106,21 +106,22 @@ stop_singularity_containers(){
   if $singularity_installed; then
     echo "Stopping any MONET singularity containers" >> $kill_output
     echo "" >> $kill_output
-    # TODO waiting for help https://stackoverflow.com/questions/59791791/stopping-a-singularity-container
+    pid=`cat "$install_dir"/containers/pid`
+    echo killing pid $pid >> $kill_output 2>&1
+    kill $pid 2>/dev/null
   fi
 }
 
 # gracefully kill any MONET instance currently running on the system
 kill_MONET() {
+  echo Please wait...
   kill_output=/tmp/MONET_kill_output
   rm -f $kill_output
   stop_docker_containers $kill_output
   echo "" >> $kill_output
-  #stop_singularity_containers $kill_output
-  echo All MONET activity on this system was gracefully interrupted.
-  echo See $kill_output for details.
-  echo ""
+  stop_singularity_containers $kill_output
   echo Any ongoing MONET runs will have stopped with an ERROR.
+  echo See $kill_output for details.
   echo ""
 }
 
@@ -350,7 +351,7 @@ checkDockerBuildSuccess() {
 }
 
 checkSingularityBuildSuccess() {
-  if ! grep -q "Finalizing Singularity container" /tmp/singularity_build_output; then
+  if ! grep -q "Build complete" /tmp/singularity_build_output; then
     echo "ERROR: singularity build returned an error"
     echo "       - is an internet connection available?"
     echo "       - is singularity running?"
@@ -375,7 +376,7 @@ fi
 
 # RUN THE METHOD ##################################################################################
 echo "" && echo "--------------------------------------------------------------------------------"
-echo "DREAM challenge Disease Module Identification" && echo ""
+echo "MONET: MOdularising NEtwork Toolbox" && echo ""
 echo "Method: $method"
 network_name=$(basename $input)
 echo "Input: $network_name"
@@ -386,13 +387,15 @@ console_output_file="$output"/"$timestamp"__"$method"__console-output__"$network
 # RUN SINGULARITY
 if [ "$container" = "singularity" ]
 then
+  # store the pid of the current process (needed in case of --kill)
+  echo $$ > "$install_dir"/containers/pid
   # build the singularity image (if image already exists, skip this step)
   echo "Preparing container, please wait..."
   if [ ! -f "$install_dir"/containers/"$method"/singularity/"$method"-image.img ]; then
     cd "$install_dir"/containers/"$method"/singularity/
     singularity image.create --size 1500 ./$method-image.img > \
      /tmp/singularity_create_output 2>&1
-    singularity build ./$method-image.img Singularity > \
+    sudo singularity build ./$method-image.img Singularity > \
      /tmp/singularity_build_output 2>&1
     cd ../../..
     checkSingularityBuildSuccess
@@ -400,14 +403,9 @@ then
   fi
   # run container
   echo "Running container, please wait..."
-  #singularity run \
-  # -B "$install_dir"/src/"$method"_code:/"$method"_code/ \
-  # "$install_dir"/containers/"$method"/singularity/"$method"-image.img > \
-  # $console_output_file 2>&1
-  singularity instance start \
-   -B "$install_dir"/src/"$method"_code:/"$method"_code/ \ # mount host file system
-   "$install_dir"/containers/"$method"/singularity/"$method"-image.img \ # path to image
-   "$method"-container > \ # container name
+  singularity run \
+   -B "$install_dir"/src/"$method"_code:/"$method"_code/ \
+   "$install_dir"/containers/"$method"/singularity/"$method"-image.img > \
    $console_output_file 2>&1
 fi
 

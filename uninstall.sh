@@ -45,7 +45,7 @@ remove_docker_images(){
     sudo docker rmi m1-image >> /tmp/docker_rmi 2>&1
     sudo docker rm R1-container >> /tmp/docker_rmi 2>&1
     sudo docker rmi r1-image >> /tmp/docker_rmi 2>&1
-    echo "- Docker images were removed (see /tmp/docker_rmi for details)"
+    echo "- Docker images/containers were removed (see /tmp/docker_rmi)"
   fi
 }
 
@@ -58,7 +58,7 @@ remove_singularity_images(){
     rm $user_home/.monet/containers/K1/singularity/K1-image.img >> /tmp/singularity_rmi 2>&1
     rm $user_home/.monet/containers/K1/singularity/M1-image.img >> /tmp/singularity_rmi 2>&1
     rm $user_home/.monet/containers/K1/singularity/R1-image.img >> /tmp/singularity_rmi 2>&1
-    echo "- Singularity images were removed (see /tmp/singularity_rmi for details)"
+    echo "- Singularity images/containers were removed (see /tmp/singularity_rmi)"
   fi
 }
 
