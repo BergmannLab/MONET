@@ -50,34 +50,35 @@ usage() {
   echo ""
   echo "  options for method M1"
   echo "    (general)"
-  echo "    --linksdir=     directionality of links: [undirected|directed]"
+  echo "       --linksdir=     directionality of links: [undirected|directed]"
   echo "    (preprocessing-specific)"
-  echo "    --avgk=         desired average degree (numeric value)"
+  echo "       --avgk=         desired average degree (numeric value)"
   echo "    (challenge-specific)"
-  echo "    --smallest=     min cluster size (numeric value)"
-  echo "    --largest=      max cluster size (numeric value)"
+  echo "       --smallest=     min cluster size (numeric value)"
+  echo "       --largest=      max cluster size (numeric value)"
   echo ""
   echo "  options for method R1"
   echo "    (general)"
-  echo "    --b=            balance parameter (numeric value)"
-  echo "    --c=            size of coarsened graph (numeric value)"
-  echo "    --i=            inflation parameter (numeric value)"
-  echo "    (preprocessing-specific)"
-  echo "    --filter=       preprocessing strategy: [double|pageRank|quantile]"
-  echo "    --threshold=    quantile threshold for preprocessing (numeric value)"
+  echo "       --b=            balance parameter (numeric value)"
+  echo "       --c=            size of coarsened graph (numeric value)"
+  echo "       --i=            inflation parameter (numeric value)"
+  echo "    (preprocessingn)"
+  echo "       --filter=       preprocessing strategy: [double|pageRank|quantile]"
+  echo "       --threshold=    quantile threshold for preprocessing (numeric value)"
   echo "    (challenge-specific)"
-  echo "    --post=         postprocessing strategy: [recluster|discard]"
-  echo "    --smallest=     min cluster size (numeric value)"
-  echo "    --largest=      max cluster size (numeric value)"
-  echo "    --b2=           recluster parameter (numeric value)"
-  echo "    --c2=           recluster parameter (numeric value)"
-  echo "    --i2=           recluster parameter (numeric value)"
+  echo "       --post=         postprocessing strategy: [recluster|discard]"
+  echo "       --smallest=     min cluster size (numeric value)"
+  echo "       --largest=      max cluster size (numeric value)"
+  echo "       --b2=           recluster parameter (numeric value)"
+  echo "       --c2=           recluster parameter (numeric value)"
+  echo "       --i2=           recluster parameter (numeric value)"
   echo ""
   echo "EXAMPLE 1: run K1 method using docker virtualization"
   echo "$ monet --input=/tmp/input.txt --method=K1 --container=docker"
   echo ""
-  echo "EXAMPLE 2: gracefully kill any MONET instance currently running on the system"
+  echo "EXAMPLE 2: gracefully kill any MONET instance currently running"
   echo "$ monet --kill"
+  echo ""
 }
 
 ###################################################################################################
@@ -399,9 +400,14 @@ then
   fi
   # run container
   echo "Running container, please wait..."
-  singularity run \
-   -B "$install_dir"/src/"$method"_code:/"$method"_code/ \
-   "$install_dir"/containers/"$method"/singularity/"$method"-image.img > \
+  #singularity run \
+  # -B "$install_dir"/src/"$method"_code:/"$method"_code/ \
+  # "$install_dir"/containers/"$method"/singularity/"$method"-image.img > \
+  # $console_output_file 2>&1
+  singularity instance start \
+   -B "$install_dir"/src/"$method"_code:/"$method"_code/ \ # mount host file system
+   "$install_dir"/containers/"$method"/singularity/"$method"-image.img \ # path to image
+   "$method"-container > \ # container name
    $console_output_file 2>&1
 fi
 
