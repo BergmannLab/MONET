@@ -92,7 +92,6 @@ stop_docker_containers(){
   if $docker_installed; then
     echo "Stopping any MONET docker containers" >> $kill_output
     echo "NOTE: Errors from Daemon are expected for methods not currently running"  >> $kill_output
-    echo "" >> $kill_output
     sudo docker stop K1-container >> $kill_output 2>&1
     sudo docker stop M1-container >> $kill_output 2>&1
     sudo docker stop R1-container >> $kill_output 2>&1
@@ -105,10 +104,14 @@ stop_singularity_containers(){
   if [ $? -eq "0" ]; then singularity_installed=true; else singularity_installed=false; fi
   if $singularity_installed; then
     echo "Stopping any MONET singularity containers" >> $kill_output
-    echo "" >> $kill_output
-    pid=`cat "$install_dir"/containers/pid`
-    echo killing pid $pid >> $kill_output 2>&1
-    kill $pid 2>/dev/null
+    pid_file="$install_dir"/containers/pid
+    if [ -f "$pid_file" ]; then
+      pid=`cat "$pid_file"`
+      echo killing pid $pid >> $kill_output 2>&1
+      kill $pid 2>/dev/null
+    else
+      echo No Singulairty containers were running >> $kill_output
+    fi
   fi
 }
 
@@ -406,7 +409,7 @@ then
   singularity run \
    -B "$install_dir"/src/"$method"_code:/"$method"_code/ \
    "$install_dir"/containers/"$method"/singularity/"$method"-image.img > \
-   $console_output_file 2>&1
+   "$console_output_file" 2>&1
 fi
 
 # RUN DOCKER
@@ -424,7 +427,7 @@ then
   echo "Running container, please wait..."
   sudo docker run --name "$method"-container \
    -v "$install_dir"/src/"$method"_code:/"$method"_code/ "$docker_reference" > \
-   $console_output_file 2>&1
+   "$console_output_file" 2>&1
 fi
 
 ulimit -s $default_ulimit
