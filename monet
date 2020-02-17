@@ -27,8 +27,17 @@
 # M1: Team Aleph
 # R1: Team Causality
 
+#prevent execution of MONET's main script directly (i.e. without installation)
 working_dir=$PWD
 install_dir="$HOME/.monet"
+
+current_script="$0"
+if [[ $current_script != *".monet"* ]]; then
+  echo "ERROR: the MONET executable is not intended to be invoked directly."
+  echo "       (refer to the INSTRUCTIONS and README file for assistance)"
+  echo "       PLEASE invoke the install script."
+  exit 1
+fi
 
 ###################################################################################################
 # HELP USAGE MESSAGE
