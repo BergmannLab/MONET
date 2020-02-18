@@ -1,7 +1,7 @@
 #! /bin/sh -
 # Copyright 2018 Bergmann's Lab UNIL <mattia.tomasoni@unil.ch> 
 #
-# This file is part of DREAM DMI Tool.
+# This file is part of MONET.
 #
 #    DREAM DMI Tool is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
 #    GNU General Public License for more details.
 #
 #    You should have received a copy of the GNU General Public License
-#    along with DREAM DMI Tool. If not, see <https://www.gnu.org/licenses/>.
+#    along with MONET. If not, see <https://www.gnu.org/licenses/>.
 #
 ###############################################################################
 # Mattia Tomasoni - UNIL, CBG
