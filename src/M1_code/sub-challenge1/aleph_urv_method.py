@@ -855,6 +855,7 @@ def find_resolution(g, names, ids, fn_net, is_dir, num_nodes, min_comm_size, max
 
   strengths = get_strengths(g, ids, is_dir)
   res_min, res_max = get_resolution_range(g, ids, num_nodes, strengths)
+  resolution = 0
 
   if num_nodes > 50 * max_comm_size:
     # find a resolution such that 45% < nodes_above / num_nodes < 55%
@@ -882,6 +883,9 @@ def find_resolution(g, names, ids, fn_net, is_dir, num_nodes, min_comm_size, max
     lt_left  = lambda pinfo: pinfo['max_size'] > max_comm_size
     gt_right = lambda pinfo: pinfo['max_size'] < max_comm_size / 4
     resolution = resolution_bisection(g, names, ids, lt_left, gt_right, res_min, res_max, fn_net, is_dir, num_nodes, strengths, min_comm_size, max_comm_size, debug)
+
+  else:
+    resolution = 0
 
   return resolution
 
