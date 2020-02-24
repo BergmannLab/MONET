@@ -55,51 +55,54 @@ For an example, see the contents of MONET/test/system_test/input/
 
 ## PARAMETERS
 
-MANDATORY: please, provide values for the following mandatory parameters:
+Please, provide values for the following MANDATORY parameters:
 
-* --input: provide a path to the network file to be analysed
+* --input: path to the network file to be analysed
 
-* --method: method to be used to analyse the input, choose [K1|M1|R1]
+* --method: method to be used to analyse the input: [K1|M1|R1]
 
-* --container: according to what is available on your system, choose: [docker|singularity]
+* --container: virtualisation technology available on the system: [docker|singularity]
 
-OPTIONAL: MONET had the following optional parameter:
+
+## OPTIONAL
+
+You may provide values for the following parameter:
 
 * --output: directory in which to output results (default is current directory)
 
-OPTIONAL, SPECIFIC to method M1; if you have selected M1 as a method, you can optionally provide the following: 
 
-* --linksdir: directionality of links (choose [undirected|directed], default is undirected)
+OPTIONS for M1; if you select M1 as a method, you may provide the following: 
 
-* --avgk: desired average degree (numeric value, default is 25)
+* --linksdir: directionality of links: [undirected|directed] (default is undirected)
 
-* --smallest: min cluster size (numeric value, default is 3)
+* --avgk: desired average degree for nodes in output (default is 25)
 
-* --largest: max cluster size (numeric value, default is 100)
+* --smallest: min size of output clusters (default is 3)
 
-OPTIONAL, SPECIFIC to method R1; if you have selected R1 as a method, you can optionally provide the following: 
+* --largest: max size of output clusters (default is 100)
 
-* --b: balance parameter (numeric value, default is 2)
 
-* --c: size of coarsened graph (numeric value, default is 800)
+OPTIONS for R1; if you select R1 as a method, you may provide the following: 
 
-* --i: inflation parameter (numeric value, default is 2)
+* --c: trade-off parameter for computational efficiency: for larger c, the algorithm will run slower, but may provide more accurate results (default is 800)
 
-* --filter: preprocessing strategy (choose [double|pageRank|quantile], default is quantile)
+* --i: inflation parameter for standard Markov Clustering algorithm on which R1 is based (default is 2)
 
-* --threshold: quantile threshold for preprocessing (numeric value, default is 4)
+* --b: parameter controlling how balanced the clustering results should be; for b=0, R1 behaves like standard Regularized Markov Cluster (default is 2)
 
-* --post: post-processing strategy: (choose [recluster|discard], default is discard)
+* --threshold: remove edges smaller than threshold from the input (default is 4)
 
-* --smallest: min cluster size (numeric value, default is 3)
+* --smallest: min size of output clusters (default is 3)
 
-* --largest: max cluster size (numeric value, default is 100)
+* --largest: max size of output clusters (default is 100)
 
-* --recluster parameter (numeric value, default is 2)
+* --post: decide whether to recursively cluster (recluster) or discard too large output clusters: [recluster|discard] (default is discard)
 
-* --c2: recluster parameter (numeric value, default is 500)
+* --c2: (only used if --post=recluster) sets —-c for reclustering round (default is 500)
 
-* --i2: recluster parameter (numeric value, default is 2)
+* --i2: (only used if --post=recluster) sets —-i for reclustering round (default is 2)
+
+* —-b2: (only used if --post=recluster) sets —-b for reclustering round (default is 2)
 
 
 ## OUTPUT
