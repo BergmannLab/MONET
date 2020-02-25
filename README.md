@@ -32,13 +32,15 @@ Once installed, from any location on your system, you can run the following exam
 
 ## INPUT
 
-The format for the input network is the following: a tab-separated file containing one line for each edge. If an edge is connecting two nodes, nodeA and nodeB, with weight weight_AB, the file will contain the entry:
+The format for the input network is the following: a **tab-separated** file containing one line for each edge. 
 
-```[nodeA]	[nodeB]	[weight_AB]```
+If an edge is connecting two nodes, gene_a and gene_b, with weight 1, the file will contain the line:
 
-nodeA and nodeB are of type *integer*, weight_AB is of type *float*.
+```gene_a /t gene_b /t 1```
 
-For an example, see the contents of MONET/test/system_test/input/ containing the actual inputs to the Disease Module Identification (DMI) DREAM Challenge. Beware that some of the inputs will require high amounts of computational resources; please refer to section COMPUTATIONAL RESOURCES for details.
+gene_a and gene_b can be either *sting* or *integer*, while wait can be of type type *integer* or *float*.
+
+For an example, see MONET/test/system_test/input/zachary_karate_club.txt. The same folder containing the actual inputs to the Disease Module Identification (DMI) DREAM Challenge. Beware that some of the inputs will require high amounts of computational resources and are not suited to be run on a simple laptop or desktop computer; please refer to section COMPUTATIONAL RESOURCES for details.
 
 ## OUTPUT
 
