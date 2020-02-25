@@ -2,17 +2,6 @@
 
 This repository holds the source code for **MONET**, a Linux/macOS command-line toolbox to mine molecular and genetic networks, leveraging the top performing methods of the **Disease Module Identification (DMI) DREAM Challenge** (https://www.synapse.org/modulechallenge)
 
-## Methods
-
-Three methods are available as part of MONET. 
-
-* **K1**: Kernel clustering optimisation algorithm, https://www.synapse.org/#!Synapse:syn7349492/wiki/407359
-
-* **M1**: Modularity optimisation algorithm, https://www.synapse.org/#!Synapse:syn7352969/wiki/407384
-
-* **R1**: Random-walk-based algorithm, https://www.synapse.org/#!Synapse:syn7286597/wiki/406659
-
-
 ## SOURCE CODE
 
 The source code is hosted at: https://github.com/BergmannLab/MONET.git
@@ -36,7 +25,7 @@ A folder MONET will have been created with the source code: you are free to remo
 
 ## RUNNING
 
-From any location on your machine, you can use the following example command: it will run method M1 on a network container in your tmp folder using docker. For details about input format, parameters and output, read the rest of this document.
+Once installed, from any location on your system, you can run the following example command: it will run a method called M1 (see section METHODS for details), on a network contained in your tmp folder (see section INPUT for details), using docker virtualization (see section PREREQUISITES for details). In the remainder of this document, you will find details about what parameters you can use and what to expect as an output (in the PARAMETRS and OUTPUT sections respectively).
 
 ```$ monet --help```
 
@@ -52,6 +41,18 @@ nodeA and nodeB are of type *integer*, weight_AB is of type *float*.
 
 For an example, see the contents of MONET/test/system_test/input/
 
+## METHODS
+
+Three methods are available as part of MONET, which emerged as the top-performing methods of the DREAM Challenge.
+
+In order to run one of the three methods, adapt the example command provided in section RUNNING providing the —-method option with the name of the chosen method.
+
+* **K1**: KERNEL CLUSTERING OPTIMISATION algorithm. K1 is based on the “Diffusion State Distance” (DSD), a novel graph metric which is built on the premise that paths through low-degree nodes are stronger indications of functional similarity than paths that traverse highdegree nodes by Cao et al. (2014). The DSD metric is used to define a pairwise distance matrix between all nodes, on which a spectral clustering algorithm is applied. In parallel, dense bipartite sub-graphs are identified using standard graph techniques. Finally, results are merged into a single set of non-overlapping clusters. For further details, please see: https://www.synapse.org/#!Synapse:syn7349492/wiki/407359
+
+* **M1**: MODULARITY OPTIMIZATION algorithm. M1 employs an original technique named Multiresolution introduced by (Arenas et al., 2008) to explore all topological scales at which modules may be found. The novelty of this approach relies on the introduction of a parameter, called resistance, which controls the aversion of nodes to form modules. Modularity (Newman and Girvan, 2004; Arenas et al., 2007) is optimized using an ensemble of algorithms: Extremal optimization (Duch
+and Arenas, 2005), Spectral optimization (Newman, 2006), Fast algorithm (Newman, 2004), Tabu search (Arenas et al., 2008), and fine-tuning by iterative repositioning of individual nodes in adjacent modules. For further details, please see: https://www.synapse.org/#!Synapse:syn7352969/wiki/407384
+
+* **R1**: RANDOM-WALK-BASED algorithm. R1 is based on a variant ofMarkov Cluster Algorithmknown as balancedMulti-layer Regularized Markov Cluster Algorithm(bMLRMCL)(Satuluriet al., 2010) which scales well to large graphs and minimizes the number ofoversized clusters. First, a pre-processing step is applied so that edges withlow weights are discarded and all remaining edges are scaled to integervalues. Then,bMLRMCLis applied iteratively on modules of size graterthan a user-defined threshold. For further details, please see: https://www.synapse.org/#!Synapse:syn7286597/wiki/406659
 
 ## PARAMETERS
 
