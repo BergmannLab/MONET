@@ -56,6 +56,9 @@ usage() {
   echo "  OPTIONAL:"
   echo "  --output=        directory in which to output results (default is current directory)"
   echo ""
+  echo "  options for method K1"
+  echo "  --nclusters=     number of output clusters (default is 100)"
+  echo ""
   echo "  options for method M1"
   echo "  --linksdir=     directionality of links: [undirected|directed] (default is undirected)"
   echo "  --avgk=         desired average degree for nodes in output (default is 25)"
@@ -88,6 +91,7 @@ input="not_set"
 output="not_set"
 method="not_set"
 container="not_set"
+nclusters=100
 linksdir=undirected
 avgk=25.0
 b=2
@@ -125,6 +129,9 @@ while [ "$1" != "" ]; do
       ;;
     --container)
       container=$VALUE
+      ;;
+    --nclusters)
+      nclusters=$VALUE
       ;;
     --linksdir)
       linksdir=$VALUE
@@ -240,6 +247,16 @@ if [ "$container" = "singularity" ]; then
 fi
 
 # WRITE PARAMETERS TO FILE ########################################################################
+if [ "$method" = "K1" ]
+then
+  addToParametersFile() {
+    echo "$1"="$2" >> "$install_dir/src/K1_code/runTusk_parameters.txt"
+  }
+  rm -f "$install_dir/src/K1_code/runTusk_parameters.txt"
+  touch "$install_dir/src/K1_code/runTusk_parameters.txt"
+  addToParametersFile nclusters "$nclusters"
+fi
+
 if [ "$method" = "M1" ]
 then
   addToParametersFile() {

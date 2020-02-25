@@ -27,10 +27,11 @@
 
 echo K1: Running Team Tusk\'s code from the DREAM challenge on disease module identification
 
-cd /K1_code/
+# load parameters from file
 
-# get number of clusters to use, default to 100
-NUM_CLUSTERS=${1:-100}
+. /K1_code/runTusk_parameters.txt
+
+cd /K1_code/
 
 rm -rf ./data/DSD
 rm -rf ./data/cluster_results
@@ -54,7 +55,7 @@ fi
 
 # run clustering on distance matrix, then split large clusters recursively
 echo "- run clustering on distance matrix"
-python ./clustering/generate_clusters.py $DSD_FILE -n $NODELIST_FILE -a 1 -p $NUM_CLUSTERS > ./data/cluster_results/network_clusters.txt
+python ./clustering/generate_clusters.py $DSD_FILE -n $NODELIST_FILE -a 1 -p ${nclusters} > ./data/cluster_results/network_clusters.txt
 echo "- split large clusters recursively"
 python ./clustering/split_clusters.py $DSD_FILE ./data/cluster_results/network_clusters.txt -n $NODELIST_FILE > ./data/cluster_results/network_clusters_split.txt
 
@@ -64,3 +65,4 @@ echo "- DONE"
 
 # docker generates output files owned by root: make them read/writable
 chmod 777 -R ./data
+
