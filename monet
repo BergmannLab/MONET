@@ -326,7 +326,11 @@ fi
 
 # RUN THE METHOD ##################################################################################
 echo "" && echo "--------------------------------------------------------------------------------"
-echo "DREAM challenge Disease Module Identification" && echo ""
+echo 
+echo "MONET: MOdularising NEtwork Toolbox"
+echo "       for mining of molecular and genetic networks"
+echo "       (DREAM challenge Disease Module Identification)" && echo ""
+echo ""
 echo "Method: $method"
 network_name=$(basename $input)
 echo "Input: $network_name"
