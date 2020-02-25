@@ -45,7 +45,7 @@ For an example, see the contents of MONET/test/system_test/input/
 
 Three methods are available as part of MONET, which emerged as the top-performing methods of the DREAM Challenge.
 
-In order to run one of the three methods, adapt the example command provided in section RUNNING providing the --method option with the name of the chosen method (--method=[K1|M1|R1]).
+In order to run one of the three methods, adapt the example command provided in section RUNNING providing the --method option with the name of the chosen method (--method=[K1|M1|R1], for details, see section PARAMETERS).
 
 * **K1**: KERNEL CLUSTERING OPTIMISATION algorithm. K1 is based on the “Diffusion State Distance” (DSD), a novel graph metric which is built on the premise that paths through low-degree nodes are stronger indications of functional similarity than paths that traverse highdegree nodes by Cao et al. (2014). The DSD metric is used to define a pairwise distance matrix between all nodes, on which a spectral clustering algorithm is applied. In parallel, dense bipartite sub-graphs are identified using standard graph techniques. Finally, results are merged into a single set of non-overlapping clusters. For further details, please see: https://www.synapse.org/#!Synapse:syn7349492/wiki/407359
 
@@ -99,11 +99,11 @@ OPTIONS for R1; **if you select R1** as a method, you may additionally provide t
 
 * --post: decide whether to recursively cluster (recluster) or discard too large output clusters: [recluster|discard] (default is discard)
 
-* --c2: (only used if --post=recluster) sets —-c for reclustering round (default is 500)
+* --c2: (only used if --post=recluster) sets --c for reclustering round (default is 500)
 
-* --i2: (only used if --post=recluster) sets —-i for reclustering round (default is 2)
+* --i2: (only used if --post=recluster) sets --i for reclustering round (default is 2)
 
-* --b2: (only used if --post=recluster) sets —-b for reclustering round (default is 2)
+* --b2: (only used if --post=recluster) sets --b for reclustering round (default is 2)
 
 
 ## OUTPUT
