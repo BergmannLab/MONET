@@ -31,9 +31,6 @@
 output=./output_reproduce_challenge
 rm -rf $output
 mkdir $output
-# clean all singularity and docker images
-yes | sudo docker system prune -a > /dev/null
-rm -f $HOME/.monet/containers/*/singularity/*.img
 
 
 
