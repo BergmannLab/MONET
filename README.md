@@ -112,13 +112,13 @@ OPTIONS for R1; **if you select R1** as a method, you may additionally provide t
 
 Some of the methods require large amount of resources, depending on your input (please, refer to the MONET paper in the PUBLICATIONS section for details about how resource needs will scale with the size of the input, for the different methods). 
 
-To reproduce the results of the DREAM Challenge, please, refer to section INPUT for deteils about where to find the official Challenge inputs. This cannot be accomplished on commodity hardware (i.e., a regular laptop or desktop) unless a very large SWAP partition is created.
+To reproduce the results of the DREAM Challenge, you can run MONET/test/system_test/reproduce_challenge.sh. This cannot be accomplished on commodity hardware (i.e., a regular laptop or desktop) unless a very large SWAP partition is created: in the same folder you can find a file with the exact ram usage and the challenge outputs (reproduced using MONET).
 
 To monitor resource usage (and thus determine the amount or RAM / swap needed by your particular input network for a particular method), two simple scripts have been added to MONET/test/helper_scripts (for for Unix and one for MacOS systems): launch them before execution of MONET and redirect their output to file for simple inspection (no other task should be running).
 
 ## BENCHMARKING
 
-Please refer to MONET/test/benchmarking.
+For details about the modularization performance of the MONET methods on a set of artificial benchmarks (Louvain algorithm is shown as a baseline), please refer to the MONET paper in the PUBLICATIONS section; in particular, Fig. 1. MONET/test/benchmarking for a detailed output of the experiments that have been carried out.
 
 ## QUESTIONS / BUG-REPORTS
 
