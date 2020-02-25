@@ -102,7 +102,7 @@ OPTIONS for R1; if you select R1 as a method, you may provide the following:
 
 * --i2: (only used if --post=recluster) sets —-i for reclustering round (default is 2)
 
-* —-b2: (only used if --post=recluster) sets —-b for reclustering round (default is 2)
+* --b2: (only used if --post=recluster) sets —-b for reclustering round (default is 2)
 
 
 ## OUTPUT
