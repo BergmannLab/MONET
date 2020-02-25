@@ -10,8 +10,7 @@ The source code is hosted at: https://github.com/BergmannLab/MONET.git
 
 The tool was tested on *Ubuntu Linux 18.04*, *CentOS Linux 7.5* and *macOS Sierra* Version 10.12.
 
-* Software: either ```docker``` or ```singularity``` must be installed. Please visit https://www.docker.com or http://singularity.lbl.gov
-* memory: some of the methods require large amount of resources, depending on your input. To fully reproduce the results of the DREAM challenge, around 40GB of memory are required
+Either ```docker``` or ```singularity``` must be installed. Please visit https://www.docker.com or http://singularity.lbl.gov
 
 ## INSTALLATION
 
@@ -25,7 +24,7 @@ A folder MONET will have been created with the source code: you are free to remo
 
 ## RUNNING
 
-Once installed, from any location on your system, you can run the following example command: it will run a method called M1 (see section METHODS for details), on a network contained in your tmp folder (see section INPUT for details), using docker virtualization (see section PREREQUISITES for details). In the remainder of this document, you will find details about what parameters you can use and what to expect as an output (in the PARAMETRS and OUTPUT sections respectively).
+Once installed, from any location on your system, you can run the following example command: it will run a method called M1 (see section METHODS for details), on a network contained in your tmp folder (see section INPUT for details), using docker virtualization (see section PREREQUISITES for details). In the remainder of this document, you will find details about what parameters you can use, what to expect as an output and resource usage (in the PARAMETRS,  OUTPUT and COMPUTATIONAL RESOURCES sections respectively).
 
 ```$ monet --help```
 
@@ -39,7 +38,11 @@ The format for the input network is the following: a tab-separated file containi
 
 nodeA and nodeB are of type *integer*, weight_AB is of type *float*.
 
-For an example, see the contents of MONET/test/system_test/input/
+For an example, see the contents of MONET/test/system_test/input/ containing the actual inputs to the Disease Module Identification (DMI) DREAM Challenge. Beware that some of the inputs will require high amounts of computational resources; please refer to section COMPUTATIONAL RESOURCES for details.
+
+## OUTPUT
+
+Two output files will be generated in the directory where you run the command, marked with a timestamp and the name of your input network: one file containing the run-time outputs and the other containing the results of your analysis.
 
 ## METHODS
 
@@ -105,10 +108,13 @@ OPTIONS for R1; **if you select R1** as a method, you may additionally provide t
 
 * --b2: (only used if --post=recluster) sets --b for reclustering round (default is 2)
 
+## COMPUTATIONAL RESOURCES
 
-## OUTPUT
+Some of the methods require large amount of resources, depending on your input (please, refer to the MONET paper in the PUBLICATIONS section for details about how resource needs will scale with the size of the input, for the different methods). 
 
-Two output files will be generated in the directory where you run the command, marked with a timestamp and the name of your input network: one file containing the run-time outputs and the other containing the results of your analysis.
+To reproduce the results of the DREAM Challenge, please, refer to section INPUT for deteils about where to find the official Challenge inputs. This cannot be accomplished on commodity hardware (i.e., a regular laptop or desktop) unless a very large SWAP partition is created.
+
+To monitor resource usage (and thus determine the amount or RAM / swap needed by your particular input network for a particular method), two simple scripts have been added to MONET/test/helper_scripts (for for Unix and one for MacOS systems): launch them before execution of MONET and redirect their output to file for simple inspection (no other task should be running).
 
 ## BENCHMARKING
 
@@ -126,7 +132,7 @@ If you are interested in contributing to MONET, we encourage you to get in touch
 
 Sarvenaz Choobdar, Mehmet Ahsen, Jake Crawford, Mattia Tomasoni, Tao Fang, David Lamparter, Junyuan Lin, Benjamin Hescott, Xiaozhe Hu, Johnathan Mercer, Ted Natoli, Rajiv Narayan, Aravind Subramanian, Jitao David Zhang, Gustavo Stolovitzky, Zoltán Kutalik, Kasper Lage, Donna Slonim, Julio Saez-Rodriguez, Lenore Cowen, Sven Bergmann. Assessment of network module identification across complex diseases. Nature Methods 16 (2019) 843-852. doi: https://doi.org/10.1038/s41592-019-0509-5
 
-Mattia Tomasoni, Sergio Gómez, Jake Crawford, Weijia Zhang, Sarvenaz Choobdar, Daniel Marbach and Sven Bergmann. MONET: MOdularising NEtwork Toolbox for mining of molecular and genetic networks. Preprints (2019). doi: https://doi.org/10.1101/611418
+Mattia Tomasoni, Sergio Gómez, Jake Crawford, Weijia Zhang, Sarvenaz Choobdar, Daniel Marbach and Sven Bergmann. MONET: a toolbox integrating top-performing methods for network modularisation. Preprints (2019). doi: https://doi.org/10.1101/611418
 
 
 
