@@ -1,6 +1,6 @@
 # MONET
 
-This repository holds the source code for **MONET**, a Linux/macOS command-line toolbox to mine molecular and genetic networks, leveraging the top performing methods of the **Disease Module Identification (DMI) DREAM Challenge** (https://www.synapse.org/modulechallenge)
+This repository holds the source code for **MONET**, a Linux/macOS command-line toolbox to mine molecular and genetic networks, leveraging the top performing methods of the **Disease Module Identification (DMI) DREAM Challenge** (see DREAM Challenge paper under section PUBLICATIONS and https://www.synapse.org/modulechallenge)
 
 ## SOURCE CODE
 
