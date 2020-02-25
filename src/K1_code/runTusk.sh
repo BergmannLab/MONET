@@ -1,20 +1,20 @@
 #!/bin/bash
 # Copyright 2018 Bergmann's Lab UNIL <mattia.tomasoni@unil.ch>
 #
-# This file is part of DREAM DMI Tool.
+# This file is part of MONET.
 #
-#    DREAM DMI Tool is free software: you can redistribute it and/or modify
+#    MONET is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 #
-#    DREAM DMI Tool is distributed in the hope that it will be useful,
+#    MONET is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
 #
 #    You should have received a copy of the GNU General Public License
-#    along with DREAM DMI Tool. If not, see <https://www.gnu.org/licenses/>.
+#    along with MONET. If not, see <https://www.gnu.org/licenses/>.
 #
 ###############################################################################
 # Mattia Tomasoni - UNIL, CBG
@@ -25,7 +25,7 @@
 # which should be located at data/input_network.txt
 ###############################################################################
 
-echo K1: Running Team Tusk\'s code from the 2017 DREAM challenge on disease module identification
+echo K1: Running Team Tusk\'s code from the DREAM challenge on disease module identification
 
 cd /K1_code/
 
