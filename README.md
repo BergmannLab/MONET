@@ -58,21 +58,21 @@ and Arenas, 2005), Spectral optimization (Newman, 2006), Fast algorithm (Newman,
 
 Please, provide values for the following MANDATORY parameters:
 
-* --input: path to the network file to be analysed
+* **--input**: path to the network file to be analysed
 
-* --method: method to be used to analyse the input: [K1|M1|R1]
+* **--method**: method to be used to analyse the input: [K1|M1|R1]
 
-* --container: virtualisation technology available on the system: [docker|singularity]
+* **--container**: virtualisation technology available on the system: [docker|singularity]
 
 
-## OPTIONAL
+## OPTIONAL PARAMETERS
 
 You may provide values for the following parameter:
 
-* --output: directory in which to output results (default is current directory)
+* **--output**: directory in which to output results (default is current directory)
 
 
-OPTIONS for M1; if you select M1 as a method, you may provide the following: 
+OPTIONS for M1; **if you select M1** as a method, you may additionally provide the following: 
 
 * --linksdir: directionality of links: [undirected|directed] (default is undirected)
 
@@ -83,7 +83,7 @@ OPTIONS for M1; if you select M1 as a method, you may provide the following:
 * --largest: max size of output clusters (default is 100)
 
 
-OPTIONS for R1; if you select R1 as a method, you may provide the following: 
+OPTIONS for R1; **if you select R1** as a method, you may additionally provide the following: 
 
 * --c: trade-off parameter for computational efficiency: for larger c, the algorithm will run slower, but may provide more accurate results (default is 800)
 
