@@ -20,7 +20,11 @@ To install:
 
 ```$ cd MONET && ./install.sh```
 
-A folder MONET will have been created with the source code: you are free to remove it, if you are not interested. The command ```monet --help``` can be invoked from any location on the system (like ```ls``` or ```pwd```).
+A folder MONET will have been created with the source code: you are free to remove it, if you are not interested. This will not affect MONET, which has now being installed in your system: the command ```monet``` can be invoked from any location on the system (like any other command, like ```ls``` or ```pwd```).
+
+## MONET HELP COMMAND
+
+After installing MONET, the help command ```monet --help``` will be available from any location on your system.
 
 ## RUNNING
 
