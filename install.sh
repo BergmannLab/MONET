@@ -76,7 +76,7 @@ function add_to_path {
 case ":$PATH:" in
   *"monet"*)
     # already in path due to previous installation, nothing to do
-    echo "" && echo "SUCCESS: installation completed."
+    echo "" && echo "Installation completed!"
     ;;
   *)
     # add to bashrc
