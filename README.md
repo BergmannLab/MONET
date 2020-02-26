@@ -82,19 +82,16 @@ Please, provide values for the following MANDATORY parameters:
 
 ## OPTIONAL PARAMETERS
 
-You may provide values for the following parameter:
 * **--output**: directory in which to output results (default is current directory)
 
-
-OPTIONS for M1; **if you select M1** as a method, you may additionally provide the following: 
+**if you select M1** as a method, you may additionally provide the following: 
 
 * --smallest: min size of output clusters (default is 3)
 * --largest: max size of output clusters (default is 100)
 * --linksdir: directionality of links: [undirected|directed] (default is undirected)
 * --avgk: desired average degree for nodes in output (default is 25)
 
-
-OPTIONS for R1; **if you select R1** as a method, you may additionally provide the following: 
+**if you select R1** as a method, you may additionally provide the following: 
 
 * --smallest: min size of output clusters (default is 3)
 * --largest: max size of output clusters (default is 100)
