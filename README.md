@@ -1,6 +1,6 @@
 # MONET
 
-This repository holds the source code for **MONET**, a Linux/macOS command-line toolbox to mine molecular and genetic networks, leveraging the top performing methods of the **Disease Module Identification (DMI) DREAM Challenge** (see DREAM Challenge paper under section PUBLICATIONS and https://www.synapse.org/modulechallenge)
+This repository holds the source code for **MONET**, a Linux/MacOS command-line toolbox to mine molecular and genetic networks, leveraging the top performing methods of the **Disease Module Identification (DMI) DREAM Challenge** (see DREAM Challenge paper under section PUBLICATIONS and https://www.synapse.org/modulechallenge)
 
 ## SOURCE CODE
 
@@ -8,19 +8,27 @@ The source code is hosted at: https://github.com/BergmannLab/MONET.git
 
 ## PREREQUISITES
 
-The tool was tested on *Ubuntu Linux 18.04*, *CentOS Linux 7.5* and *macOS Sierra* Version 10.12.
+**Operating System**: MONET can be run on **either**
+* Linux (it was tested on *Ubuntu Linux* 18.04, *CentOS Linux* 7.5)
+* MacOS (it was tested on *macOS Sierra* 10.12)
 
-Either ```docker``` or ```singularity``` must be installed. Please visit https://www.docker.com or http://singularity.lbl.gov
+**Software**: MONET requires **either**:
+* ```Docker``` (see https://www.docker.com)
+* ```Singularity``` (see http://singularity.lbl.gov)
+
+**Harware**: MONET was tested both on server and on commodity hardware (i.e., regular desktop). For details, please refer to section COMPUTATIONAL RESOURCES below.
 
 ## INSTALLATION
 
-To install: 
+**Just like you can ```ls``` a folder, after installation will be able to ```monet``` a network**. 
+
+Please run:
 
 ```$ git clone https://github.com/BergmannLab/MONET.git```
 
 ```$ cd MONET && ./install.sh```
 
-A folder MONET will have been created with the source code: you are free to remove it, if you are not interested. This will not affect MONET, which has now being installed in your system: the command ```monet``` can be invoked from any location on the system (like any other command, like ```ls``` or ```pwd```).
+A folder MONET will have been created with the source code: you are free to remove it, if you are not interested. This will not affect MONET, which has now being installed in your system: the command ```monet``` can be invoked from any location on the system.
 
 ## MONET HELP COMMAND
 
