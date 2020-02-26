@@ -154,7 +154,7 @@ One of the MONET developers will test the changes in your branch then merge to M
 
 ## TROUBLESHOOTING COMMON PROBLEMS
 
-If a MONET run is suddenly interrupted or if the expected outputs has note been generated, here are few common problems that can occur:
+If a MONET run is suddenly interrupted or if the expected outputs has not been generated, here are few common problems that can occur:
 * lack of RAM: if the console-output file (see section OUTPUT) contains the word "Killed", the MONET processed were stopped by the Operating System, likely due to a lack of RAM. To confirm this, please read section COMPUTATIONAL RESOURCES to learn how to monitor your resource usage while running MONET.
 * outdated kernel: Singularity users that work on Linux distributions with old kernels (e.g. CentOS 6.1, kernel 2.6) will encounter trouble during the install process; they need to contact their system administrator to inquire whether a kernel upgrade is possible.
 
@@ -166,7 +166,7 @@ Please, address your questions and bug reports to Mattia Tomasoni, <mattia.tomas
 
 * **MONET paper**: Mattia Tomasoni, Sergio Gómez, Jake Crawford, Weijia Zhang, Sarvenaz Choobdar, Daniel Marbach and Sven Bergmann. MONET: a toolbox integrating top-performing methods for network modularisation. Preprints (2019). doi: https://doi.org/10.1101/611418
 
-* **DREAM Challenge paper**: Sarvenaz Choobdar, Mehmet Ahsen, Jake Crawford, Mattia Tomasoni, Tao Fang, David Lamparter, Junyuan Lin, Benjamin Hescott, Xiaozhe Hu, Johnathan Mercer, Ted Natoli, Rajiv Narayan, Aravind Subramanian, Jitao David Zhang, Gustavo Stolovitzky, Zoltán Kutalik, Kasper Lage, Donna Slonim, Julio Saez-Rodriguez, Lenore Cowen, Sven Bergmann. Assessment of network module identification across complex diseases. Nature Methods 16 (2019) 843-852. doi: https://doi.org/10.1038/s41592-019-0509-5
+* **DREAM Challenge paper**: Sarvenaz Choobdar, Mehmet Ahsen, Jake Crawford, Mattia Tomasoni, Tao Fang, David Lamparter, Junyuan Lin, Benjamin Hescott, Xiaozhe Hu, Johnathan Mercer, Ted Natoli, Rajiv Narayan, The DREAM Module Identification Challenge Consortium, Aravind Subramanian, Jitao David Zhang, Gustavo Stolovitzky, Zoltán Kutalik, Kasper Lage, Donna Slonim, Julio Saez-Rodriguez, Lenore Cowen, Sven Bergmann, Daniel Marbach. Assessment of network module identification across complex diseases. Nature Methods 16 (2019) 843-852. doi: https://doi.org/10.1038/s41592-019-0509-5
 
 
 
