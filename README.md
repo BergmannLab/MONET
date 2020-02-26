@@ -2,10 +2,6 @@
 
 This repository holds the source code for **MONET**, a Linux/MacOS command-line toolbox to mine molecular and genetic networks, leveraging the top performing methods of the **Disease Module Identification (DMI) DREAM Challenge** (see DREAM Challenge paper under section PUBLICATIONS and https://www.synapse.org/modulechallenge)
 
-## SOURCE CODE
-
-The source code is hosted at: https://github.com/BergmannLab/MONET.git
-
 ## PREREQUISITES
 
 **Operating System**: MONET can be run on **either**
@@ -127,6 +123,10 @@ For details about the modularization performance of the MONET methods on a set o
 ## QUESTIONS / BUG-REPORTS
 
 Please, address your questions and bug reports to Mattia Tomasoni, <mattia.tomasoni AT unil.ch>. An issue will be opened here to address your problem: https://github.com/BergmannLab/MONET/issues
+
+## SOURCE CODE
+
+The source code is hosted at: https://github.com/BergmannLab/MONET.git
 
 ## CONTRIBUTING
 
