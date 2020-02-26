@@ -16,7 +16,7 @@ This repository holds the source code for **MONET**, a Linux/MacOS command-line 
 
 ## INSTALLATION
 
-**Just like you can ```ls``` a folder, after installation will be able to ```monet``` a network**. 
+**Just like you can ```ls``` a folder, after installation will be able to ```monet``` a network** from any location on your system.
 
 Please run:
 
