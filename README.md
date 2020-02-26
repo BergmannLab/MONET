@@ -48,14 +48,15 @@ The input file is provided to MONET using the ```--input``` parameter (see secti
 
 The format for the input network is the following: a **tab-separated** file containing one line for each edge. 
 
-If an edge is connecting two nodes, gene_a and gene_b, with weight 1, the file will contain the line:
+If an edge is connecting two nodes, gene_a and gene_b, with a certain weight, the file will contain the line:
 
-```gene_a /t gene_b /t 1 /n```
+```gene_a \t gene_b \t weight \n```
 
-Data types:
-* gene_a and gene_b, the gene ids, can be either *sting* or *integer*
-* weigth can be of type type *integer* or *float*
-* "/t" indicates the tab character and "/n" a newline
+Details:
+* gene_a and gene_b, the gene ids, can be either *string* or *integer*
+* weigth can be of type *integer* or *float*
+* "\t" indicates the tab character and "\n" the newline character
+* no blank spaces should appear, neither as separators nor as part of the gene ids
 
 For an example, see MONET/test/system_test/input/zachary_karate_club.txt. The same folder containing the actual inputs to the Disease Module Identification (DMI) DREAM Challenge. Beware that some of the inputs will require high amounts of computational resources and are not suited to be run on a simple laptop or desktop computer; please refer to section COMPUTATIONAL RESOURCES for details.
 
