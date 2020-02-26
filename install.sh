@@ -35,7 +35,7 @@ if [ -d $user_home/.monet ]; then
   read -p "MONET is already installed. Would you like to overwrite? [y|n] " -n 1 -r
   echo ""
   if [[ $REPLY =~ ^[y]$ ]]; then
-    ./uninstall.sh > /dev/null 2>&1
+    echo y | ./uninstall.sh > /dev/null 2>&1
   elif [[ $REPLY =~ ^[n]$ ]]; then
     echo "EXITING: MONET WAS NOT RE-INSTALLED."
     exit 0
