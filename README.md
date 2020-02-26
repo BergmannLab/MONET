@@ -69,61 +69,42 @@ Three methods are available as part of MONET, which emerged as the top-performin
 In order to run one of the three methods, adapt the example command provided in section RUNNING providing the --method option with the name of the chosen method (--method=[K1|M1|R1], for details, see section PARAMETERS).
 
 * **K1**: KERNEL CLUSTERING OPTIMISATION algorithm. K1 is based on the “Diffusion State Distance” (DSD), a novel graph metric which is built on the premise that paths through low-degree nodes are stronger indications of functional similarity than paths that traverse highdegree nodes by Cao et al. (2014). The DSD metric is used to define a pairwise distance matrix between all nodes, on which a spectral clustering algorithm is applied. In parallel, dense bipartite sub-graphs are identified using standard graph techniques. Finally, results are merged into a single set of non-overlapping clusters. For further details, please see: https://www.synapse.org/#!Synapse:syn7349492/wiki/407359
-
 * **M1**: MODULARITY OPTIMIZATION algorithm. M1 employs an original technique named Multiresolution introduced by (Arenas et al., 2008) to explore all topological scales at which modules may be found. The novelty of this approach relies on the introduction of a parameter, called resistance, which controls the aversion of nodes to form modules. Modularity (Newman and Girvan, 2004; Arenas et al., 2007) is optimized using an ensemble of algorithms: Extremal optimization (Duch
 and Arenas, 2005), Spectral optimization (Newman, 2006), Fast algorithm (Newman, 2004), Tabu search (Arenas et al., 2008), and fine-tuning by iterative repositioning of individual nodes in adjacent modules. For further details, please see: https://www.synapse.org/#!Synapse:syn7352969/wiki/407384
-
 * **R1**: RANDOM-WALK-BASED algorithm. R1 is based on a variant ofMarkov Cluster Algorithmknown as balancedMulti-layer Regularized Markov Cluster Algorithm(bMLRMCL)(Satuluriet al., 2010) which scales well to large graphs and minimizes the number ofoversized clusters. First, a pre-processing step is applied so that edges withlow weights are discarded and all remaining edges are scaled to integervalues. Then,bMLRMCLis applied iteratively on modules of size graterthan a user-defined threshold. For further details, please see: https://www.synapse.org/#!Synapse:syn7286597/wiki/406659
 
 ## PARAMETERS
 
 Please, provide values for the following MANDATORY parameters:
-
 * **--input**: path to the network file to be analysed
-
 * **--method**: method to be used to analyse the input: [K1|M1|R1]
-
 * **--container**: virtualisation technology available on the system: [docker|singularity]
-
 
 ## OPTIONAL PARAMETERS
 
 You may provide values for the following parameter:
-
 * **--output**: directory in which to output results (default is current directory)
 
 
 OPTIONS for M1; **if you select M1** as a method, you may additionally provide the following: 
 
 * --smallest: min size of output clusters (default is 3)
-
 * --largest: max size of output clusters (default is 100)
-
 * --linksdir: directionality of links: [undirected|directed] (default is undirected)
-
 * --avgk: desired average degree for nodes in output (default is 25)
 
 
 OPTIONS for R1; **if you select R1** as a method, you may additionally provide the following: 
 
 * --smallest: min size of output clusters (default is 3)
-
 * --largest: max size of output clusters (default is 100)
-
 * --c: trade-off parameter for computational efficiency: for larger c, the algorithm will run slower, but may provide more accurate results (default is 800)
-
 * --i: inflation parameter for standard Markov Clustering algorithm on which R1 is based (default is 2)
-
 * --b: parameter controlling how balanced the clustering results should be; for b=0, R1 behaves like standard Regularized Markov Cluster (default is 2)
-
 * --threshold: remove edges smaller than threshold from the input (default is 4)
-
 * --post: decide whether to recursively cluster (recluster) or discard too large output clusters: [recluster|discard] (default is discard)
-
 * --c2: (only used if --post=recluster) sets --c for reclustering round (default is 500)
-
 * --i2: (only used if --post=recluster) sets --i for reclustering round (default is 2)
-
 * --b2: (only used if --post=recluster) sets --b for reclustering round (default is 2)
 
 ## COMPUTATIONAL RESOURCES
