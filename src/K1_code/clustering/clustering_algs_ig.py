@@ -67,13 +67,9 @@ def spectral_clustering(dist_matrix, n_clusters=8, node_map=[]):
         clusters (list) - a list of lists of nodes, each sublist represents
                           a cluster
     """
-    '''
-    # generate a numpy distance matrix from the given graph
-    mat = G.get_adjacency(attribute='weight')
-    del G
-    dist_matrix = np.array(mat.data)
-    del mat
-    '''
+
+    if n_clusters >= dist_matrix.shape[0]:
+        raise ValueError('Number of clusters must be less than number of nodes')
 
     # apply RBF kernel to generate similarity matrix from distance
     # matrix (i.e. lower DSD => higher similarity)
