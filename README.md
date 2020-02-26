@@ -94,7 +94,7 @@ Please, provide values for the following MANDATORY parameters:
 
 **if you select K1** as a method, you may additionally provide the following: 
 
-* --nclusters: number of output clusters for spectral clustering step (default is 100)
+* --nclusters: initial number of output clusters for spectral clustering step; final number of clusters differ (default is 100)
 
 **if you select M1** as a method, you may additionally provide the following: 
 
@@ -107,7 +107,7 @@ Please, provide values for the following MANDATORY parameters:
 
 * --smallest: min size of output clusters (default is 3)
 * --largest: max size of output clusters (default is 100)
-* --c: trade-off parameter for computational efficiency: for larger c, the algorithm will run slower, but may provide more accurate results (default is 800)
+* --c: trade-off parameter for computational efficiency; for larger c, the algorithm will run slower, but may provide more accurate results (default is 800)
 * --i: inflation parameter for standard Markov Clustering algorithm on which R1 is based (default is 2)
 * --b: parameter controlling how balanced the clustering results should be; for b=0, R1 behaves like standard Regularized Markov Cluster (default is 2)
 * --threshold: remove edges smaller than threshold from the input (default is 4)
