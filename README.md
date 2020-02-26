@@ -26,6 +26,10 @@ Please run:
 
 A folder MONET will have been created with the source code: you are free to remove it, if you are not interested. This will not affect MONET, which has now being installed in your system: the command ```monet``` can be invoked from any location on the system.
 
+## TESTING THE INSTALLATION
+
+At the end of the install process, you will be asked whether you want to test MONET. This test is completely automatic.
+
 ## MONET HELP COMMAND
 
 After installing MONET, the help command ```monet --help``` will be available from any location on your system.
