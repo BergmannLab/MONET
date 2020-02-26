@@ -130,7 +130,24 @@ The source code is hosted at: https://github.com/BergmannLab/MONET.git
 
 ## CONTRIBUTING
 
-If you are interested in contributing to MONET, we encourage you to get in touch! We will be happy to add you to the list of our developers https://github.com/BergmannLab/MONET/graphs/contributors
+If you are interested in contributing to MONET, we encourage you to get in touch! We will be happy to add you to the list of our developers https://github.com/BergmannLab/MONET/graphs/contributors. **THANK YOU!**
+
+**CONTRIBUTING: CREATING A BRANCH**
+First we will create an issue for the specific feature you are willing to contribute; let's say yours will happen to be issue 999. You will be then asked to create a new git branch where to implement your changes; run the following from the cloned MONET directory: 
+
+```$ git checkout -b issues_999```
+```$ git push origin issues_999```
+
+At this point, you are free to make changes to your local code code in your laptop. Don't worry if you mess things up, it's no problem to add mistakes to a branch.
+
+**CONTRIBUTING: PUSHING YOUR CHANGES**
+
+Once you are done with your changes, run the following from the cloned MONET directory:
+
+```$ git add .```
+```$ git commit -m "adding code for feature # issues_999"```
+```$ git push --set-upstream origin issues_999```
+```$ git checkout -b master```
 
 ## TROUBLESHOOTING COMMON PROBLEMS
 
