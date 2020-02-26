@@ -95,16 +95,20 @@ You may provide values for the following parameter:
 
 OPTIONS for M1; **if you select M1** as a method, you may additionally provide the following: 
 
-* --linksdir: directionality of links: [undirected|directed] (default is undirected)
-
-* --avgk: desired average degree for nodes in output (default is 25)
-
 * --smallest: min size of output clusters (default is 3)
 
 * --largest: max size of output clusters (default is 100)
 
+* --linksdir: directionality of links: [undirected|directed] (default is undirected)
+
+* --avgk: desired average degree for nodes in output (default is 25)
+
 
 OPTIONS for R1; **if you select R1** as a method, you may additionally provide the following: 
+
+* --smallest: min size of output clusters (default is 3)
+
+* --largest: max size of output clusters (default is 100)
 
 * --c: trade-off parameter for computational efficiency: for larger c, the algorithm will run slower, but may provide more accurate results (default is 800)
 
@@ -113,10 +117,6 @@ OPTIONS for R1; **if you select R1** as a method, you may additionally provide t
 * --b: parameter controlling how balanced the clustering results should be; for b=0, R1 behaves like standard Regularized Markov Cluster (default is 2)
 
 * --threshold: remove edges smaller than threshold from the input (default is 4)
-
-* --smallest: min size of output clusters (default is 3)
-
-* --largest: max size of output clusters (default is 100)
 
 * --post: decide whether to recursively cluster (recluster) or discard too large output clusters: [recluster|discard] (default is discard)
 
