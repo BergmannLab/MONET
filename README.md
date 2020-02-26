@@ -92,6 +92,10 @@ Please, provide values for the following MANDATORY parameters:
 
 * **--output**: directory in which to output results (default is current directory)
 
+**if you select K1** as a method, you may additionally provide the following: 
+
+* --nclusters: number of output clusters for spectral clustering step (default is 100)
+
 **if you select M1** as a method, you may additionally provide the following: 
 
 * --smallest: min size of output clusters (default is 3)
