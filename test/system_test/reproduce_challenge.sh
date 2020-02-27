@@ -91,13 +91,16 @@ monet --input=./input/6_homology_anonym_v2.txt --output=$output --method=M1 --co
 
 # K1 - TUSK
 
+monet --input=./input/1_ppi_anonym_v2.txt --output=$output --method=K1 --container=singularity
+monet --input=./input/1_ppi_anonym_v2.txt --output=$output --method=K1 --container=docker
+
 monet --input=./input/2_ppi_anonym_v2.txt --output=$output --method=K1 --container=singularity
 monet --input=./input/2_ppi_anonym_v2.txt --output=$output --method=K1 --container=docker
 
 monet --input=./input/3_signal_anonym_directed_v3.txt --output=$output --method=K1 --container=singularity
 monet --input=./input/3_signal_anonym_directed_v3.txt --output=$output --method=K1 --container=docker
 
-monet --input=./input/4_coexpr_anonym_v2.txt --output=$output --method=K1 --container=singularity#OK
+monet --input=./input/4_coexpr_anonym_v2.txt --output=$output --method=K1 --container=singularity
 monet --input=./input/4_coexpr_anonym_v2.txt --output=$output --method=K1 --container=docker
 
 monet --input=./input/5_cancer_anonym_v2.txt --output=$output --method=K1 --container=singularity

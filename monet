@@ -185,7 +185,7 @@ done
 # HANDLE MANDATORY AND DEFAULT PARAMETERS #########################################################
 
 if [ "$method" != "K1" -a "$method" != "M1" -a "$method" != "R1" ]; then
-  echo "ERROR: you must specify a method (--method option)\n"
+  echo "ERROR: you must specify a method (--method option)"; echo ""
   usage
   exit 1
 fi
@@ -204,7 +204,7 @@ if [ "$input" != "not_set" ]; then
       cp $input "$install_dir/src/R1_code/sub-challenge1/input.txt"; fi
   fi
 else
-  echo "ERROR: you must provide an input file (--input option)\n"
+  echo "ERROR: you must provide an input file (--input option)"; echo ""
   usage
   exit 1
 fi
@@ -225,7 +225,7 @@ else
 fi
 
 if [ "$container" != "docker" -a "$container" != "singularity" ]; then
-  echo "ERROR: you must specify a container type (--container option)\n"
+  echo "ERROR: you must specify a container type (--container option)"; echo ""
   usage
   exit 1
 fi
@@ -233,7 +233,7 @@ if [ "$container" = "docker" ]; then
   docker --help > /tmp/docker_test
   if ! grep -q "Usage:	docker" /tmp/docker_test; then
     echo "ERROR: you specified --container=docker, but docker is not installed"
-    echo "Please visit https://www.docker.com\n"
+    echo "Please visit https://www.docker.com"; echo ""
     exit 1
   fi
 fi
@@ -241,7 +241,7 @@ if [ "$container" = "singularity" ]; then
   singularity --help > /tmp/singularity_test
   if ! grep -q "Usage:" /tmp/singularity_test && ! grep -q "USAGE:" /tmp/singularity_test; then
     echo "ERROR: you specified --container=singularity, but singularity is not installed"
-    echo "Please visit http://singularity.lbl.gov\n"
+    echo "Please visit http://singularity.lbl.gov"; echo ""
     exit 1
   fi
 fi
