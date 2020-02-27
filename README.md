@@ -94,7 +94,7 @@ Please, provide values for the following MANDATORY parameters:
 
 **if you select K1** as a method, you may additionally provide the following: 
 
-* --nclusters: initial number of output clusters for spectral clustering step; final number of clusters differ (default is 100)
+* --nclusters: initial number of output clusters for spectral clustering step; final number may differ (default is 100)
 
 **if you select M1** as a method, you may additionally provide the following: 
 
