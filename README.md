@@ -164,11 +164,16 @@ Once you have tested your changes, run the following from the cloned MONET direc
 
 One of the MONET developers will test the changes in your branch then merge to Master. 
 
+## IMPLEMENTING LOCAL CHANGES TO MONET
+
+If you wish to implement local changes to MONET, independently from our github repository, you can simply modify the code in your local cloned repository and **reinstall** after having made those changes (i.e. run or re-run the ```install.sh``` script and confirm if you are asked to reinstall). This procedure can be repeated as many times as you like.
+
 ## TROUBLESHOOTING COMMON PROBLEMS
 
 If a MONET run is suddenly interrupted or if the expected outputs has not been generated, here are few common problems that can occur:
 * lack of RAM: if the console-output file (see section OUTPUT) contains the word "Killed", the MONET processed were stopped by the Operating System, likely due to a lack of RAM. To confirm this, please read section COMPUTATIONAL RESOURCES to learn how to monitor your resource usage while running MONET.
 * outdated kernel: Singularity users that work on Linux distributions with old kernels (e.g. CentOS 6.1, kernel 2.6) will encounter trouble during the install process; they need to contact their system administrator to inquire whether a kernel upgrade is possible.
+* can't implement local changes: please, refer to section IMPLEMENTING LOCAL CHANGES TO MONET.
 
 ## BUG-REPORTS
 
