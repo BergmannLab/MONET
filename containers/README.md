@@ -5,5 +5,5 @@ This directory contains the recipe files to generate the images from which virtu
 
 In particular, **DO NOT modify locally without REINSTALLING**.
 
-Note that the actual image files will not be placed in this folder.
+Note that the actual image files will not be placed in this folders.
 
