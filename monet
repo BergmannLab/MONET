@@ -405,6 +405,7 @@ if [ "$method" = "K1" ]; then
   rm "$install_dir"/src/K1_code/data/input_network.txt;
   if [ ! -f "$install_dir"/src/K1_code/data/final_clusters/clusters.txt ]; then
     echo ERROR: see "$output"/"$timestamp"__"$method"__console-output__"$network_name"
+    echo        please refer to section TROUBLESHOOTING in the README 
   else
     mv "$install_dir"/src/K1_code/data/final_clusters/clusters.txt $output_file
     echo "DONE: output can be found in $output"
@@ -414,6 +415,7 @@ if [ "$method" = "M1" ]; then
   rm "$install_dir"/src/M1_code/sub-challenge1/input.txt
   if [ ! -f "$install_dir"/src/M1_code/sub-challenge1/output.txt ]; then
     echo ERROR: see "$output"/"$timestamp"__"$method"__console-output__"$network_name"
+    echo        please refer to section TROUBLESHOOTING in the README
   else
     mv "$install_dir"/src/M1_code/sub-challenge1/output.txt $output_file
     echo "DONE: output can be found in $output"
@@ -423,6 +425,7 @@ if [ "$method" = "R1" ]; then
   rm "$install_dir"/src/R1_code/sub-challenge1/input.txt
   if [ ! -f "$install_dir"/src/R1_code/sub-challenge1/result/input.txt ]; then
     echo ERROR: see "$output"/"$timestamp"__"$method"__console-output__"$network_name"
+    echo        please refer to section TROUBLESHOOTING in the README
   else
     mv "$install_dir"/src/R1_code/sub-challenge1/result/input.txt $output_file
     echo "DONE: output can be found in $output"
