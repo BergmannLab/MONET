@@ -1,0 +1,51 @@
+R1: Running Team Causality's code from the DREAM challenge on disease module identification
+During startup - Warning messages:
+1: Setting LC_CTYPE failed, using "C" 
+2: Setting LC_COLLATE failed, using "C" 
+3: Setting LC_TIME failed, using "C" 
+4: Setting LC_MESSAGES failed, using "C" 
+5: Setting LC_MONETARY failed, using "C" 
+6: Setting LC_PAPER failed, using "C" 
+7: Setting LC_MEASUREMENT failed, using "C" 
+[1] "/R1_code/sub-challenge1"
+Loading required package: methods
+
+Attaching package: 'igraph'
+
+The following objects are masked from 'package:stats':
+
+    decompose, spectrum
+
+The following object is masked from 'package:base':
+
+    union
+
+Found 1986 singleton nodes in the input graph. Removing them.
+Input graph information ---------------------------------------------------
+  Name: test.txt, #Vertices: 14679, #Edges: 757339
+Output shall be placed in the file output.txt
+------------------------------------------------
+Clustering....
+Coarsened 6 levels
+Number of vertices in coarsest graph:556
+Done level 6
+Done level 5
+Done level 4
+Done level 3
+Done level 2
+Done level 1
+Done level 0
+------------------------------------------------
+Output statistics for graph without singletons
+Clusters: 340 N-Cut: 138.640 AvgN-Cut: 0.408 Balance in cluster sizes: 36.99 Std_Deviation in cluster sizes: 85.64 Coefficient_of_Variation: 2.29
+Output statistics for original graph
+Clusters: 2326 N-Cut: 138.640 AvgN-Cut: 0.060 Balance in cluster sizes: 218.83 Std.Deviation in cluster sizes: 35.17 Coefficient_of_Variation: 5.57
+
+Output is written to file: output.txt
+
+Timing Information --------------------------------------------------
+  I/O:          		   0.075
+  Partitioning: 		   6.205   (MLR-MCL time)
+  Total:        		   6.294
+**********************************************************************
+[1] 7

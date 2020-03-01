@@ -1,0 +1,83 @@
+R1: Running Team Causality's code from the DREAM challenge on disease module identification
+[1] "/R1_code/sub-challenge1"
+Loading required package: methods
+
+Attaching package: 'igraph'
+
+The following objects are masked from 'package:stats':
+
+    decompose, spectrum
+
+The following object is masked from 'package:base':
+
+    union
+
+Found 517 singleton nodes in the input graph. Removing them.
+Input graph information ---------------------------------------------------
+  Name: test.txt, #Vertices: 12588, #Edges: 256294
+Output shall be placed in the file output.txt
+------------------------------------------------
+Clustering....
+Coarsened 5 levels
+Number of vertices in coarsest graph:444
+Done level 5
+Done level 4
+Done level 3
+Done level 2
+Done level 1
+Done level 0
+------------------------------------------------
+Output statistics for graph without singletons
+Clusters: 290 N-Cut: 189.355 AvgN-Cut: 0.653 Balance in cluster sizes: 2.96 Std_Deviation in cluster sizes: 16.10 Coefficient_of_Variation: 0.39
+Output statistics for original graph
+Clusters: 807 N-Cut: 189.355 AvgN-Cut: 0.235 Balance in cluster sizes: 7.89 Std.Deviation in cluster sizes: 21.75 Coefficient_of_Variation: 1.39
+
+Output is written to file: output.txt
+
+Timing Information --------------------------------------------------
+  I/O:          		   0.034
+  Partitioning: 		   2.732   (MLR-MCL time)
+  Total:        		   2.771
+**********************************************************************
+[1] 1
+Input graph information ---------------------------------------------------
+  Name: test.txt, #Vertices: 542, #Edges: 10095
+Output shall be placed in the file output2.txt
+------------------------------------------------
+Clustering....
+Coarsened 0 levels
+Number of vertices in coarsest graph:542
+Done level 0
+------------------------------------------------
+Clusters: 35 N-Cut: 27.325 AvgN-Cut: 0.781 Balance in cluster sizes: 7.10 Std.Deviation in cluster sizes: 33.41 Coefficient_of_Variation: 2.16
+
+Output is written to file: output2.txt
+
+Timing Information --------------------------------------------------
+  I/O:          		   0.002
+  Partitioning: 		   0.074   (MLR-MCL time)
+  Total:        		   0.076
+**********************************************************************
+[1] 2
+Found 8 singleton nodes in the input graph. Removing them.
+Input graph information ---------------------------------------------------
+  Name: test.txt, #Vertices: 110, #Edges: 439
+Output shall be placed in the file output2.txt
+------------------------------------------------
+Clustering....
+Coarsened 0 levels
+Number of vertices in coarsest graph:102
+Done level 0
+------------------------------------------------
+Output statistics for graph without singletons
+Clusters: 22 N-Cut: 14.251 AvgN-Cut: 0.648 Balance in cluster sizes: 4.10 Std_Deviation in cluster sizes: 4.89 Coefficient_of_Variation: 1.06
+Output statistics for original graph
+Clusters: 30 N-Cut: 14.251 AvgN-Cut: 0.475 Balance in cluster sizes: 5.18 Std.Deviation in cluster sizes: 4.49 Coefficient_of_Variation: 1.22
+
+Output is written to file: output2.txt
+
+Timing Information --------------------------------------------------
+  I/O:          		   0.000
+  Partitioning: 		   0.003   (MLR-MCL time)
+  Total:        		   0.003
+**********************************************************************

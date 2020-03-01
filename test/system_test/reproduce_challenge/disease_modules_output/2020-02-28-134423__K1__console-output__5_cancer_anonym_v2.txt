@@ -1,0 +1,5 @@
+K1: Running Team Tusk's code from the DREAM challenge on disease module identification
+- run DSD and write distance matrix/nodelist
+- run clustering on distance matrix
+- split large clusters recursively
+- DONE

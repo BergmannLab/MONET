@@ -1,0 +1,74 @@
+R1: Running Team Causality's code from the DREAM challenge on disease module identification
+During startup - Warning messages:
+1: Setting LC_CTYPE failed, using "C" 
+2: Setting LC_COLLATE failed, using "C" 
+3: Setting LC_TIME failed, using "C" 
+4: Setting LC_MESSAGES failed, using "C" 
+5: Setting LC_MONETARY failed, using "C" 
+6: Setting LC_PAPER failed, using "C" 
+7: Setting LC_MEASUREMENT failed, using "C" 
+[1] "/R1_code/sub-challenge1"
+Loading required package: methods
+
+Attaching package: 'igraph'
+
+The following objects are masked from 'package:stats':
+
+    decompose, spectrum
+
+The following object is masked from 'package:base':
+
+    union
+
+Found 8244 singleton nodes in the input graph. Removing them.
+Input graph information ---------------------------------------------------
+  Name: test.txt, #Vertices: 17395, #Edges: 206491
+Output shall be placed in the file output.txt
+------------------------------------------------
+Clustering....
+Coarsened 6 levels
+Number of vertices in coarsest graph:670
+Done level 6
+Done level 5
+Done level 4
+Done level 3
+Done level 2
+Done level 1
+Done level 0
+------------------------------------------------
+Output statistics for graph without singletons
+Clusters: 305 N-Cut: 91.096 AvgN-Cut: 0.299 Balance in cluster sizes: 11.27 Std_Deviation in cluster sizes: 29.70 Coefficient_of_Variation: 0.99
+Output statistics for original graph
+Clusters: 8549 N-Cut: 91.096 AvgN-Cut: 0.011 Balance in cluster sizes: 166.11 Std.Deviation in cluster sizes: 7.77 Coefficient_of_Variation: 3.82
+
+Output is written to file: output.txt
+
+Timing Information --------------------------------------------------
+  I/O:          		   0.043
+  Partitioning: 		   1.856   (MLR-MCL time)
+  Total:        		   1.905
+**********************************************************************
+[1] 1
+expected no. of edges:114430, xadj[nvtxs]:72140
+Found 178 singleton nodes in the input graph. Removing them.
+Input graph information ---------------------------------------------------
+  Name: test.txt, #Vertices: 609, #Edges: 36070
+Output shall be placed in the file output2.txt
+------------------------------------------------
+Clustering....
+Coarsened 0 levels
+Number of vertices in coarsest graph:431
+Done level 0
+------------------------------------------------
+Output statistics for graph without singletons
+Clusters: 3 N-Cut: 1.685 AvgN-Cut: 0.562 Balance in cluster sizes: 2.97 Std_Deviation in cluster sizes: 199.64 Coefficient_of_Variation: 1.39
+Output statistics for original graph
+Clusters: 181 N-Cut: 1.685 AvgN-Cut: 0.009 Balance in cluster sizes: 126.61 Std.Deviation in cluster sizes: 31.50 Coefficient_of_Variation: 9.36
+
+Output is written to file: output2.txt
+
+Timing Information --------------------------------------------------
+  I/O:          		   0.003
+  Partitioning: 		   0.181   (MLR-MCL time)
+  Total:        		   0.185
+**********************************************************************

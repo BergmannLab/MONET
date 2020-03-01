@@ -1,0 +1,432 @@
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: R1
+Input: 1_ppi_anonym_v2.txt
+Container: singularity
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 23 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: R1
+Input: 1_ppi_anonym_v2.txt
+Container: docker
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 26 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: R1
+Input: 2_ppi_anonym_v2.txt
+Container: singularity
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 14 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: R1
+Input: 2_ppi_anonym_v2.txt
+Container: docker
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 16 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: R1
+Input: 3_signal_anonym_directed_v3.txt
+Container: singularity
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 3 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: R1
+Input: 3_signal_anonym_directed_v3.txt
+Container: docker
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 4 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: R1
+Input: 4_coexpr_anonym_v2.txt
+Container: singularity
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 16 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: R1
+Input: 4_coexpr_anonym_v2.txt
+Container: docker
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 18 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: R1
+Input: 5_cancer_anonym_v2.txt
+Container: singularity
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 29 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: R1
+Input: 5_cancer_anonym_v2.txt
+Container: docker
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 33 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: R1
+Input: 6_homology_anonym_v2.txt
+Container: singularity
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 22 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: R1
+Input: 6_homology_anonym_v2.txt
+Container: docker
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 24 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: M1
+Input: 1_ppi_anonym_v2.txt
+Container: singularity
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 1834 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: M1
+Input: 1_ppi_anonym_v2.txt
+Container: docker
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 1935 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: M1
+Input: 2_ppi_anonym_v2.txt
+Container: singularity
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 772 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: M1
+Input: 2_ppi_anonym_v2.txt
+Container: docker
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 828 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: M1
+Input: 3_signal_anonym_directed_v3.txt
+Container: singularity
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 156 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: M1
+Input: 3_signal_anonym_directed_v3.txt
+Container: docker
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 161 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: M1
+Input: 4_coexpr_anonym_v2.txt
+Container: singularity
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 1584 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: M1
+Input: 4_coexpr_anonym_v2.txt
+Container: docker
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 1673 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: M1
+Input: 5_cancer_anonym_v2.txt
+Container: singularity
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 2071 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: M1
+Input: 5_cancer_anonym_v2.txt
+Container: docker
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 2889 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: M1
+Input: 6_homology_anonym_v2.txt
+Container: singularity
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 1374 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: M1
+Input: 6_homology_anonym_v2.txt
+Container: docker
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 1473 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: K1
+Input: 1_ppi_anonym_v2.txt
+Container: singularity
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 20074 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: K1
+Input: 1_ppi_anonym_v2.txt
+Container: docker
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 21054 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: K1
+Input: 2_ppi_anonym_v2.txt
+Container: singularity
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 5151 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: K1
+Input: 2_ppi_anonym_v2.txt
+Container: docker
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 5236 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: K1
+Input: 3_signal_anonym_directed_v3.txt
+Container: singularity
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 388 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: K1
+Input: 3_signal_anonym_directed_v3.txt
+Container: docker
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 402 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: K1
+Input: 4_coexpr_anonym_v2.txt
+Container: singularity
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 5592 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: K1
+Input: 4_coexpr_anonym_v2.txt
+Container: docker
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 5627 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: K1
+Input: 5_cancer_anonym_v2.txt
+Container: singularity
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 8613 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: K1
+Input: 5_cancer_anonym_v2.txt
+Container: docker
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 8929 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: K1
+Input: 6_homology_anonym_v2.txt
+Container: singularity
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 2732 seconds
+DONE: output can be found in ./output_reproduce_challenge
+
+--------------------------------------------------------------------------------
+DREAM challenge Disease Module Identification
+
+Method: K1
+Input: 6_homology_anonym_v2.txt
+Container: docker
+Preparing container, please wait...
+Running container, please wait...
+
+Exectution took 2761 seconds
+DONE: output can be found in ./output_reproduce_challenge

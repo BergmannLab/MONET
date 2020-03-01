@@ -1,0 +1,57 @@
+R1: Running Team Causality's code from the DREAM challenge on disease module identification
+During startup - Warning messages:
+1: Setting LC_CTYPE failed, using "C" 
+2: Setting LC_COLLATE failed, using "C" 
+3: Setting LC_TIME failed, using "C" 
+4: Setting LC_MESSAGES failed, using "C" 
+5: Setting LC_MONETARY failed, using "C" 
+6: Setting LC_PAPER failed, using "C" 
+7: Setting LC_MEASUREMENT failed, using "C" 
+[1] "/R1_code/sub-challenge1"
+Loading required package: methods
+
+Attaching package: 'igraph'
+
+The following objects are masked from 'package:stats':
+
+    decompose, spectrum
+
+The following object is masked from 'package:base':
+
+    union
+
+expected no. of edges:48906, xadj[nvtxs]:42102
+Input graph information ---------------------------------------------------
+  Name: test.txt, #Vertices: 5254, #Edges: 21051
+Output shall be placed in the file output.txt
+------------------------------------------------
+Clustering....
+Coarsened 15 levels
+Number of vertices in coarsest graph:400
+Done level 15
+Done level 14
+Done level 13
+Done level 12
+Done level 11
+Done level 10
+Done level 9
+Done level 8
+Done level 7
+Done level 6
+Done level 5
+Done level 4
+Done level 3
+Done level 2
+Done level 1
+Done level 0
+------------------------------------------------
+Clusters: 259 N-Cut: 87.322 AvgN-Cut: 0.337 Balance in cluster sizes: 3.25 Std.Deviation in cluster sizes: 17.10 Coefficient_of_Variation: 0.84
+
+Output is written to file: output.txt
+
+Timing Information --------------------------------------------------
+  I/O:          		   0.003
+  Partitioning: 		   0.402   (MLR-MCL time)
+  Total:        		   0.405
+**********************************************************************
+[1] 0
