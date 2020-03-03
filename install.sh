@@ -68,7 +68,13 @@ fi
 echo "- Copying files..."
 mkdir $user_home/.monet
 cp -r ./* $user_home/.monet
+cp -r ./. $user_home/.monet
 chmod -R 750 $user_home/.monet
+# some folders were hidden in the repo to avoid confusing the user
+mv $user_home/.monet/.monet $user_home/.monet/monet
+mv $user_home/.monet/.src $user_home/.monet/src
+mv $user_home/.monet/.test $user_home/.monet/test
+mv $user_home/.monet/.containers $user_home/.monet/containers
 echo "  ...DONE"
 
 function add_to_path {
