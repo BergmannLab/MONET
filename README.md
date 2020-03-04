@@ -26,6 +26,10 @@ Please run:
 
 A folder MONET will have been created with the source code: you are free to remove it, if you are not interested. This will not affect MONET, which has now been installed in your system: the command ```monet``` can be invoked from any location on the system.
 
+#### USERS WITHOUT SUDO RIGHTS: INSTALLATION NOTE
+
+Sudo rights will be required at installation time. Users that don't have sudo rights should install as explained above, then refer to MONET/docs/installation_no_sudo.txt where they will find a workaround to complete the installation manually.
+
 ## TESTING THE INSTALLATION
 
 At the end of the install process, you will be asked whether you want to test MONET. This test is completely automatic.
