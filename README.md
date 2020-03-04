@@ -26,9 +26,11 @@ Please run:
 
 A folder MONET will have been created with the source code: you are free to remove it, if you are not interested. This will not affect MONET, which has now been installed in your system: the command ```monet``` can be invoked from any location on the system.
 
-#### USERS WITHOUT SUDO RIGHTS: INSTALLATION NOTE
+#### SINGULARITY USERS WITHOUT SUDO RIGHTS: INSTALLATION NOTE
 
-Sudo rights will be required at installation time. Users that don't have sudo rights should install as explained above, then refer to MONET/docs/installation_no_sudo.txt where they will find a workaround to complete the installation manually.
+Sudo rights will be required at installation time for Singularity users: Singularity users will not need sudo rights while running MONET (i.e., Singularity does not require sudo right to run containers), but they will need it at installtion time (i.e., at the time the Singularity images are first created). 
+
+Users that don't have sudo rights should follow the regular installation procedure explained above, then refer to MONET/docs/installation_no_sudo.txt where they will find a workaround to complete the installation manually without needing sudo.
 
 ## TESTING THE INSTALLATION
 
