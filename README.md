@@ -100,27 +100,27 @@ Please, provide values for the following MANDATORY parameters:
 
 **if you select K1** as a method, you may additionally provide the following: 
 
-* --nclusters: initial number of output clusters for spectral clustering step; final number may differ (default is 100)
+* **--nclusters**: initial number of output clusters for spectral clustering step; final number may differ (default is 100)
 
 **if you select M1** as a method, you may additionally provide the following: 
 
-* --smallest: min size of output clusters (default is 3)
-* --largest: max size of output clusters (default is 100)
-* --linksdir: directionality of links: [undirected|directed] (default is undirected)
-* --avgk: desired average degree for nodes in output (default is 25)
+* **--smallest**: min size of output clusters (default is 3)
+* **--largest**: max size of output clusters (default is 100)
+* **--linksdir**: directionality of links: [undirected|directed] (default is undirected)
+* **--avgk**: desired average degree for nodes in output (default is 25)
 
 **if you select R1** as a method, you may additionally provide the following: 
 
-* --smallest: min size of output clusters (default is 3)
-* --largest: max size of output clusters (default is 100)
-* --c: trade-off parameter for computational efficiency; for larger c, the algorithm will run slower, but may provide more accurate results (default is 800)
-* --i: inflation parameter for standard Markov Clustering algorithm on which R1 is based (default is 2)
-* --b: parameter controlling how balanced the clustering results should be; for b=0, R1 behaves like standard Regularized Markov Cluster (default is 2)
-* --threshold: remove edges smaller than threshold from the input (default is 4)
-* --post: decide whether to recursively cluster (recluster) or discard too large output clusters: [recluster|discard] (default is discard)
-* --c2: (only used if --post=recluster) sets --c for reclustering round (default is 500)
-* --i2: (only used if --post=recluster) sets --i for reclustering round (default is 2)
-* --b2: (only used if --post=recluster) sets --b for reclustering round (default is 2)
+* **--smallest**: min size of output clusters (default is 3)
+* **--largest**: max size of output clusters (default is 100)
+* **--c**: trade-off parameter for computational efficiency; for larger c, the algorithm will run slower, but may provide more accurate results (default is 800)
+* **--i**: inflation parameter for standard Markov Clustering algorithm on which R1 is based (default is 2)
+* **--b**: parameter controlling how balanced the clustering results should be; for b=0, R1 behaves like standard Regularized Markov Cluster (default is 2)
+* **--threshold**: remove edges smaller than threshold from the input (default is 4)
+* **--post**: decide whether to recursively cluster (recluster) or discard too large output clusters: [recluster|discard] (default is discard)
+* **--c2**: (only used if --post=recluster) sets --c for reclustering round (default is 500)
+* **--i2**: (only used if --post=recluster) sets --i for reclustering round (default is 2)
+* **--b2**: (only used if --post=recluster) sets --b for reclustering round (default is 2)
 
 ## COMPUTATIONAL RESOURCES
 
