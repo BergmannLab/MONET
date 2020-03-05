@@ -1,0 +1,18 @@
+INSTALLATION WITHOUT SUDO RIGHTS for SINGULARITY USERS
+This file is meant to give guidance to SINGULARITY users that do not have sudo rights. DOCKER users are not affected, as sudo rights are not needed at installation time.
+
+Please run the install process as explained in the main README file until you are asked:
+  $ “To complete the installation, you need SUPERUSER rights and INTERNET access."
+  $ "Do you want to proceed? [y|n]"
+Answer no (i.e., “n”), then, depending on your Singularity version, follow the instructions below to complete the installation. Installation without sudo for Docker users is not supported at present.
+
+Singularity 2.6
+- download from file from https://drive.google.com/open?id=1H1BqTn4ru-o1CsuGR6QJHnK_r1hiAb1X rename it and place it here $HOME/.monet/.containers/R1/singularity/R1-image.img
+- download from file from https://drive.google.com/open?id=1zoAoftvHqypbZzlFqK6ZukhPztzUm6YU rename it and place it here $HOME/.monet/.containers/K1/singularity/K1-image.img
+- download from file https://drive.google.com/open?id=1j7tHLU6TtU6iAawhA4VqGwQW43ESN0mE rename it and place it here $HOME/.monet/.containers/M1/singularity/M1-image.img
+
+Singularity 3.4
+- download from file from https://cloud.sylabs.io/library/mattiat/default/monet-r1 rename it and place it here $HOME/.monet/.containers/R1/singularity/R1-image.img
+- download from file from https://cloud.sylabs.io/library/mattiat/default/monet-k1 rename it and place it here $HOME/.monet/.containers/K1/singularity/K1-image.img
+-  download from file from https://cloud.sylabs.io/library/mattiat/default/monet-m1 rename it and place it here $HOME/.monet/.containers/M1/singularity/M1-image.img
+

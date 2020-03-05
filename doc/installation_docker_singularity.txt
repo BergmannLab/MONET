@@ -1,0 +1,6 @@
+INSTALLING DOCKER/SINGULARITY ON DIFFERENT PLATFORMS
+This file provides instructions to install Docker/Singularity on a number of different Operating Systems.
+
+SETTING: during the International Conference on Multiscale Systems and Network Medicine (Munich, 03 March 2020), participants of a MONET workshop installed Docker / Singularity and run MONET, testing a number of Operating System and Docker/Singularity version combinations.
+
+…Coming after 03 March 2020.

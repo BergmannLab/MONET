@@ -1,0 +1,7 @@
+RESEARCH BEHIND THE MONET METHODS
+
+This is a link to our paper giving all the details about how the MONET methods were benchmarked on SYNTHETIC data: 
+https://www.biorxiv.org/content/10.1101/611418v4
+
+This is a link to our paper showing the performance of the MONET methods on real data as part of the Disease Module Identification DREAM Challenge:
+https://www.nature.com/articles/s41592-019-0509-5
