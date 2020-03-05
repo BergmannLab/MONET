@@ -56,7 +56,7 @@ main <- function(file,b=2,c=5000,i=2,filter,threshold=2,inteWeight="yes",weighte
       output[[i]] <- temp
     }
   }
-  writeFile(output,file,dir)
+  # writeFile(output,file,dir)
   return(output)
   file.remove("output.txt")
   file.remove("test.txt")
@@ -89,8 +89,13 @@ preProcessing <- function(input,method=c("quantile","pageRank","double"),i,integ
   if (integerWeight=="yes"){
     maximum<-max(input[,3])
     minimum<-min(input[,3])
-    w<-as.integer(scales::rescale(input[,3],maximum,minimum))
-    E(graph)$weight=as.numeric(w)
+    if (maximum==minimum){
+      E(graph)$weight=as.numeric(input[,3])
+    } else{
+      rescale <- function(x,max,min) (x-minimum)/(maximum - minimum) * 100
+      w<-as.integer(rescale(input[,3]))
+      E(graph)$weight=as.numeric(w)
+    }
   }
   else if (integerWeight=="no")
     E(graph)$weight<-as.numeric(input[,3])
