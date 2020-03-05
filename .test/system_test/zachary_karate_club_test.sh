@@ -39,4 +39,4 @@ monet --input=./input/zachary_karate_club.txt --output=$output --method=R1 --con
 monet --input=./input/zachary_karate_club.txt --output=$output --method=M1 --container=docker
 
 # K1 - TUSK
-monet --input=./input/zachary_karate_club.txt --output=$output --method=K1 --container=docker
+monet --input=./input/zachary_karate_club.txt --nclusters=10 --output=$output --method=K1 --container=docker
