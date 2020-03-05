@@ -403,7 +403,9 @@ output_file="$output"/"$timestamp"__"$method"__result-modules__"$network_name"
 if [ "$method" = "K1" ]; then
   rm -f "$install_dir"/src/K1_code/data/DSD/* # remove temporary files
   rm "$install_dir"/src/K1_code/data/input_network.txt;
-  if [ ! -f "$install_dir"/src/K1_code/data/final_clusters/clusters.txt ]; then
+  result_file="$install_dir"/src/K1_code/data/final_clusters/clusters.txt
+  if [ ! -f $result_file ] || [ ! -s $result_file ]; then
+    # if result file not present or empty
     echo ERROR: see "$output"/"$timestamp"__"$method"__console-output__"$network_name"
     echo        please refer to section TROUBLESHOOTING in the README 
   else
@@ -413,7 +415,8 @@ if [ "$method" = "K1" ]; then
 fi
 if [ "$method" = "M1" ]; then
   rm "$install_dir"/src/M1_code/sub-challenge1/input.txt
-  if [ ! -f "$install_dir"/src/M1_code/sub-challenge1/output.txt ]; then
+  result_file="$install_dir"/src/M1_code/sub-challenge1/output.txt
+  if [ ! -f $result_file ] || [ ! -s $result_file ]; then
     echo ERROR: see "$output"/"$timestamp"__"$method"__console-output__"$network_name"
     echo        please refer to section TROUBLESHOOTING in the README
   else
@@ -423,7 +426,8 @@ if [ "$method" = "M1" ]; then
 fi
 if [ "$method" = "R1" ]; then
   rm "$install_dir"/src/R1_code/sub-challenge1/input.txt
-  if [ ! -f "$install_dir"/src/R1_code/sub-challenge1/result/input.txt ]; then
+  result_file="$install_dir"/src/R1_code/sub-challenge1/result/input.txt
+  if [ ! -f $result_file ] || [ ! -s $result_file ]; then
     echo ERROR: see "$output"/"$timestamp"__"$method"__console-output__"$network_name"
     echo        please refer to section TROUBLESHOOTING in the README
   else

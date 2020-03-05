@@ -69,7 +69,7 @@ def spectral_clustering(dist_matrix, n_clusters=8, node_map=[]):
     """
 
     if n_clusters >= dist_matrix.shape[0]:
-        raise ValueError('Number of clusters must be less than number of nodes')
+        raise ValueError('Please re-run setting --ncluster < number of nodes in the input file')
 
     # apply RBF kernel to generate similarity matrix from distance
     # matrix (i.e. lower DSD => higher similarity)
