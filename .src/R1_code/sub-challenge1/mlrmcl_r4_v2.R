@@ -56,7 +56,7 @@ main <- function(file,b=2,c=5000,i=2,filter,threshold=2,inteWeight="yes",weighte
       output[[i]] <- temp
     }
   }
-  # writeFile(output,file,dir)
+  writeFile(output,file,dir)
   return(output)
   file.remove("output.txt")
   file.remove("test.txt")
