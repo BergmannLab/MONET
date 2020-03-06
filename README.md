@@ -26,6 +26,10 @@ Please run:
 
 A folder MONET will have been created with the source code: you are free to remove it, if you are not interested. This will not affect MONET, which has now been installed in your system: the command ```monet``` can be invoked from any location on the system.
 
+#### WINDOWS USERS
+
+Users using Windows are encouraged to install a hypervisor (i.e., a software that allows to creates and run virtual machines): for example, install VirtualBox https://www.virtualbox.org/wiki/Downloads and configure it up to run a virtual Ubuntu Linux inside which to install MONET (using the instructions above).
+
 #### SINGULARITY USERS WITHOUT SUDO RIGHTS: INSTALLATION NOTE
 
 Sudo rights will be required at installation time for Singularity users: Singularity users will not need sudo rights while running MONET (i.e., Singularity does not require sudo right to run containers), but they will need it at installtion time (i.e., at the time the Singularity images are first created). 
