@@ -14,7 +14,7 @@
 #    GNU General Public License for more details.
 #
 #    You should have received a copy of the GNU General Public License
-#    along with DREAM DMI Tool. If not, see <https://www.gnu.org/licenses/>.
+#    along with DREAM DMI Tool. If not, see <https://www.gnu.org/licoenses/>.
 #
 ###############################################################################
 # Mattia Tomasoni - UNIL, CBG
@@ -89,8 +89,13 @@ preProcessing <- function(input,method=c("quantile","pageRank","double"),i,integ
   if (integerWeight=="yes"){
     maximum<-max(input[,3])
     minimum<-min(input[,3])
-    w<-as.integer(rescale(input[,3],graph,maximum,minimum))
-    E(graph)$weight=as.numeric(w)
+    if (maximum==minimum){
+      E(graph)$weight=as.numeric(input[,3])
+    } else{
+      rescale <- function(x,max,min) (x-minimum)/(maximum - minimum) * 100
+      w<-as.integer(rescale(input[,3]))
+      E(graph)$weight=as.numeric(w)
+    }
   }
   else if (integerWeight=="no")
     E(graph)$weight<-as.numeric(input[,3])

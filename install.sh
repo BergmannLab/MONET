@@ -98,7 +98,7 @@ if ! $docker_installed && $singularity_installed; then
   echo ""
   echo "It appears only Singularity is intalled on this system."
   echo "To complete the installation, you need SUPERUSER rights and INTERNET access."
-  read -p "Do you want to proceeed? [y|n] " -n 1 -r
+  read -p "Do you want to proceed? [y|n] " -n 1 -r
   echo " " && echo "Please wait while the Singularity containers are being built"
   echo "(this takes a few minutes)" 
   if [[ $REPLY =~ ^[y]$ ]]
@@ -114,7 +114,7 @@ if ! $docker_installed && $singularity_installed; then
     else
       echo " "
       echo "The installation will need to be completed, manually, at a later stage."
-      echo "Please contact mattia.tomasoni@unil.ch and ask for support."  
+      echo "Please refer to MONET/doc/installation_no_sudo"  
       add_to_path
       exit 0
   fi
