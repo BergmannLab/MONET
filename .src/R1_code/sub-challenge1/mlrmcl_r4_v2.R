@@ -104,27 +104,58 @@ preProcessing <- function(input,method=c("quantile","pageRank","double"),i,integ
   return(graph)
 }
 
+# THIS VERSION OF generateFile
+# 
+# SOLVES ISSUE 15 https://github.com/BergmannLab/MONET/issues/15
+# - MONET/.test/system_test/retinal_toxicity_test.sh PASSES
+# BUT CAUSES ERROR IN SYSTEM TESTS
+# - MONET/.test/system_test/reproduce_challenge
+#
+#generateFile <- function(graph,weighted=T){
+#  test3<-get.adjacency(graph,attr = "weight")
+#  m.index<-get.adjlist(graph)
+#  graph_directed <- as.directed(graph)
+#  m.weight <- get.edge.attribute(graph_directed,name = "weight")
+#  # m<-as.matrix(test3)
+#  if (weighted){
+#    # test<-sapply(1:nrow(m), function(i) m[i,m.index[[i]]])
+#    temp2<-list()
+#    # temp2_t <- list()
+#    count <- 1
+#    for (i in 1:length(m.index)){
+#      num_edge_i = length(m.index[[i]])
+#      if (num_edge_i == 0){
+#        temp2[[i]]<-c(rbind(as.character(m.index[[i]]),numeric(0)))
+#      } else{
+#        edge_weight_i <- m.weight[count:(count+num_edge_i-1)]
+#        # temp2_t[[i]]<-c(rbind(as.character(m.index[[i]]),test[[i]]))
+#        temp2[[i]]<-c(rbind(as.character(m.index[[i]]),edge_weight_i))
+#        count <- count + num_edge_i
+#      }
+#    }
+#    fn <- "test.txt"
+#    if (file.exists(fn)) file.remove(fn)
+#    write(c(vcount(graph),ecount(graph),1),file="test.txt",sep="\t")
+#    dummy<-lapply(temp2, write, "test.txt", ncolumns = length(temp2), append=TRUE,sep="\t")
+#  }
+#  else{
+#    fn <- "test.txt"
+#    if (file.exists(fn)) file.remove(fn)
+#    write(c(vcount(graph),ecount(graph)),file="test.txt",sep="\t")
+#    dummy<-lapply(m.index, write, "test.txt", ncolumns = length(m.index), append=TRUE,sep="\t")
+#  }
+#}
+
 generateFile <- function(graph,weighted=T){
   test3<-get.adjacency(graph,attr = "weight")
-  m.index<-get.adjlist(graph)
-  graph_directed <- as.directed(graph)
-  m.weight <- get.edge.attribute(graph_directed,name = "weight")
-  # m<-as.matrix(test3)
+  m<-as.matrix(test3)
+  m.index<-apply(m!=0,1,which,arr.ind=T)
+  # weight<-m[m.index]
   if (weighted){
-    # test<-sapply(1:nrow(m), function(i) m[i,m.index[[i]]])
+    test<-sapply(1:nrow(m), function(i) m[i,m.index[[i]]])
     temp2<-list()
-    # temp2_t <- list()
-    count <- 1
     for (i in 1:length(m.index)){
-      num_edge_i = length(m.index[[i]])
-      if (num_edge_i == 0){
-        temp2[[i]]<-c(rbind(as.character(m.index[[i]]),numeric(0)))
-      } else{
-        edge_weight_i <- m.weight[count:(count+num_edge_i-1)]
-        # temp2_t[[i]]<-c(rbind(as.character(m.index[[i]]),test[[i]]))
-        temp2[[i]]<-c(rbind(as.character(m.index[[i]]),edge_weight_i))
-        count <- count + num_edge_i
-      }
+      temp2[[i]]<-c(rbind(as.character(m.index[[i]]),test[[i]]))
     }
     fn <- "test.txt"
     if (file.exists(fn)) file.remove(fn)
