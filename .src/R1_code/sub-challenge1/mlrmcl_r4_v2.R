@@ -253,7 +253,7 @@ writeFile <- function(output,file,dir){
   if (file.exists("output2.txt")) file.remove("output2.txt")
   file.remove("test.txt")
   for (i in 1:length(output)){
-    temp<-c(i,0.5,output[[i]])
+    temp<-c(i,1,output[[i]])
     write(temp,file=fn, ncolumns = length(output[[i]])+2, append=T, sep="\t")
   }
 }
