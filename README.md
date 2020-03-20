@@ -141,7 +141,7 @@ To monitor resource usage when running on your own input (and thus determine the
 
 ## BENCHMARKING
 
-For details about the modularization performance of the MONET methods on a set of artificial benchmarks (Louvain algorithm is shown as a baseline), please refer to the MONET paper in the PUBLICATIONS section; in particular, Fig. 1. MONET/test/benchmarking for a detailed output of the experiments that have been carried out.
+For details about the modularization performance of the MONET methods on a set of artificial benchmarks (Louvain algorithm is shown as a baseline), please refer to the MONET paper in the PUBLICATIONS section; in particular, Fig. 1. MONET/.test/benchmarking for a detailed output of the experiments that have been carried out.
 
 ## SOURCE CODE
 
