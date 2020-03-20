@@ -135,9 +135,9 @@ Please, provide values for the following MANDATORY parameters:
 
 Some of the methods require large amount of resources, depending on your input (please, refer to the MONET paper in the PUBLICATIONS section for details about how resource needs will scale with the size of the input, for the different methods). 
 
-To reproduce the results of the DREAM Challenge, you can run MONET/test/system_test/reproduce_challenge/reproduce_challenge.sh. This might fail on commodity hardware (i.e., a regular laptop or desktop) as about 8GB or RAM need to be available. In that case, you can allocate a larger SWAP partition (on Linux) or run the experiment on more powerful hardware, such as a server. Please browser the rest of the contents of MONET/test/system_test/reproduce_challenge to view the exact RAM usage (ram_usage.txt) and the challenge outputs produced by MONET (disease_modules_output directory).
+To reproduce the results of the DREAM Challenge, you can run MONET/.test/system_test/reproduce_challenge/reproduce_challenge.sh. This might fail on commodity hardware (i.e., a regular laptop or desktop) as about 8GB or RAM need to be available. In that case, you can allocate a larger SWAP partition (on Linux) or run the experiment on more powerful hardware, such as a server. Please browser the rest of the contents of MONET/.test/system_test/reproduce_challenge to view the exact RAM usage (ram_usage.txt) and the challenge outputs produced by MONET (disease_modules_output directory).
 
-To monitor resource usage when running on your own input (and thus determine the amount or RAM / swap needed by your particular input network for a particular method), two simple scripts have been added to MONET/test/helper_scripts (for Unix and one for MacOS systems): launch them before execution of MONET and redirect their output to file for simple inspection (no other task should be running).
+To monitor resource usage when running on your own input (and thus determine the amount or RAM / swap needed by your particular input network for a particular method), two simple scripts have been added to MONET/.test/helper_scripts (for Unix and one for MacOS systems): launch them before execution of MONET and redirect their output to file for simple inspection (no other task should be running).
 
 ## BENCHMARKING
 
