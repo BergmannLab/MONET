@@ -73,7 +73,7 @@ Details:
 * "\t" indicates the tab character and "\n" the newline character
 * no blank spaces should appear, neither as separators nor as part of the gene ids
 
-For an example, see MONET/test/system_test/input/zachary_karate_club.txt. The same folder containing the actual inputs to the Disease Module Identification (DMI) DREAM Challenge. Beware that some of the inputs will require high amounts of computational resources and are not suited to be run on a simple laptop or desktop computer; please refer to section COMPUTATIONAL RESOURCES for details.
+For an example, see MONET/.test/system_test/input/zachary_karate_club.txt. The same folder containing the actual inputs to the Disease Module Identification (DMI) DREAM Challenge. Beware that some of the inputs will require high amounts of computational resources and are not suited to be run on a simple laptop or desktop computer; please refer to section COMPUTATIONAL RESOURCES for details.
 
 ## OUTPUT
 
