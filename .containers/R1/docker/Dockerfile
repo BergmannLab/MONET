@@ -24,7 +24,7 @@
 # one of the top performing teams: Team Causality
 ###############################################################################
 
-FROM ubuntu
+FROM ubuntu:19.10
 LABEL maintainer="Mattia Tomasoni <mattia.tomasoni@unil.ch>"
 
 ###############################################################################
