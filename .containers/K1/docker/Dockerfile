@@ -14,7 +14,7 @@
 #
 #    You should have received a copy of the GNU General Public License
 #    along with DREAM DMI Tool. If not, see <https://www.gnu.org/licenses/>.
-#
+#====
 ###############################################################################
 # Mattia Tomasoni - UNIL, CBG
 # 2017 DREAM challenge on Disease Module Identification
@@ -24,28 +24,23 @@
 # one of the top performing teams: Team Tusk
 ###############################################################################
 
-FROM ubuntu:19.10
+FROM ubuntu:20.04
 LABEL maintainer="Mattia Tomasoni <mattia.tomasoni@unil.ch>"
 
 ###############################################################################
 # install python and required libraries
 
-RUN apt-get update
+RUN apt update
+RUN apt -y install python2
+RUN apt -y install curl
+RUN curl https://bootstrap.pypa.io/2.7/get-pip.py --output get-pip.py
+RUN python2 get-pip.py
 
-#RUN apt-get install -y python
-
-RUN apt-get -y install python-igraph
-
-RUN apt install -y python-pip && \
- pip install --upgrade pip
-
-RUN pip install scikit-learn
-
-RUN pip install numpy scipy
-
-RUN apt-get -y install python-argparse
-
-RUN pip install networkx
+RUN pip2 install python-igraph
+RUN pip2 install scikit-learn
+RUN pip2 install numpy scipy
+RUN pip2 install argparse
+RUN pip2 install networkx
 
 ###############################################################################
 # run method

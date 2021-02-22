@@ -25,7 +25,7 @@
 ###############################################################################
 
 Bootstrap: docker
-From: ubuntu:19.10
+From: ubuntu:20.04
 
 %labels
 AUTHOR Mattia Tomasoni <mattia.tomasoni@unil.ch>
@@ -34,15 +34,17 @@ AUTHOR Mattia Tomasoni <mattia.tomasoni@unil.ch>
 # install python 3.6 and required libraries
 
 %post
-
-apt-get update && \
- apt-get install -y python && \
- apt-get -y install python-igraph && \
- apt install -y python-pip && \
- pip install scikit-learn && \
- pip install numpy scipy && \
- apt-get -y install python-argparse && \
- pip install networkx 
+ 
+apt update && \
+  apt -y install python2 && \
+  apt -y install curl && \
+  curl https://bootstrap.pypa.io/2.7/get-pip.py --output get-pip.py && \
+  python2 get-pip.py && \
+  pip2 install python-igraph && \
+  pip2 install scikit-learn && \
+  pip2 install numpy scipy && \
+  pip2 install argparse && \
+  pip2 install networkx
 
 ###############################################################################
 # run method

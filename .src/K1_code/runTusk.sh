@@ -42,7 +42,7 @@ mkdir -p ./data/final_clusters
 
 # run DSD and write distance matrix/nodelist to data/DSD
 echo "- run DSD and write distance matrix/nodelist"
-python ./dsd_gen.py ./data/input_network.txt -o ./data/DSD/network
+python2 ./dsd_gen.py ./data/input_network.txt -o ./data/DSD/network
 
 # get correct location of distance matrix/nodelist
 if [ -f ./data/DSD/network.dsd ]; then
@@ -55,9 +55,9 @@ fi
 
 # run clustering on distance matrix, then split large clusters recursively
 echo "- run clustering on distance matrix"
-python ./clustering/generate_clusters.py $DSD_FILE -n $NODELIST_FILE -a 1 -p ${nclusters} > ./data/cluster_results/network_clusters.txt
+python2 ./clustering/generate_clusters.py $DSD_FILE -n $NODELIST_FILE -a 1 -p ${nclusters} > ./data/cluster_results/network_clusters.txt
 echo "- split large clusters recursively"
-python ./clustering/split_clusters.py $DSD_FILE ./data/cluster_results/network_clusters.txt -n $NODELIST_FILE > ./data/cluster_results/network_clusters_split.txt
+python2 ./clustering/split_clusters.py $DSD_FILE ./data/cluster_results/network_clusters.txt -n $NODELIST_FILE > ./data/cluster_results/network_clusters_split.txt
 
 # copy to final clustering file
 cp ./data/cluster_results/network_clusters_split.txt ./data/final_clusters/clusters.txt
