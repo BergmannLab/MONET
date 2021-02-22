@@ -229,17 +229,24 @@ if [ "$container" != "docker" -a "$container" != "singularity" ]; then
   usage
   exit 1
 fi
+
+
+
+
+
 if [ "$container" = "docker" ]; then
-  docker --help > /tmp/docker_test
-  if ! grep -q "Usage:	docker" /tmp/docker_test; then
+  docker --help > /tmp/docker_test 2>&1
+  if [ $? -eq "0" ]; then docker_installed=true; else docker_installed=false; fi
+  if ! $docker_installed; then
     echo "ERROR: you specified --container=docker, but docker is not installed"
     echo "Please visit https://www.docker.com"; echo ""
     exit 1
   fi
 fi
 if [ "$container" = "singularity" ]; then
-  singularity --help > /tmp/singularity_test
-  if ! grep -q "Usage:" /tmp/singularity_test && ! grep -q "USAGE:" /tmp/singularity_test; then
+  singularity --help > /tmp/singularity_test 2>&1
+  if [ $? -eq "0" ]; then singularity_installed=true; else singularity_installed=false; fi
+  if ! $singularity_installed; then
     echo "ERROR: you specified --container=singularity, but singularity is not installed"
     echo "Please visit http://singularity.lbl.gov"; echo ""
     exit 1
