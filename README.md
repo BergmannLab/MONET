@@ -9,7 +9,7 @@ This repository holds the source code for **MONET**, a Linux/MacOS command-line 
 * MacOS (it was tested on *macOS Sierra* 10.12)
 
 **Software**: MONET requires **either**:
-* ```Docker``` (see https://www.docker.com)
+* ```Docker``` (see "Install using the repository" https://docs.docker.com/engine/install/)
 * ```Singularity``` (see http://singularity.lbl.gov)
 
 **Hardware**: MONET was tested both on server and on commodity hardware (i.e., regular desktop). For details, please refer to section COMPUTATIONAL RESOURCES below.
