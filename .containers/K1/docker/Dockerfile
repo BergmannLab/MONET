@@ -33,7 +33,7 @@ LABEL maintainer="Mattia Tomasoni <mattia.tomasoni@unil.ch>"
 RUN apt update
 RUN apt -y install python2
 RUN apt -y install curl
-RUN curl https://bootstrap.pypa.io/2.7/get-pip.py --output get-pip.py
+RUN curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
 RUN python2 get-pip.py
 
 RUN pip2 install python-igraph
