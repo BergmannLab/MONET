@@ -36,7 +36,7 @@ RUN apt -y install curl
 RUN curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
 RUN python2 get-pip.py
 
-RUN pip2 install python-igraph
+RUN pip2 install python-igraph==0.8.3
 RUN pip2 install scikit-learn
 RUN pip2 install numpy scipy
 RUN pip2 install argparse
