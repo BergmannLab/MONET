@@ -402,7 +402,8 @@ then
   echo "Preparing container, please wait..."
   docker_reference=$(getDockerReferenceName)
   sudo docker build -t $docker_reference "$install_dir"/containers/"$method"/docker \
-   > /tmp/docker_build_output 2>&1
+       > /tmp/docker_build_output 2>&1
+  # This function may return error in MAC OSX docker sicen there is no "Successfully built" line int he docker output file...! 
   checkDockerBuildSuccess
   # remove (old) container (if exists)
   sudo docker rm "$method"-container > /tmp/docker_rm_output 2>&1
