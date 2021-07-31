@@ -40,7 +40,7 @@ apt update && \
   apt -y install curl && \
   curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py && \
   python2 get-pip.py && \
-  pip2 install python-igraph && \
+  pip2 install python-igraph==0.8.3 && \
   pip2 install scikit-learn && \
   pip2 install numpy scipy && \
   pip2 install argparse && \

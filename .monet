@@ -315,7 +315,22 @@ getDockerReferenceName() {
 }
 
 checkDockerBuildSuccess() {
-  if ! grep -q "Successfully built" /tmp/docker_build_output; then
+  new_message="naming to docker.io/library"
+  if grep -q "$new_message" /tmp/docker_build_output; then
+    new_message_present=true
+    echo 1
+  else
+    new_message_present=false
+  fi
+
+  old_message="Successfully built"
+  if grep -q "$old_message" /tmp/docker_build_output; then
+    old_message_present=true
+  else
+    old_message_present=false
+  fi
+
+  if ! $new_message_present && ! $old_message_present; then
     echo "ERROR: docker build returned an error"
     echo "       - is an internet connection available?"
     echo "       - is the docker daemon running?"
