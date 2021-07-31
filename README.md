@@ -6,7 +6,7 @@ This repository holds the source code for **MONET**, a Linux/MacOS command-line 
 
 **Operating System**: MONET can be run on **either**
 * Linux (it was tested on *Ubuntu Linux* 20.04, *CentOS Linux* 7.5)
-* MacOS (it was tested on *macOS Sierra* 10.12)
+* MacOS (it was tested on *Big Sur* 11.4 and *Sierra* 10.12)
 
 **Software**: MONET requires **either**:
 * ```Docker``` (see "Install using the repository" https://docs.docker.com/engine/install/)
