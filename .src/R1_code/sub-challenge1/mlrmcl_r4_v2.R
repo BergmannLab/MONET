@@ -26,6 +26,7 @@ rescale<-function(x,graph,maximum,minimum){
   numV<-vcount(graph)
   return((numV-1)/(maximum-minimum)*(x-maximum)+numV)
 }
+
 main <- function(file,b=2,c=5000,i=2,filter,threshold=2,inteWeight="yes",weighted=T,dir,post,smallest,largest,b2,c2,i2){
   input<-read.table(file,sep='\t')
   isString = FALSE
@@ -41,12 +42,50 @@ main <- function(file,b=2,c=5000,i=2,filter,threshold=2,inteWeight="yes",weighte
     input$V2 = as.numeric(factor(input$V2, levels = dict))
   }
   
+  # if max(node_id)-min(node_id) > 2 * #nodes
+  # get a dictionary that maps the original nodes IDs to start from ONE
+  if (max(input[,1])-min(input[,1]) > 2* length(unique(input[,1]))){
+    print("Performing Node ID remapping")
+    input_new = input
+    nodes = sort(union(input_new$V1, input_new$V2))
+    nodes_ordered = 1:length(nodes)
+    
+    assign_hash <- Vectorize(assign, vectorize.args = c("x", "value"))
+    get_hash <- Vectorize(get, vectorize.args = "x")
+    # exists_hash <- Vectorize(exists, vectorize.args = "x")
+    hash <- new.env(hash = TRUE, parent = emptyenv(), size = 10000L)
+    assign_hash(as.character(nodes), nodes_ordered, hash)
+    
+    # map original input to input_new that starts from ONE
+    for (iterator in 1:nrow(input_new)){
+      input_new[iterator,1] = get_hash(as.character(input[iterator,1]), hash)
+      input_new[iterator,2] = get_hash(as.character(input[iterator,2]), hash)
+    }
+    input = input_new
+  }
+
+  print("Read input finished!")
   graph<-preProcessing(input,filter,threshold,integerWeight=inteWeight)
   generateFile(graph,weighted)
+  print("Clustering start!")
   system(paste("./mlrmcl -b ",b," -c ",c," -i ",i," -o output.txt test.txt",sep=""))
   output<-postProcessing(post,smallest,largest,graph,b2,c2,i2)
+  
+  # map input_new starting from ONE back, to the original inputs using dictionary
+  if (max(input[,1])-min(input[,1]) >  2 * length(unique(input[,1]))){
+    hash2 <- new.env(hash = TRUE, parent = emptyenv(), size = 10000L)
+    assign_hash(as.character(nodes_ordered), nodes, hash2)
+    for (iterator in 1:length(output)){
+      if (length(output)>0){
+        for (iterator2 in 1:length(output[[iterator]])){
+          output[[iterator]][iterator2] = get_hash(as.character(output[[iterator]][iterator2]+1), hash2)
+        }
+      }
+    }
+  }
+  
+  # If the input is STRING nodes, translate integer back to strings
   if(isString == TRUE){
-    # translate integer back to strings using 
     # add 1 since postProcessing is not changed, still for DREAM data with 0 as gene id. 
     for (i in 1:length(output)){
       temp = output[[i]] + 1
@@ -56,7 +95,7 @@ main <- function(file,b=2,c=5000,i=2,filter,threshold=2,inteWeight="yes",weighte
       output[[i]] <- temp
     }
   }
-  writeFile(output,file,dir)
+  writeFile(output,basename(file),dir)
   return(output)
   file.remove("output.txt")
   file.remove("test.txt")
@@ -110,8 +149,8 @@ preProcessing <- function(input,method=c("quantile","pageRank","double"),i,integ
 # - MONET/.test/system_test/retinal_toxicity_test.sh PASSES
 # BUT CAUSES ERROR IN SYSTEM TESTS
 # - MONET/.test/system_test/reproduce_challenge
-#
-#generateFile <- function(graph,weighted=T){
+
+# generateFile <- function(graph,weighted=T){
 #  test3<-get.adjacency(graph,attr = "weight")
 #  m.index<-get.adjlist(graph)
 #  graph_directed <- as.directed(graph)
@@ -144,7 +183,7 @@ preProcessing <- function(input,method=c("quantile","pageRank","double"),i,integ
 #    write(c(vcount(graph),ecount(graph)),file="test.txt",sep="\t")
 #    dummy<-lapply(m.index, write, "test.txt", ncolumns = length(m.index), append=TRUE,sep="\t")
 #  }
-#}
+# }
 
 generateFile <- function(graph,weighted=T){
   test3<-get.adjacency(graph,attr = "weight")
@@ -168,7 +207,6 @@ generateFile <- function(graph,weighted=T){
     write(c(vcount(graph),ecount(graph)),file="test.txt",sep="\t")
     dummy<-lapply(m.index, write, "test.txt", ncolumns = length(m.index), append=TRUE,sep="\t")
   }
-
 }
 
 postProcessing <- function(method=c("random","discard","recluster"),smallest = 3,largest=100,
@@ -207,7 +245,6 @@ postProcessing <- function(method=c("random","discard","recluster"),smallest = 3
         #reclustered with MLRMCL
         generateFile(graph.new,weighted=T)
         system(paste("./mlrmcl -b ",b2," -c ",c2," -i ",i2," -o output2.txt test.txt",sep=""))
-        # system(paste("./mlrmcl -b ",0.5," -c ",800," -i ",2," -o output2.txt test.txt",sep=""))
         result<-read.table("output2.txt")
         output2<-list()
         for (i in 1:nrow(unique(result))){
@@ -221,7 +258,7 @@ postProcessing <- function(method=c("random","discard","recluster"),smallest = 3
       large<-output[lapply(output,length)>100]
       temp<-list()
       i=1
-      while(length(large)>0){
+      while(length(large)>0 && i<4){
         print(i)
         i=i+1
         splitted<-rerun(graph,large,smallest)
@@ -229,17 +266,7 @@ postProcessing <- function(method=c("random","discard","recluster"),smallest = 3
         large<-splitted[lapply(splitted,length)>100]
         temp<-append(temp,small)
       }
-      # reclustered with standard MCL
-#       matrix<-get.adjacency(graph.new)
-#       x<-mcl(matrix,addLoops=T,allow1=T,inflation=1.5)
-#       reclustered<-list()
-#       for (i in 1:length(unique(x[[3]]))){
-#         temp1<-x[[3]]==unique(x[[3]])[i]
-#         reclustered[[i]]<-as.integer(V(graph.new)$name[temp1])-1
-#       }
-#       output<-append(output,reclustered)
       output<-append(good,temp)
-      #######################
   }
   output<-output[lapply(output,length)<=largest]
   return(output)
@@ -253,8 +280,12 @@ writeFile <- function(output,file,dir){
   if (file.exists("output2.txt")) file.remove("output2.txt")
   file.remove("test.txt")
   for (i in 1:length(output)){
-    temp<-c(i,1,output[[i]])
-    write(temp,file=fn, ncolumns = length(output[[i]])+2, append=T, sep="\t")
+    if (length(output)>0)
+      {temp<-c(i,1,output[[i]])
+      write(temp,file=fn, ncolumns = length(output[[i]])+2, append=T, sep="\t")}
+    else{
+      write("No satisfactory clusters found",file=fn)
+    }
   }
 }
 
